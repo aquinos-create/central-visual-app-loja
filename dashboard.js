@@ -2,804 +2,450 @@
 
 const CAMINHO_DADOS = "progresso.json";
 
-const seletores = {
-  ambiente: document.querySelector("#ambiente-projeto"),
-  versao: document.querySelector("#versao-logica"),
-  atualizadoEm: document.querySelector("#data-atualizacao"),
-  progressoGeral: document.querySelector("#progresso-geral"),
-  rotuloProgresso: document.querySelector("#rotulo-progresso"),
-  observacaoProgresso: document.querySelector("#observacao-progresso"),
-  anelProgresso: document.querySelector("#anel-progresso"),
-  nucleo: document.querySelector("#nucleo"),
-  nucleoCheckpoint: document.querySelector("#nucleo-checkpoint"),
-  marcadoresModulos: document.querySelector("#marcadores-modulos"),
-
-  checkpointId: document.querySelector("#checkpoint-id"),
-  checkpointTitulo: document.querySelector("#checkpoint-titulo"),
-  checkpointEstado: document.querySelector("#checkpoint-estado"),
-  checkpointData: document.querySelector("#checkpoint-data"),
-
-  tarefaAtual: document.querySelector("#tarefa-atual"),
-  tarefaModulo: document.querySelector("#tarefa-modulo"),
-  blocoImediato: document.querySelector("#bloco-imediato"),
-
-  gradeModulos: document.querySelector("#grade-modulos"),
-  trilhaModulo: document.querySelector("#trilha-modulo"),
-  listaProximos: document.querySelector("#lista-proximos"),
-  listaCamadas: document.querySelector("#lista-camadas"),
-  timeline: document.querySelector("#timeline-checkpoints"),
-  totalCheckpoints: document.querySelector("#total-checkpoints"),
-  avisoFonte: document.querySelector("#aviso-fonte"),
-
-  filtros: [...document.querySelectorAll(".filtro")],
-
-  templateModulo: document.querySelector("#template-modulo"),
-  templateEtapa: document.querySelector("#template-etapa"),
-  templateProximo: document.querySelector("#template-proximo"),
-  templateCamada: document.querySelector("#template-camada"),
-  templateCheckpoint: document.querySelector("#template-checkpoint")
+const estadoRotulo = {
+  validado: "Validado",
+  em_andamento: "Em andamento",
+  definido: "Definido / inicial",
+  nao_iniciado: "Não iniciado",
+  descartado: "Testado e descartado",
+  pendente_producao: "Pendente antes de Produção"
 };
 
-let dadosDashboard = null;
-let filtroAtual = "todos";
+const refs = {
+  ambiente: document.querySelector("#meta-ambiente"),
+  versao: document.querySelector("#meta-versao"),
+  data: document.querySelector("#meta-data"),
+  btnCheckpoint: document.querySelector("#btn-checkpoint-atual"),
+  corePercent: document.querySelector("#core-percent"),
+  coreCheckpoint: document.querySelector("#core-checkpoint"),
+  coreProgress: document.querySelector("#core-progress"),
+  totalModulos: document.querySelector("#total-modulos"),
+  countAndamento: document.querySelector("#count-andamento"),
+  countDefinidos: document.querySelector("#count-definidos"),
+  countNaoIniciados: document.querySelector("#count-nao-iniciados"),
+  stateDonut: document.querySelector("#state-donut"),
+  frontList: document.querySelector("#front-list"),
+  taskModule: document.querySelector("#task-module"),
+  taskTitle: document.querySelector("#task-title"),
+  taskBlock: document.querySelector("#task-block"),
+  nextList: document.querySelector("#next-list"),
+  miniTimeline: document.querySelector("#mini-timeline"),
+  summaryTotal: document.querySelector("#summary-total"),
+  summaryActive: document.querySelector("#summary-active"),
+  summaryDefined: document.querySelector("#summary-defined"),
+  summaryIdle: document.querySelector("#summary-idle"),
+  priorityList: document.querySelector("#priority-list"),
+  statusNote: document.querySelector("#status-note"),
+  modalBackdrop: document.querySelector("#modal-backdrop"),
+  modalTitle: document.querySelector("#modal-title"),
+  modalBody: document.querySelector("#modal-body"),
+  modalClose: document.querySelector("#modal-close"),
+  modalCloseFooter: document.querySelector("#modal-close-footer")
+};
 
-document.addEventListener("DOMContentLoaded", iniciarDashboard);
+let dados = null;
+let focoAnterior = null;
 
-async function iniciarDashboard() {
-  configurarFiltros();
+document.addEventListener("DOMContentLoaded", iniciar);
+
+async function iniciar() {
+  configurarInteracoesBase();
 
   try {
-    dadosDashboard = await carregarDados();
-    validarEstruturaMinima(dadosDashboard);
-
-    preencherCabecalho(dadosDashboard);
-    preencherSituacaoAtual(dadosDashboard);
-    preencherNucleo(dadosDashboard);
-    atualizarResumoRapido(dadosDashboard);
-    renderizarModulos();
-    renderizarTrilha(dadosDashboard.trilhaModuloAtivo?.etapas ?? []);
-    renderizarProximos(dadosDashboard.proximosBlocos ?? []);
-    renderizarCamadas(dadosDashboard.camadasTransversais ?? []);
-    renderizarCheckpoints(dadosDashboard.checkpoints ?? []);
-    preencherRodape(dadosDashboard);
+    dados = await carregarDados();
+    validarDados(dados);
+    preencherDashboard(dados);
   } catch (erro) {
-    console.error("Falha ao carregar a Central Visual:", erro);
-    exibirErroCarregamento(erro);
+    console.error(erro);
+    exibirFalha(erro);
   }
 }
 
 async function carregarDados() {
   if (window.location.protocol === "file:") {
-    throw new Error(
-      "O navegador bloqueou a leitura direta do progresso.json porque o arquivo foi aberto por duplo clique."
-    );
+    throw new Error("Abra a Central Visual pelo GitHub Pages ou por um servidor local para permitir a leitura do progresso.json.");
   }
 
   const resposta = await fetch(CAMINHO_DADOS, {
     cache: "no-store",
-    headers: {
-      Accept: "application/json"
-    }
+    headers: { Accept: "application/json" }
   });
 
   if (!resposta.ok) {
-    throw new Error(
-      `Não foi possível carregar ${CAMINHO_DADOS}. Código HTTP: ${resposta.status}.`
-    );
+    throw new Error(`Não foi possível carregar ${CAMINHO_DADOS}. Código HTTP ${resposta.status}.`);
   }
 
-  try {
-    return await resposta.json();
-  } catch {
-    throw new Error(
-      `${CAMINHO_DADOS} foi encontrado, mas contém um JSON inválido.`
-    );
-  }
+  return resposta.json();
 }
 
-function validarEstruturaMinima(dados) {
-  const erros = [];
-
-  if (!dados || typeof dados !== "object") {
-    erros.push("objeto principal ausente");
-  }
-
-  if (!dados?.projeto) {
-    erros.push("projeto");
-  }
-
-  if (!dados?.projeto?.progressoGeral) {
-    erros.push("projeto.progressoGeral");
-  }
-
-  if (!dados?.situacaoAtual?.ultimoCheckpoint) {
-    erros.push("situacaoAtual.ultimoCheckpoint");
-  }
-
-  if (!dados?.situacaoAtual?.tarefaAtual) {
-    erros.push("situacaoAtual.tarefaAtual");
-  }
-
-  if (!Array.isArray(dados?.modulos)) {
-    erros.push("modulos");
-  }
-
-  if (!Array.isArray(dados?.checkpoints)) {
-    erros.push("checkpoints");
-  }
-
-  if (erros.length > 0) {
-    throw new Error(
-      `Estrutura incompleta no progresso.json: ${erros.join(", ")}.`
-    );
-  }
+function validarDados(valor) {
+  const faltantes = [];
+  if (!valor?.projeto?.progressoGeral) faltantes.push("projeto.progressoGeral");
+  if (!valor?.situacaoAtual?.ultimoCheckpoint) faltantes.push("situacaoAtual.ultimoCheckpoint");
+  if (!valor?.situacaoAtual?.tarefaAtual) faltantes.push("situacaoAtual.tarefaAtual");
+  if (!Array.isArray(valor?.modulos)) faltantes.push("modulos");
+  if (!Array.isArray(valor?.proximosBlocos)) faltantes.push("proximosBlocos");
+  if (!Array.isArray(valor?.checkpoints)) faltantes.push("checkpoints");
+  if (faltantes.length) throw new Error(`Estrutura incompleta no progresso.json: ${faltantes.join(", ")}.`);
 }
 
-function preencherCabecalho(dados) {
-  const projeto = dados.projeto;
+function preencherDashboard(valor) {
+  const projeto = valor.projeto;
+  const atual = valor.situacaoAtual;
+  const progresso = percentual(projeto.progressoGeral.percentual);
+  const contagens = contarEstados(valor.modulos);
 
-  definirTexto(seletores.ambiente, projeto.ambiente);
-  definirTexto(seletores.versao, projeto.versaoLogica);
-  definirTexto(seletores.atualizadoEm, formatarData(projeto.atualizadoEm));
+  texto(refs.ambiente, projeto.ambiente);
+  texto(refs.versao, projeto.versaoLogica);
+  texto(refs.data, formatarData(projeto.atualizadoEm));
+  texto(refs.btnCheckpoint, atual.ultimoCheckpoint.id);
+  texto(refs.corePercent, progresso);
+  texto(refs.coreCheckpoint, atual.ultimoCheckpoint.id);
+  texto(refs.totalModulos, valor.modulos.length);
+  texto(refs.countAndamento, contagens.andamento);
+  texto(refs.countDefinidos, contagens.definidos);
+  texto(refs.countNaoIniciados, contagens.naoIniciados);
+  texto(refs.summaryTotal, valor.modulos.length);
+  texto(refs.summaryActive, contagens.andamento);
+  texto(refs.summaryDefined, contagens.definidos);
+  texto(refs.summaryIdle, contagens.naoIniciados);
+  texto(refs.taskModule, atual.tarefaAtual.modulo);
+  texto(refs.taskTitle, atual.tarefaAtual.tituloCurto || atual.tarefaAtual.tituloCompleto);
+  texto(refs.taskBlock, atual.tarefaAtual.blocoTecnicoImediato);
+  texto(refs.statusNote, "Percentuais são estimativas de acompanhamento e podem variar.");
+
+  refs.coreProgress.style.background = `conic-gradient(from -90deg, var(--cyan) 0 ${progresso}%, rgba(79,216,255,.08) ${progresso}% 100%)`;
+  refs.stateDonut.style.background = montarGradienteEstados(valor.modulos, contagens);
+  refs.stateDonut.setAttribute("aria-label", `${contagens.andamento} módulos em andamento, ${contagens.definidos} definidos ou iniciais e ${contagens.naoIniciados} não iniciados.`);
+
+  renderizarFrentes(valor.modulos);
+  renderizarProximos(valor.proximosBlocos);
+  renderizarPrioridades(valor.proximosBlocos);
+  renderizarTimeline(valor.checkpoints, atual.ultimoCheckpoint.id);
 }
 
-function preencherSituacaoAtual(dados) {
-  const checkpoint = dados.situacaoAtual.ultimoCheckpoint;
-  const tarefa = dados.situacaoAtual.tarefaAtual;
-
-  definirTexto(seletores.checkpointId, checkpoint.id);
-  definirTexto(seletores.checkpointTitulo, checkpoint.titulo);
-  definirTexto(seletores.checkpointEstado, checkpoint.estado);
-  definirTexto(seletores.checkpointData, formatarData(checkpoint.data));
-
-  if (seletores.checkpointData && checkpoint.data) {
-    seletores.checkpointData.dateTime = checkpoint.data;
-  }
-
-  definirTexto(seletores.tarefaAtual, tarefa.tituloCurto ?? tarefa.tituloCompleto);
-  definirTexto(seletores.tarefaModulo, tarefa.modulo);
-  definirTexto(seletores.blocoImediato, tarefa.blocoTecnicoImediato);
+function contarEstados(modulos) {
+  return modulos.reduce((acc, modulo) => {
+    if (modulo.estado === "em_andamento") acc.andamento += 1;
+    else if (modulo.estado === "nao_iniciado") acc.naoIniciados += 1;
+    else acc.definidos += 1;
+    return acc;
+  }, { andamento: 0, definidos: 0, naoIniciados: 0 });
 }
 
-function preencherNucleo(dados) {
-  const progresso = normalizarPercentual(
-    dados.projeto.progressoGeral.percentual
-  );
-  const checkpoint = dados.situacaoAtual.ultimoCheckpoint?.id ?? "—";
-
-  definirTexto(seletores.progressoGeral, String(progresso));
-  definirTexto(
-    seletores.rotuloProgresso,
-    dados.projeto.progressoGeral.rotulo
-  );
-  definirTexto(
-    seletores.observacaoProgresso,
-    dados.projeto.progressoGeral.observacao
-  );
-  definirTexto(seletores.nucleoCheckpoint, checkpoint);
-
-  if (seletores.anelProgresso) {
-    seletores.anelProgresso.setAttribute(
-      "stroke-dasharray",
-      `${progresso} 100`
-    );
-  }
-
-  if (seletores.nucleo) {
-    seletores.nucleo.setAttribute(
-      "aria-label",
-      `${dados.projeto.progressoGeral.rotulo}: ${progresso} por cento`
-    );
-  }
-
-  renderizarMarcadoresDoNucleo(dados.modulos ?? []);
+function montarGradienteEstados(modulos, contagens) {
+  const total = Math.max(1, modulos.length);
+  const pAndamento = contagens.andamento / total * 100;
+  const pDefinidos = contagens.definidos / total * 100;
+  const limiteDefinidos = pAndamento + pDefinidos;
+  return `conic-gradient(var(--orange) 0 ${pAndamento.toFixed(2)}%, var(--blue) ${pAndamento.toFixed(2)}% ${limiteDefinidos.toFixed(2)}%, #4b6376 ${limiteDefinidos.toFixed(2)}% 100%)`;
 }
 
-function renderizarMarcadoresDoNucleo(modulos) {
-  const grupo = seletores.marcadoresModulos;
+function renderizarFrentes(modulos) {
+  const frentes = [...modulos]
+    .sort((a, b) => percentual(b.percentual) - percentual(a.percentual))
+    .slice(0, 3);
 
-  if (!grupo) {
-    return;
-  }
+  refs.frontList.replaceChildren();
 
-  grupo.replaceChildren();
+  frentes.forEach((modulo) => {
+    const linha = document.createElement("div");
+    linha.className = `front-row${modulo.destaque ? " front-row--active" : ""}`;
 
-  const total = modulos.length;
-  const centro = 210;
-  const raio = 184;
+    const meta = document.createElement("div");
+    meta.className = "front-row__meta";
+    const nome = document.createElement("span");
+    nome.textContent = modulo.nome;
+    const valor = document.createElement("strong");
+    valor.textContent = `${percentual(modulo.percentual)}%`;
+    meta.append(nome, valor);
 
-  modulos.forEach((modulo, indice) => {
-    const angulo = ((indice / total) * 360 - 90) * (Math.PI / 180);
-    const x = centro + raio * Math.cos(angulo);
-    const y = centro + raio * Math.sin(angulo);
+    const trilho = document.createElement("div");
+    trilho.className = "segmented-track";
+    const barra = document.createElement("span");
+    barra.style.setProperty("--value", `${percentual(modulo.percentual)}%`);
+    trilho.appendChild(barra);
 
-    const marcador = criarElementoSvg("circle", {
-      cx: x.toFixed(2),
-      cy: y.toFixed(2),
-      r: modulo.destaque ? "5.5" : "3.5",
-      class: `marcador-modulo marcador-modulo--${modulo.estado}`,
-      "data-modulo": modulo.id,
-      "aria-label": `${modulo.nome}: ${normalizarPercentual(modulo.percentual)}%`
-    });
-
-    aplicarCorMarcador(marcador, modulo);
-    grupo.appendChild(marcador);
+    linha.append(meta, trilho);
+    refs.frontList.appendChild(linha);
   });
-}
-
-function criarElementoSvg(nome, atributos = {}) {
-  const elemento = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    nome
-  );
-
-  Object.entries(atributos).forEach(([chave, valor]) => {
-    elemento.setAttribute(chave, String(valor));
-  });
-
-  return elemento;
-}
-
-function aplicarCorMarcador(elemento, modulo) {
-  const cores = {
-    validado: "#62d99b",
-    em_andamento: "#ff9c40",
-    definido: "#3b78ff",
-    nao_iniciado: "#526171",
-    descartado: "#b88b65",
-    pendente_producao: "#ff6d78"
-  };
-
-  const cor = modulo.destaque
-    ? cores.em_andamento
-    : cores[modulo.estado] ?? cores.nao_iniciado;
-
-  elemento.setAttribute("fill", cor);
-  elemento.style.filter = modulo.destaque
-    ? `drop-shadow(0 0 7px ${cor})`
-    : `drop-shadow(0 0 3px ${cor})`;
-}
-
-function atualizarResumoRapido(dados) {
-  const itensResumo = [...document.querySelectorAll(".resumo-rapido__item")];
-
-  itensResumo.forEach((item) => {
-    const nome = item.querySelector("span")?.textContent?.trim();
-    const modulo = dados.modulos.find((entrada) => entrada.nome === nome);
-
-    if (!modulo) {
-      return;
-    }
-
-    const percentual = normalizarPercentual(modulo.percentual);
-    const valor = item.querySelector("strong");
-    const barra = item.querySelector(".barra-mini span");
-
-    definirTexto(valor, `${percentual}%`);
-
-    if (barra) {
-      barra.style.width = `${percentual}%`;
-    }
-  });
-}
-
-function configurarFiltros() {
-  seletores.filtros.forEach((botao) => {
-    botao.addEventListener("click", () => {
-      filtroAtual = botao.dataset.filtro ?? "todos";
-
-      seletores.filtros.forEach((item) => {
-        const ativo = item === botao;
-        item.classList.toggle("ativo", ativo);
-        item.setAttribute("aria-pressed", String(ativo));
-      });
-
-      renderizarModulos();
-    });
-  });
-}
-
-function renderizarModulos() {
-  const container = seletores.gradeModulos;
-
-  if (!container || !dadosDashboard) {
-    return;
-  }
-
-  const modulos = dadosDashboard.modulos.filter((modulo) => {
-    return filtroAtual === "todos" || modulo.estado === filtroAtual;
-  });
-
-  container.replaceChildren();
-
-  if (modulos.length === 0) {
-    container.appendChild(
-      criarMensagem("Nenhum módulo corresponde a este filtro.")
-    );
-    container.setAttribute("aria-busy", "false");
-    return;
-  }
-
-  const fragmento = document.createDocumentFragment();
-
-  modulos.forEach((modulo) => {
-    const card = seletores.templateModulo.content
-      .firstElementChild
-      .cloneNode(true);
-
-    const percentual = normalizarPercentual(modulo.percentual);
-    const resumo = card.querySelector(".card-modulo__resumo");
-    const pendencia = card.querySelector(".card-modulo__pendencia");
-
-    card.dataset.estado = modulo.estado;
-    card.dataset.destaque = String(Boolean(modulo.destaque));
-    card.dataset.expandido = "false";
-    card.setAttribute("role", "button");
-    card.setAttribute("tabindex", "0");
-    card.setAttribute("aria-expanded", "false");
-    card.setAttribute(
-      "aria-label",
-      `${modulo.nome}. ${modulo.estadoRotulo}. ${percentual} por cento. Clique para ver detalhes.`
-    );
-
-    definirTexto(card.querySelector(".card-modulo__grupo"), modulo.grupo);
-    definirTexto(
-      card.querySelector(".card-modulo__percentual"),
-      `${percentual}%`
-    );
-    definirTexto(card.querySelector(".card-modulo__nome"), modulo.nome);
-    definirTexto(
-      card.querySelector(".card-modulo__estado"),
-      modulo.estadoRotulo
-    );
-    definirTexto(resumo, modulo.resumo);
-    definirTexto(
-      pendencia.querySelector("strong"),
-      modulo.pendenciaPrincipal
-    );
-
-    const barra = card.querySelector(".barra-progresso span");
-
-    if (barra) {
-      barra.style.width = `${percentual}%`;
-    }
-
-    const marcoCompacto = document.createElement("p");
-    marcoCompacto.className = "card-modulo__marco-compacto";
-
-    const rotuloMarco = document.createElement("span");
-    rotuloMarco.textContent = "Próximo: ";
-
-    const textoMarco = document.createElement("strong");
-    textoMarco.textContent = modulo.pendenciaPrincipal;
-
-    marcoCompacto.append(rotuloMarco, textoMarco);
-
-    const detalhes = document.createElement("div");
-    detalhes.className = "card-modulo__detalhes";
-    detalhes.hidden = true;
-    detalhes.append(resumo, pendencia);
-
-    const acao = document.createElement("span");
-    acao.className = "card-modulo__acao";
-
-    const acaoTexto = document.createElement("span");
-    acaoTexto.className = "card-modulo__acao-texto";
-    acaoTexto.textContent = "Ver detalhes";
-
-    const acaoIcone = document.createElement("span");
-    acaoIcone.className = "card-modulo__acao-icone";
-    acaoIcone.setAttribute("aria-hidden", "true");
-    acaoIcone.textContent = "⌄";
-
-    acao.append(acaoTexto, acaoIcone);
-    card.append(marcoCompacto, detalhes, acao);
-
-    const alternar = () => alternarCardModulo(card, modulo);
-
-    card.addEventListener("click", alternar);
-    card.addEventListener("keydown", (evento) => {
-      if (evento.key === "Enter" || evento.key === " ") {
-        evento.preventDefault();
-        alternar();
-      }
-    });
-
-    fragmento.appendChild(card);
-  });
-
-  container.appendChild(fragmento);
-  container.setAttribute("aria-busy", "false");
-}
-
-function alternarCardModulo(card, modulo) {
-  const deveAbrir = card.dataset.expandido !== "true";
-
-  if (deveAbrir) {
-    document
-      .querySelectorAll('.card-modulo[data-expandido="true"]')
-      .forEach((outroCard) => {
-        if (outroCard !== card) {
-          definirEstadoCardModulo(outroCard, false);
-        }
-      });
-  }
-
-  definirEstadoCardModulo(card, deveAbrir, modulo);
-}
-
-function definirEstadoCardModulo(card, expandido, modulo = null) {
-  const detalhes = card.querySelector(".card-modulo__detalhes");
-  const acaoTexto = card.querySelector(".card-modulo__acao-texto");
-
-  card.dataset.expandido = String(expandido);
-  card.setAttribute("aria-expanded", String(expandido));
-
-  if (detalhes) {
-    detalhes.hidden = !expandido;
-  }
-
-  if (acaoTexto) {
-    acaoTexto.textContent = expandido ? "Ocultar detalhes" : "Ver detalhes";
-  }
-
-  if (modulo) {
-    const percentual = normalizarPercentual(modulo.percentual);
-    card.setAttribute(
-      "aria-label",
-      `${modulo.nome}. ${modulo.estadoRotulo}. ${percentual} por cento. ${
-        expandido ? "Detalhes abertos." : "Clique para ver detalhes."
-      }`
-    );
-  }
-}
-
-
-function renderizarTrilha(etapas) {
-  const container = seletores.trilhaModulo;
-
-  if (!container) {
-    return;
-  }
-
-  container.replaceChildren();
-
-  if (etapas.length === 0) {
-    container.appendChild(
-      criarMensagem("Nenhuma etapa foi registrada para o módulo ativo.")
-    );
-    container.setAttribute("aria-busy", "false");
-    return;
-  }
-
-  const fragmento = document.createDocumentFragment();
-
-  etapas.forEach((etapa) => {
-    const item = seletores.templateEtapa.content
-      .firstElementChild
-      .cloneNode(true);
-
-    item.dataset.estado = etapa.estado;
-
-    definirTexto(
-      item.querySelector(".etapa-trilha__ordem"),
-      `ETAPA ${String(etapa.ordem).padStart(2, "0")}`
-    );
-    definirTexto(item.querySelector(".etapa-trilha__nome"), etapa.nome);
-    definirTexto(
-      item.querySelector(".etapa-trilha__estado"),
-      montarEstadoEtapa(etapa)
-    );
-
-    const observacao = item.querySelector(".etapa-trilha__observacao");
-
-    if (etapa.observacao) {
-      definirTexto(observacao, etapa.observacao);
-    } else {
-      observacao.remove();
-    }
-
-    fragmento.appendChild(item);
-  });
-
-  container.appendChild(fragmento);
-  container.setAttribute("aria-busy", "false");
-}
-
-function montarEstadoEtapa(etapa) {
-  const rotulos = {
-    validado: "Validado",
-    em_andamento: "Em andamento",
-    definido: "Definido",
-    nao_iniciado: "Não iniciado",
-    descartado: "Testado e descartado",
-    pendente_producao: "Obrigatório antes de Produção"
-  };
-
-  const estado = rotulos[etapa.estado] ?? etapa.estado ?? "Sem estado";
-  return etapa.checkpoint ? `${estado} · ${etapa.checkpoint}` : estado;
 }
 
 function renderizarProximos(blocos) {
-  const container = seletores.listaProximos;
+  refs.nextList.replaceChildren();
 
-  if (!container) {
-    return;
-  }
-
-  container.replaceChildren();
-
-  if (blocos.length === 0) {
-    container.appendChild(
-      criarMensagem("Nenhum próximo bloco foi registrado.", "li")
-    );
-    container.setAttribute("aria-busy", "false");
-    return;
-  }
-
-  const ordenados = [...blocos].sort((a, b) => a.ordem - b.ordem);
-  const fragmento = document.createDocumentFragment();
-
-  ordenados.forEach((bloco) => {
-    const item = seletores.templateProximo.content
-      .firstElementChild
-      .cloneNode(true);
-
-    item.dataset.estado = bloco.estado;
-
-    definirTexto(item.querySelector(".item-proximo__ordem"), bloco.ordem);
-    definirTexto(item.querySelector(".item-proximo__modulo"), bloco.modulo);
-    definirTexto(item.querySelector(".item-proximo__titulo"), bloco.titulo);
-    definirTexto(item.querySelector(".item-proximo__detalhe"), bloco.detalhe);
-
-    fragmento.appendChild(item);
+  [...blocos].sort((a, b) => a.ordem - b.ordem).slice(0, 3).forEach((bloco, indice) => {
+    const item = document.createElement("li");
+    const numero = document.createElement("b");
+    numero.textContent = String(indice + 1).padStart(2, "0");
+    const nome = document.createElement("span");
+    nome.textContent = bloco.titulo;
+    const seta = document.createElement("i");
+    seta.textContent = "›";
+    item.append(numero, nome, seta);
+    refs.nextList.appendChild(item);
   });
-
-  container.appendChild(fragmento);
-  container.setAttribute("aria-busy", "false");
 }
 
-function renderizarCamadas(camadas) {
-  const container = seletores.listaCamadas;
+function renderizarPrioridades(blocos) {
+  refs.priorityList.replaceChildren();
 
-  if (!container) {
-    return;
-  }
+  [...blocos].sort((a, b) => a.ordem - b.ordem).slice(0, 3).forEach((bloco, indice) => {
+    const linha = document.createElement("div");
+    linha.className = `priority-row priority-row--${indice < 2 ? "high" : "medium"}`;
 
-  container.replaceChildren();
+    const rotulo = document.createElement("span");
+    const nome = document.createElement("b");
+    nome.textContent = encurtarTitulo(bloco.titulo);
+    const nivel = document.createElement("small");
+    nivel.textContent = indice < 2 ? "Prioridade alta" : "Prioridade média";
+    rotulo.append(nome, nivel);
 
-  if (camadas.length === 0) {
-    container.appendChild(
-      criarMensagem("Nenhuma camada transversal foi registrada.")
-    );
-    container.setAttribute("aria-busy", "false");
-    return;
-  }
+    const segmentos = document.createElement("div");
+    segmentos.className = "priority-segments";
+    segmentos.setAttribute("aria-hidden", "true");
+    for (let i = 0; i < 8; i += 1) segmentos.appendChild(document.createElement("i"));
 
-  const fragmento = document.createDocumentFragment();
-
-  camadas.forEach((camada) => {
-    const item = seletores.templateCamada.content
-      .firstElementChild
-      .cloneNode(true);
-
-    const percentual = normalizarPercentual(camada.percentual);
-
-    item.dataset.estado = camada.estado;
-
-    definirTexto(item.querySelector(".item-camada__nome"), camada.nome);
-    definirTexto(
-      item.querySelector(".item-camada__percentual"),
-      `${percentual}%`
-    );
-
-    const barra = item.querySelector(".barra-progresso span");
-
-    if (barra) {
-      barra.style.width = `${percentual}%`;
-    }
-
-    fragmento.appendChild(item);
+    linha.append(rotulo, segmentos);
+    refs.priorityList.appendChild(linha);
   });
-
-  container.appendChild(fragmento);
-  container.setAttribute("aria-busy", "false");
 }
 
-function renderizarCheckpoints(checkpoints) {
-  const container = seletores.timeline;
+function encurtarTitulo(titulo) {
+  const mapa = [
+    ["Favoritos compartilhados", "Favoritos"],
+    ["Proteção com uma Reserva real", "Reserva real"],
+    ["Alertas e detalhes de Reserva e Lista de Espera", "Alertas e detalhes"]
+  ];
+  return mapa.find(([completo]) => completo === titulo)?.[1] || titulo;
+}
 
-  if (!container) {
-    return;
-  }
-
-  container.replaceChildren();
-  definirTexto(seletores.totalCheckpoints, checkpoints.length);
-
-  if (checkpoints.length === 0) {
-    container.appendChild(
-      criarMensagem("Nenhum checkpoint foi registrado.")
-    );
-    container.setAttribute("aria-busy", "false");
-    return;
-  }
-
-  const fragmento = document.createDocumentFragment();
+function renderizarTimeline(checkpoints, checkpointAtual) {
+  refs.miniTimeline.replaceChildren();
 
   checkpoints.forEach((checkpoint) => {
-    const item = seletores.templateCheckpoint.content
-      .firstElementChild
-      .cloneNode(true);
+    const ponto = document.createElement("span");
+    const atual = checkpoint.id === checkpointAtual;
+    ponto.className = `timeline-node timeline-node--${atual ? "current" : checkpoint.categoria || "validado"}`;
+    ponto.dataset.id = checkpoint.id;
+    ponto.title = `${checkpoint.id} — ${checkpoint.titulo}`;
+    refs.miniTimeline.appendChild(ponto);
+  });
+}
 
-    item.dataset.categoria = checkpoint.categoria;
-
-    const botao = item.querySelector(".checkpoint__botao");
-    const detalhes = item.querySelector(".checkpoint__detalhes");
-    const data = item.querySelector(".checkpoint__data");
-    const modulo = item.querySelector(".checkpoint__modulo");
-
-    definirTexto(item.querySelector(".checkpoint__id"), checkpoint.id);
-    definirTexto(data, formatarDataCurta(checkpoint.data));
-    definirTexto(
-      item.querySelector(".checkpoint__titulo"),
-      checkpoint.titulo
-    );
-    definirTexto(
-      item.querySelector(".checkpoint__estado"),
-      checkpoint.estado
-    );
-    definirTexto(
-      item.querySelector(".checkpoint__resumo"),
-      checkpoint.resumo
-    );
-
-    if (data && checkpoint.data) {
-      data.dateTime = checkpoint.data;
-    }
-
-    if (checkpoint.modulo) {
-      definirTexto(modulo, `Módulo: ${checkpoint.modulo}`);
-    } else {
-      modulo.remove();
-    }
-
-    botao.addEventListener("click", () => {
-      const expandido = botao.getAttribute("aria-expanded") === "true";
-      botao.setAttribute("aria-expanded", String(!expandido));
-      detalhes.hidden = expandido;
-    });
-
-    fragmento.appendChild(item);
+function configurarInteracoesBase() {
+  document.querySelectorAll("[data-open]").forEach((elemento) => {
+    elemento.addEventListener("click", () => abrirModal(elemento.dataset.open, elemento));
   });
 
-  container.appendChild(fragmento);
-  container.setAttribute("aria-busy", "false");
+  refs.btnCheckpoint.addEventListener("click", () => abrirModal("currentCheckpoint", refs.btnCheckpoint));
+  refs.modalClose.addEventListener("click", fecharModal);
+  refs.modalCloseFooter.addEventListener("click", fecharModal);
+  refs.modalBackdrop.addEventListener("click", (evento) => {
+    if (evento.target === refs.modalBackdrop) fecharModal();
+  });
+  document.addEventListener("keydown", (evento) => {
+    if (evento.key === "Escape" && !refs.modalBackdrop.hidden) fecharModal();
+  });
 }
 
-function preencherRodape(dados) {
-  definirTexto(seletores.avisoFonte, dados.projeto.avisoFonte);
-
-  const checkpointRodape = document.querySelector(
-    ".rodape__estado strong"
-  );
-
-  definirTexto(
-    checkpointRodape,
-    dados.situacaoAtual.ultimoCheckpoint?.id ?? "—"
-  );
+function abrirModal(tipo, origem) {
+  if (!dados) return;
+  focoAnterior = origem || document.activeElement;
+  const conteudo = construirModal(tipo);
+  texto(refs.modalTitle, conteudo.titulo);
+  refs.modalBody.replaceChildren(conteudo.corpo);
+  refs.modalBackdrop.hidden = false;
+  document.body.style.overflow = "hidden";
+  refs.modalClose.focus();
 }
 
-function exibirErroCarregamento(erro) {
-  const mensagemPrincipal =
-    window.location.protocol === "file:"
-      ? "Os arquivos estão corretos, mas este dashboard precisa ser aberto por um servidor local ou pelo GitHub Pages para ler o progresso.json."
-      : "Não foi possível carregar os dados do dashboard.";
+function fecharModal() {
+  refs.modalBackdrop.hidden = true;
+  document.body.style.overflow = "";
+  if (focoAnterior instanceof HTMLElement) focoAnterior.focus();
+}
 
-  const detalhe = erro instanceof Error ? erro.message : String(erro);
-  const texto = `${mensagemPrincipal} ${detalhe}`;
+function construirModal(tipo) {
+  if (tipo === "modules") return modalModulos();
+  if (tipo === "fronts") return modalFrentes();
+  if (tipo === "task") return modalTarefa();
+  if (tipo === "next") return modalProximos();
+  if (tipo === "timeline") return modalTimeline();
+  if (tipo === "currentCheckpoint") return modalCheckpointAtual();
+  return modalVisaoGeral();
+}
 
+function modalVisaoGeral() {
+  const container = document.createElement("div");
+  const contagens = contarEstados(dados.modulos);
+  const kpis = document.createElement("div");
+  kpis.className = "modal-kpis";
   [
-    seletores.gradeModulos,
-    seletores.trilhaModulo,
-    seletores.listaProximos,
-    seletores.listaCamadas,
-    seletores.timeline
-  ].forEach((container) => {
-    if (!container) {
-      return;
-    }
+    [dados.projeto.progressoGeral.percentual + "%", "Progresso estimado"],
+    [dados.modulos.length, "Módulos totais"],
+    [contagens.andamento, "Em andamento"],
+    [dados.situacaoAtual.ultimoCheckpoint.id, "Último checkpoint"]
+  ].forEach(([valor, rotulo]) => kpis.appendChild(criarKpi(valor, rotulo)));
 
-    container.replaceChildren(criarMensagem(texto));
-    container.setAttribute("aria-busy", "false");
+  const nota = document.createElement("div");
+  nota.className = "modal-note";
+  nota.textContent = dados.projeto.progressoGeral.observacao;
+
+  const lista = document.createElement("div");
+  lista.className = "modal-list";
+  lista.append(
+    criarItemModal("Foco atual", dados.situacaoAtual.tarefaAtual.tituloCurto, dados.situacaoAtual.tarefaAtual.blocoTecnicoImediato, dados.situacaoAtual.tarefaAtual.modulo),
+    criarItemModal("Último checkpoint", dados.situacaoAtual.ultimoCheckpoint.id, dados.situacaoAtual.ultimoCheckpoint.titulo, formatarData(dados.situacaoAtual.ultimoCheckpoint.data))
+  );
+
+  container.append(kpis, nota, lista);
+  return { titulo: "Visão geral do projeto", corpo: container };
+}
+
+function modalModulos() {
+  const grade = document.createElement("div");
+  grade.className = "modal-grid";
+
+  dados.modulos.forEach((modulo) => {
+    const card = document.createElement("article");
+    card.className = `modal-card${modulo.destaque ? " modal-card--active" : ""}`;
+    const titulo = document.createElement("h3");
+    titulo.textContent = modulo.nome;
+    const estado = document.createElement("p");
+    estado.textContent = modulo.estadoRotulo;
+    const barra = document.createElement("div");
+    barra.className = "modal-bar";
+    const preenchimento = document.createElement("span");
+    preenchimento.style.width = `${percentual(modulo.percentual)}%`;
+    barra.appendChild(preenchimento);
+    const valor = document.createElement("strong");
+    valor.textContent = `${percentual(modulo.percentual)}%`;
+    const resumo = document.createElement("p");
+    resumo.textContent = modulo.resumo;
+    const marco = document.createElement("p");
+    marco.textContent = `Próximo marco: ${modulo.pendenciaPrincipal}`;
+    card.append(titulo, estado, barra, valor, resumo, marco);
+    grade.appendChild(card);
   });
 
-  const aviso = document.createElement("section");
-  aviso.className = "aviso-estimativa";
-  aviso.setAttribute("role", "alert");
-
-  const icone = document.createElement("span");
-  icone.className = "aviso-estimativa__icone";
-  icone.textContent = "!";
-
-  const conteudo = document.createElement("div");
-  const titulo = document.createElement("h2");
-  const paragrafo = document.createElement("p");
-
-  titulo.textContent = "Dados ainda não carregados";
-  paragrafo.textContent = texto;
-
-  conteudo.append(titulo, paragrafo);
-  aviso.append(icone, conteudo);
-
-  const primeiroPainel = document.querySelector(".painel-principal");
-  primeiroPainel?.insertAdjacentElement("afterend", aviso);
+  return { titulo: "Módulos e estados", corpo: grade };
 }
 
-function criarMensagem(texto, tag = "p") {
-  const elemento = document.createElement(tag);
-  elemento.className = "mensagem-carregamento";
-  elemento.textContent = texto;
-  return elemento;
+function modalFrentes() {
+  const lista = document.createElement("div");
+  lista.className = "modal-list";
+  [...dados.modulos]
+    .sort((a, b) => percentual(b.percentual) - percentual(a.percentual))
+    .slice(0, 5)
+    .forEach((modulo, indice) => {
+      lista.appendChild(criarItemModal(String(indice + 1).padStart(2, "0"), modulo.nome, modulo.resumo, `${percentual(modulo.percentual)}%`));
+    });
+  return { titulo: "Frentes mais avançadas", corpo: lista };
 }
 
-function definirTexto(elemento, valor) {
-  if (!elemento || valor === undefined || valor === null) {
-    return;
-  }
-
-  elemento.textContent = String(valor);
+function modalTarefa() {
+  const tarefa = dados.situacaoAtual.tarefaAtual;
+  const container = document.createElement("div");
+  const kpis = document.createElement("div");
+  kpis.className = "modal-kpis";
+  kpis.append(
+    criarKpi(tarefa.modulo, "Módulo"),
+    criarKpi("Em andamento", "Estado"),
+    criarKpi(dados.situacaoAtual.ultimoCheckpoint.id, "Base atual"),
+    criarKpi("DEV", "Ambiente")
+  );
+  const nota = document.createElement("div");
+  nota.className = "modal-note";
+  nota.textContent = tarefa.tituloCompleto;
+  const lista = document.createElement("div");
+  lista.className = "modal-list";
+  lista.appendChild(criarItemModal("Agora", tarefa.tituloCurto, tarefa.blocoTecnicoImediato, "Tarefa ativa"));
+  container.append(kpis, nota, lista);
+  return { titulo: "Tarefa em execução", corpo: container };
 }
 
-function normalizarPercentual(valor) {
+function modalProximos() {
+  const lista = document.createElement("div");
+  lista.className = "modal-list";
+  [...dados.proximosBlocos].sort((a, b) => a.ordem - b.ordem).forEach((bloco) => {
+    lista.appendChild(criarItemModal(String(bloco.ordem).padStart(2, "0"), bloco.titulo, bloco.detalhe, bloco.modulo));
+  });
+  return { titulo: "Próximos blocos", corpo: lista };
+}
+
+function modalTimeline() {
+  const lista = document.createElement("div");
+  lista.className = "modal-list";
+  dados.checkpoints.forEach((checkpoint) => {
+    lista.appendChild(criarItemModal(checkpoint.id, checkpoint.titulo, checkpoint.resumo, formatarData(checkpoint.data)));
+  });
+  return { titulo: "Linha do tempo dos checkpoints", corpo: lista };
+}
+
+function modalCheckpointAtual() {
+  const checkpoint = dados.checkpoints.find((item) => item.id === dados.situacaoAtual.ultimoCheckpoint.id) || dados.situacaoAtual.ultimoCheckpoint;
+  const container = document.createElement("div");
+  const kpis = document.createElement("div");
+  kpis.className = "modal-kpis";
+  kpis.append(
+    criarKpi(checkpoint.id, "Checkpoint"),
+    criarKpi(formatarData(checkpoint.data), "Data"),
+    criarKpi(checkpoint.modulo || "Projeto", "Módulo"),
+    criarKpi("DEV", "Ambiente")
+  );
+  const nota = document.createElement("div");
+  nota.className = "modal-note";
+  nota.textContent = checkpoint.resumo || checkpoint.titulo;
+  container.append(kpis, nota);
+  return { titulo: checkpoint.titulo, corpo: container };
+}
+
+function criarKpi(valor, rotulo) {
+  const item = document.createElement("div");
+  item.className = "modal-kpi";
+  const forte = document.createElement("strong");
+  forte.textContent = valor;
+  const textoRotulo = document.createElement("span");
+  textoRotulo.textContent = rotulo;
+  item.append(forte, textoRotulo);
+  return item;
+}
+
+function criarItemModal(codigo, titulo, detalhe, lateral) {
+  const item = document.createElement("article");
+  item.className = "modal-list-item";
+  const code = document.createElement("b");
+  code.textContent = codigo;
+  const centro = document.createElement("div");
+  const heading = document.createElement("h3");
+  heading.textContent = titulo;
+  const textoDetalhe = document.createElement("p");
+  textoDetalhe.textContent = detalhe;
+  centro.append(heading, textoDetalhe);
+  const meta = document.createElement("small");
+  meta.textContent = lateral || "";
+  item.append(code, centro, meta);
+  return item;
+}
+
+function exibirFalha(erro) {
+  refs.statusNote.textContent = erro.message || "Não foi possível carregar os dados.";
+  refs.statusNote.style.color = "var(--red)";
+}
+
+function texto(elemento, valor) {
+  if (elemento && valor !== undefined && valor !== null) elemento.textContent = String(valor);
+}
+
+function percentual(valor) {
   const numero = Number(valor);
-
-  if (!Number.isFinite(numero)) {
-    return 0;
-  }
-
-  return Math.min(100, Math.max(0, Math.round(numero)));
+  if (!Number.isFinite(numero)) return 0;
+  return Math.max(0, Math.min(100, Math.round(numero)));
 }
 
 function formatarData(valor) {
-  const data = criarDataLocal(valor);
-
-  if (!data) {
-    return valor ?? "—";
-  }
-
-  return new Intl.DateTimeFormat("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric"
-  }).format(data);
-}
-
-function formatarDataCurta(valor) {
-  const data = criarDataLocal(valor);
-
-  if (!data) {
-    return valor ?? "—";
-  }
-
-  return new Intl.DateTimeFormat("pt-BR", {
-    day: "2-digit",
-    month: "2-digit"
-  }).format(data);
-}
-
-function criarDataLocal(valor) {
-  if (typeof valor !== "string") {
-    return null;
-  }
-
-  const correspondencia = valor.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-
-  if (!correspondencia) {
-    return null;
-  }
-
-  const [, ano, mes, dia] = correspondencia;
-  const data = new Date(Number(ano), Number(mes) - 1, Number(dia));
-
-  return Number.isNaN(data.getTime()) ? null : data;
+  const partes = typeof valor === "string" ? valor.match(/^(\d{4})-(\d{2})-(\d{2})$/) : null;
+  if (!partes) return valor || "—";
+  return `${partes[3]}/${partes[2]}/${partes[1]}`;
 }
