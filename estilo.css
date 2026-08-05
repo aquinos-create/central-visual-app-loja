@@ -740,20 +740,25 @@ a:focus-visible {
 .grade-modulos {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
   gap: 12px;
 }
 
 .card-modulo {
   position: relative;
-  min-height: 282px;
-  padding: 19px;
+  display: flex;
+  min-height: 184px;
+  flex-direction: column;
+  padding: 18px;
   border: 1px solid var(--borda);
   border-radius: var(--raio-menor);
   background: var(--card);
+  cursor: pointer;
   transition:
     transform 180ms ease,
     border-color 180ms ease,
-    background 180ms ease;
+    background 180ms ease,
+    min-height 180ms ease;
 }
 
 .card-modulo:hover {
@@ -762,11 +767,32 @@ a:focus-visible {
   background: var(--card-hover);
 }
 
+.card-modulo:focus-visible {
+  outline: 2px solid var(--ciano);
+  outline-offset: 3px;
+}
+
+.card-modulo[data-expandido="true"] {
+  grid-column: span 2;
+  min-height: 276px;
+  border-color: rgba(88, 214, 255, 0.34);
+  background:
+    linear-gradient(145deg, rgba(88, 214, 255, 0.055), transparent 48%),
+    var(--card-hover);
+}
+
 .card-modulo[data-destaque="true"] {
   border-color: rgba(255, 156, 64, 0.32);
   background:
     linear-gradient(140deg, rgba(255, 156, 64, 0.08), transparent 42%),
     var(--card);
+}
+
+.card-modulo[data-destaque="true"][data-expandido="true"] {
+  border-color: rgba(255, 156, 64, 0.48);
+  background:
+    linear-gradient(140deg, rgba(255, 156, 64, 0.11), transparent 46%),
+    var(--card-hover);
 }
 
 .card-modulo__cabecalho,
@@ -796,15 +822,16 @@ a:focus-visible {
 }
 
 .card-modulo__nome {
-  margin: 18px 0 4px;
-  font-size: 1.08rem;
+  margin: 13px 0 3px;
+  font-size: 1.04rem;
+  line-height: 1.25;
 }
 
 .card-modulo__estado {
-  min-height: 21px;
-  margin: 0 0 13px;
+  min-height: 20px;
+  margin: 0 0 11px;
   color: var(--texto-secundario);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
 }
 
 .barra-progresso {
@@ -816,16 +843,43 @@ a:focus-visible {
   background: linear-gradient(90deg, #d96e18, var(--laranja));
 }
 
-.card-modulo__resumo {
-  margin: 16px 0 0;
+.card-modulo__marco-compacto {
+  margin: 13px 0 0;
+  overflow: hidden;
   color: var(--texto-secundario);
-  font-size: 0.88rem;
+  font-size: 0.76rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-modulo__marco-compacto strong {
+  color: var(--texto);
+  font-weight: 650;
+}
+
+.card-modulo[data-expandido="true"] .card-modulo__marco-compacto {
+  display: none;
+}
+
+.card-modulo__detalhes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 17px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(128, 191, 229, 0.12);
+}
+
+.card-modulo__resumo {
+  margin: 0;
+  color: var(--texto-secundario);
+  font-size: 0.86rem;
 }
 
 .card-modulo__pendencia {
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(128, 191, 229, 0.10);
+  margin: 0;
+  padding-left: 17px;
+  border-left: 1px solid rgba(128, 191, 229, 0.14);
 }
 
 .card-modulo__pendencia span {
@@ -839,9 +893,44 @@ a:focus-visible {
 
 .card-modulo__pendencia strong {
   display: block;
-  margin-top: 4px;
+  margin-top: 5px;
   font-size: 0.82rem;
   line-height: 1.4;
+}
+
+.card-modulo__acao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 13px;
+  color: var(--texto-suave);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.card-modulo__acao-icone {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--borda);
+  border-radius: 50%;
+  color: var(--ciano);
+  font-size: 0.9rem;
+  transition: transform 180ms ease;
+}
+
+.card-modulo[data-destaque="true"] .card-modulo__acao-icone {
+  color: var(--laranja);
+  border-color: rgba(255, 156, 64, 0.28);
+}
+
+.card-modulo[data-expandido="true"] .card-modulo__acao-icone {
+  transform: rotate(180deg);
 }
 
 .mensagem-carregamento {
@@ -1276,6 +1365,10 @@ a:focus-visible {
   .grade-modulos {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .card-modulo[data-expandido="true"] {
+    grid-column: span 2;
+  }
 }
 
 @media (max-width: 1020px) {
@@ -1348,6 +1441,21 @@ a:focus-visible {
   .resumo-rapido,
   .grade-modulos {
     grid-template-columns: 1fr;
+  }
+
+  .card-modulo[data-expandido="true"] {
+    grid-column: auto;
+  }
+
+  .card-modulo__detalhes {
+    grid-template-columns: 1fr;
+  }
+
+  .card-modulo__pendencia {
+    padding-top: 14px;
+    padding-left: 0;
+    border-top: 1px solid rgba(128, 191, 229, 0.14);
+    border-left: 0;
   }
 
   .secao-dashboard {

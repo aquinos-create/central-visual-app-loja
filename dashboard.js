@@ -328,9 +328,19 @@ function renderizarModulos() {
       .cloneNode(true);
 
     const percentual = normalizarPercentual(modulo.percentual);
+    const resumo = card.querySelector(".card-modulo__resumo");
+    const pendencia = card.querySelector(".card-modulo__pendencia");
 
     card.dataset.estado = modulo.estado;
     card.dataset.destaque = String(Boolean(modulo.destaque));
+    card.dataset.expandido = "false";
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("aria-expanded", "false");
+    card.setAttribute(
+      "aria-label",
+      `${modulo.nome}. ${modulo.estadoRotulo}. ${percentual} por cento. Clique para ver detalhes.`
+    );
 
     definirTexto(card.querySelector(".card-modulo__grupo"), modulo.grupo);
     definirTexto(
@@ -342,9 +352,9 @@ function renderizarModulos() {
       card.querySelector(".card-modulo__estado"),
       modulo.estadoRotulo
     );
-    definirTexto(card.querySelector(".card-modulo__resumo"), modulo.resumo);
+    definirTexto(resumo, modulo.resumo);
     definirTexto(
-      card.querySelector(".card-modulo__pendencia strong"),
+      pendencia.querySelector("strong"),
       modulo.pendenciaPrincipal
     );
 
@@ -354,12 +364,96 @@ function renderizarModulos() {
       barra.style.width = `${percentual}%`;
     }
 
+    const marcoCompacto = document.createElement("p");
+    marcoCompacto.className = "card-modulo__marco-compacto";
+
+    const rotuloMarco = document.createElement("span");
+    rotuloMarco.textContent = "Próximo: ";
+
+    const textoMarco = document.createElement("strong");
+    textoMarco.textContent = modulo.pendenciaPrincipal;
+
+    marcoCompacto.append(rotuloMarco, textoMarco);
+
+    const detalhes = document.createElement("div");
+    detalhes.className = "card-modulo__detalhes";
+    detalhes.hidden = true;
+    detalhes.append(resumo, pendencia);
+
+    const acao = document.createElement("span");
+    acao.className = "card-modulo__acao";
+
+    const acaoTexto = document.createElement("span");
+    acaoTexto.className = "card-modulo__acao-texto";
+    acaoTexto.textContent = "Ver detalhes";
+
+    const acaoIcone = document.createElement("span");
+    acaoIcone.className = "card-modulo__acao-icone";
+    acaoIcone.setAttribute("aria-hidden", "true");
+    acaoIcone.textContent = "⌄";
+
+    acao.append(acaoTexto, acaoIcone);
+    card.append(marcoCompacto, detalhes, acao);
+
+    const alternar = () => alternarCardModulo(card, modulo);
+
+    card.addEventListener("click", alternar);
+    card.addEventListener("keydown", (evento) => {
+      if (evento.key === "Enter" || evento.key === " ") {
+        evento.preventDefault();
+        alternar();
+      }
+    });
+
     fragmento.appendChild(card);
   });
 
   container.appendChild(fragmento);
   container.setAttribute("aria-busy", "false");
 }
+
+function alternarCardModulo(card, modulo) {
+  const deveAbrir = card.dataset.expandido !== "true";
+
+  if (deveAbrir) {
+    document
+      .querySelectorAll('.card-modulo[data-expandido="true"]')
+      .forEach((outroCard) => {
+        if (outroCard !== card) {
+          definirEstadoCardModulo(outroCard, false);
+        }
+      });
+  }
+
+  definirEstadoCardModulo(card, deveAbrir, modulo);
+}
+
+function definirEstadoCardModulo(card, expandido, modulo = null) {
+  const detalhes = card.querySelector(".card-modulo__detalhes");
+  const acaoTexto = card.querySelector(".card-modulo__acao-texto");
+
+  card.dataset.expandido = String(expandido);
+  card.setAttribute("aria-expanded", String(expandido));
+
+  if (detalhes) {
+    detalhes.hidden = !expandido;
+  }
+
+  if (acaoTexto) {
+    acaoTexto.textContent = expandido ? "Ocultar detalhes" : "Ver detalhes";
+  }
+
+  if (modulo) {
+    const percentual = normalizarPercentual(modulo.percentual);
+    card.setAttribute(
+      "aria-label",
+      `${modulo.nome}. ${modulo.estadoRotulo}. ${percentual} por cento. ${
+        expandido ? "Detalhes abertos." : "Clique para ver detalhes."
+      }`
+    );
+  }
+}
+
 
 function renderizarTrilha(etapas) {
   const container = seletores.trilhaModulo;
