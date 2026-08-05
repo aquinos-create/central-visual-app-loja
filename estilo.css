@@ -290,7 +290,7 @@ button.hud-panel { width: 100%; cursor: pointer; }
 .next-list span { color: #b7d1df; font-size: clamp(.58rem, .72vw, .8rem); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .next-list i { color: var(--orange); font-size: 1.25rem; font-style: normal; }
 .data-pulse { margin-top: auto; height: 10px; border: 1px solid rgba(79,216,255,.16); overflow: hidden; }
-.data-pulse span { display: block; width: 38%; height: 100%; background: repeating-linear-gradient(90deg, var(--cyan) 0 8px, transparent 8px 11px); animation: data-slide 6.4s linear infinite; }
+.data-pulse span { display: block; width: 38%; height: 100%; background: repeating-linear-gradient(90deg, var(--cyan) 0 8px, transparent 8px 11px); animation: data-slide 3.2s linear infinite; }
 
 .bottom-grid { min-height: 0; display: grid; grid-template-columns: 43% 28% 29%; gap: clamp(7px, .7vw, 12px); }
 .bottom-panel { padding: clamp(8px, .9vw, 14px); }
