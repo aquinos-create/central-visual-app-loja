@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central Visual — App da Loja</title>
+  <meta name="description" content="Dashboard visual de acompanhamento do projeto App da Loja.">
+  <link rel="stylesheet" href="estilo.css">
+  <script src="dashboard.js" defer></script>
+</head>
+
+<body>
+  <div class="fundo-tecnico" aria-hidden="true">
+    <span class="linha-tecnica linha-tecnica--1"></span>
+    <span class="linha-tecnica linha-tecnica--2"></span>
+    <span class="ponto-tecnico ponto-tecnico--1"></span>
+    <span class="ponto-tecnico ponto-tecnico--2"></span>
+    <span class="ponto-tecnico ponto-tecnico--3"></span>
+  </div>
+
+  <div class="painel">
+    <header class="cabecalho">
+      <div class="cabecalho__identidade">
+        <p class="rotulo-superior">CENTRAL VISUAL</p>
+        <h1>App da Loja</h1>
+        <p class="cabecalho__subtitulo">Acompanhamento visual do desenvolvimento do projeto</p>
+      </div>
+
+      <div class="cabecalho__metadados" aria-label="Informações do projeto">
+        <span class="selo selo--ambiente" id="ambiente-projeto">DEV</span>
+
+        <div class="metadado">
+          <span class="metadado__rotulo">Versão lógica</span>
+          <strong id="versao-logica">DEV-0.1.0</strong>
+        </div>
+
+        <div class="metadado">
+          <span class="metadado__rotulo">Atualizado em</span>
+          <strong id="data-atualizacao">05/08/2026</strong>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="painel-principal" aria-labelledby="titulo-situacao">
+        <h2 class="titulo-secao titulo-secao--oculto" id="titulo-situacao">Situação atual do projeto</h2>
+
+        <article class="card-status card-status--checkpoint">
+          <div class="card-status__topo">
+            <span class="icone-status" aria-hidden="true">◈</span>
+            <span class="card-status__rotulo">Último checkpoint</span>
+          </div>
+
+          <strong class="card-status__codigo" id="checkpoint-id">CP-014</strong>
+          <h3 id="checkpoint-titulo">Desfazer implementado, testado e descartado</h3>
+          <p class="card-status__detalhe" id="checkpoint-estado">Concluído por decisão funcional</p>
+          <time class="card-status__data" id="checkpoint-data" datetime="2026-08-05">05/08/2026</time>
+        </article>
+
+        <section class="nucleo-projeto" aria-labelledby="titulo-nucleo">
+          <h2 class="titulo-secao titulo-secao--oculto" id="titulo-nucleo">Núcleo do projeto</h2>
+
+          <div class="nucleo" id="nucleo" role="img" aria-label="Progresso geral estimado do projeto: 38 por cento">
+            <svg class="nucleo__grafico" viewBox="0 0 420 420" aria-hidden="true">
+              <circle class="nucleo__orbita nucleo__orbita--externa" cx="210" cy="210" r="184" />
+              <circle class="nucleo__orbita nucleo__orbita--media" cx="210" cy="210" r="154" />
+              <circle class="nucleo__trilha" cx="210" cy="210" r="126" />
+              <circle class="nucleo__progresso" id="anel-progresso" cx="210" cy="210" r="126" pathLength="100" stroke-dasharray="38 100" />
+              <circle class="nucleo__centro" cx="210" cy="210" r="96" />
+              <g class="nucleo__marcadores" id="marcadores-modulos"></g>
+            </svg>
+
+            <div class="nucleo__conteudo">
+              <span class="nucleo__estado">PROJETO EM CONSTRUÇÃO</span>
+              <strong class="nucleo__percentual"><span id="progresso-geral">38</span><small>%</small></strong>
+              <span class="nucleo__rotulo" id="rotulo-progresso">Progresso geral estimado</span>
+              <span class="nucleo__checkpoint" id="nucleo-checkpoint">CP-014</span>
+            </div>
+          </div>
+
+          <div class="nucleo__legenda" aria-label="Legenda dos estados">
+            <span><i class="estado estado--validado"></i> Validado</span>
+            <span><i class="estado estado--andamento"></i> Em andamento</span>
+            <span><i class="estado estado--definido"></i> Definido</span>
+            <span><i class="estado estado--nao-iniciado"></i> Não iniciado</span>
+          </div>
+        </section>
+
+        <article class="card-status card-status--tarefa">
+          <div class="card-status__topo">
+            <span class="icone-status" aria-hidden="true">✦</span>
+            <span class="card-status__rotulo">Tarefa técnica atual</span>
+          </div>
+
+          <span class="selo selo--andamento">EM ANDAMENTO</span>
+          <h3 id="tarefa-atual">Favoritos compartilhados</h3>
+          <p class="card-status__modulo" id="tarefa-modulo">Atualizar Estoque</p>
+
+          <div class="proximo-passo">
+            <span class="proximo-passo__rotulo">Bloco técnico imediato</span>
+            <strong id="bloco-imediato">Persistência dos Favoritos no backend</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="resumo-rapido" aria-label="Resumo dos módulos principais">
+        <article class="resumo-rapido__item">
+          <span>Consulta de Estoque</span>
+          <strong>85%</strong>
+          <div class="barra-mini" aria-hidden="true"><span style="width: 85%"></span></div>
+        </article>
+
+        <article class="resumo-rapido__item resumo-rapido__item--ativo">
+          <span>Atualizar Estoque</span>
+          <strong>60%</strong>
+          <div class="barra-mini" aria-hidden="true"><span style="width: 60%"></span></div>
+        </article>
+
+        <article class="resumo-rapido__item">
+          <span>Lista de Espera</span>
+          <strong>10%</strong>
+          <div class="barra-mini" aria-hidden="true"><span style="width: 10%"></span></div>
+        </article>
+
+        <article class="resumo-rapido__item">
+          <span>Planejamento de Compras</span>
+          <strong>10%</strong>
+          <div class="barra-mini" aria-hidden="true"><span style="width: 10%"></span></div>
+        </article>
+      </section>
+
+      <section class="secao-dashboard" aria-labelledby="titulo-modulos">
+        <div class="secao-dashboard__cabecalho">
+          <div>
+            <p class="rotulo-superior">PANORAMA</p>
+            <h2 id="titulo-modulos">Módulos do projeto</h2>
+          </div>
+
+          <div class="filtros" aria-label="Filtrar módulos">
+            <button class="filtro ativo" type="button" data-filtro="todos">Todos</button>
+            <button class="filtro" type="button" data-filtro="em_andamento">Em andamento</button>
+            <button class="filtro" type="button" data-filtro="definido">Definidos</button>
+            <button class="filtro" type="button" data-filtro="nao_iniciado">Não iniciados</button>
+          </div>
+        </div>
+
+        <div class="grade-modulos" id="grade-modulos" aria-live="polite" aria-busy="true">
+          <p class="mensagem-carregamento">Carregando os módulos do projeto...</p>
+        </div>
+      </section>
+
+      <section class="secao-dashboard secao-dashboard--trilha" aria-labelledby="titulo-trilha">
+        <div class="secao-dashboard__cabecalho">
+          <div>
+            <p class="rotulo-superior">MÓDULO EM FOCO</p>
+            <h2 id="titulo-trilha">Construção de Atualizar Estoque</h2>
+          </div>
+
+          <span class="selo selo--andamento">60% ESTIMADO</span>
+        </div>
+
+        <div class="trilha-construcao" id="trilha-modulo" aria-live="polite" aria-busy="true">
+          <p class="mensagem-carregamento">Montando a trilha do módulo...</p>
+        </div>
+      </section>
+
+      <div class="grade-secundaria">
+        <section class="secao-dashboard" aria-labelledby="titulo-proximos">
+          <div class="secao-dashboard__cabecalho">
+            <div>
+              <p class="rotulo-superior">ROTA DE CONSTRUÇÃO</p>
+              <h2 id="titulo-proximos">Próximos blocos</h2>
+            </div>
+          </div>
+
+          <ol class="lista-proximos" id="lista-proximos" aria-live="polite" aria-busy="true">
+            <li class="mensagem-carregamento">Carregando os próximos blocos...</li>
+          </ol>
+        </section>
+
+        <section class="secao-dashboard" aria-labelledby="titulo-camadas">
+          <div class="secao-dashboard__cabecalho">
+            <div>
+              <p class="rotulo-superior">SISTEMAS DE APOIO</p>
+              <h2 id="titulo-camadas">Camadas transversais</h2>
+            </div>
+          </div>
+
+          <div class="lista-camadas" id="lista-camadas" aria-live="polite" aria-busy="true">
+            <p class="mensagem-carregamento">Carregando as camadas...</p>
+          </div>
+        </section>
+      </div>
+
+      <section class="secao-dashboard secao-dashboard--timeline" aria-labelledby="titulo-timeline">
+        <div class="secao-dashboard__cabecalho">
+          <div>
+            <p class="rotulo-superior">HISTÓRICO DO PROJETO</p>
+            <h2 id="titulo-timeline">Linha do tempo dos checkpoints</h2>
+          </div>
+
+          <span class="contador-checkpoints"><strong id="total-checkpoints">14</strong> checkpoints</span>
+        </div>
+
+        <div class="timeline" id="timeline-checkpoints" aria-live="polite" aria-busy="true">
+          <p class="mensagem-carregamento">Carregando a linha do tempo...</p>
+        </div>
+      </section>
+
+      <section class="aviso-estimativa" aria-labelledby="titulo-estimativa">
+        <span class="aviso-estimativa__icone" aria-hidden="true">i</span>
+
+        <div>
+          <h2 id="titulo-estimativa">Como interpretar os percentuais</h2>
+          <p id="observacao-progresso">Os percentuais são estimativas visuais de acompanhamento. Eles não representam uma medição técnica absoluta e não são calculados por média simples entre os módulos.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="rodape">
+      <p id="aviso-fonte">Este dashboard é uma representação visual. Em caso de divergência, prevalecem os documentos oficiais.</p>
+
+      <div class="rodape__estado">
+        <span>Fonte: documentação oficial</span>
+        <span aria-hidden="true">•</span>
+        <span>Checkpoint considerado: <strong>CP-014</strong></span>
+      </div>
+    </footer>
+  </div>
+
+  <template id="template-modulo">
+    <article class="card-modulo">
+      <header class="card-modulo__cabecalho">
+        <span class="card-modulo__grupo"></span>
+        <span class="card-modulo__percentual"></span>
+      </header>
+
+      <h3 class="card-modulo__nome"></h3>
+      <p class="card-modulo__estado"></p>
+
+      <div class="barra-progresso" aria-hidden="true"><span></span></div>
+
+      <p class="card-modulo__resumo"></p>
+
+      <div class="card-modulo__pendencia">
+        <span>Próximo marco</span>
+        <strong></strong>
+      </div>
+    </article>
+  </template>
+
+  <template id="template-etapa">
+    <article class="etapa-trilha">
+      <div class="etapa-trilha__marcador" aria-hidden="true"></div>
+
+      <div class="etapa-trilha__conteudo">
+        <span class="etapa-trilha__ordem"></span>
+        <h3 class="etapa-trilha__nome"></h3>
+        <p class="etapa-trilha__estado"></p>
+        <p class="etapa-trilha__observacao"></p>
+      </div>
+    </article>
+  </template>
+
+  <template id="template-proximo">
+    <li class="item-proximo">
+      <span class="item-proximo__ordem"></span>
+
+      <div>
+        <span class="item-proximo__modulo"></span>
+        <h3 class="item-proximo__titulo"></h3>
+        <p class="item-proximo__detalhe"></p>
+      </div>
+    </li>
+  </template>
+
+  <template id="template-camada">
+    <article class="item-camada">
+      <div class="item-camada__cabecalho">
+        <h3 class="item-camada__nome"></h3>
+        <strong class="item-camada__percentual"></strong>
+      </div>
+
+      <div class="barra-progresso" aria-hidden="true"><span></span></div>
+    </article>
+  </template>
+
+  <template id="template-checkpoint">
+    <article class="checkpoint">
+      <button class="checkpoint__botao" type="button" aria-expanded="false">
+        <span class="checkpoint__marcador" aria-hidden="true"></span>
+
+        <span class="checkpoint__cabecalho">
+          <strong class="checkpoint__id"></strong>
+          <time class="checkpoint__data"></time>
+        </span>
+
+        <span class="checkpoint__titulo"></span>
+        <span class="checkpoint__estado"></span>
+      </button>
+
+      <div class="checkpoint__detalhes" hidden>
+        <p class="checkpoint__modulo"></p>
+        <p class="checkpoint__resumo"></p>
+      </div>
+    </article>
+  </template>
+
+  <noscript>
+    <p class="aviso-sem-script">Ative o JavaScript para carregar os dados do arquivo progresso.json.</p>
+  </noscript>
+</body>
+</html>

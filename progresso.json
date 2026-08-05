@@ -1,0 +1,470 @@
+{
+  "schemaVersion": "1.0.0",
+  "projeto": {
+    "nome": "App da Loja",
+    "tituloDashboard": "Central Visual — App da Loja",
+    "ambiente": "DEV",
+    "versaoLogica": "DEV-0.1.0",
+    "atualizadoEm": "2026-08-05",
+    "fonteVerdade": "documentacao_oficial",
+    "avisoFonte": "Este dashboard é uma representação visual. Em caso de divergência, prevalecem os documentos oficiais.",
+    "progressoGeral": {
+      "percentual": 38,
+      "rotulo": "Progresso geral estimado",
+      "tipo": "estimativa_acompanhamento",
+      "observacao": "Estimativa visual de acompanhamento; não representa uma medição técnica absoluta e não é calculada por média simples dos módulos."
+    }
+  },
+  "situacaoAtual": {
+    "ultimoCheckpoint": {
+      "id": "CP-014",
+      "data": "2026-08-05",
+      "titulo": "Desfazer implementado, testado e descartado",
+      "estado": "Concluído por decisão funcional"
+    },
+    "tarefaAtual": {
+      "modulo": "Atualizar Estoque",
+      "tituloCurto": "Favoritos compartilhados",
+      "tituloCompleto": "Implementar e validar a gravação e a remoção de Favoritos compartilhados",
+      "blocoTecnicoImediato": "Persistência dos Favoritos no backend",
+      "estado": "em_andamento"
+    }
+  },
+  "legendaEstados": [
+    {
+      "id": "validado",
+      "rotulo": "Validado"
+    },
+    {
+      "id": "em_andamento",
+      "rotulo": "Em andamento"
+    },
+    {
+      "id": "definido",
+      "rotulo": "Definido, não implementado"
+    },
+    {
+      "id": "nao_iniciado",
+      "rotulo": "Não iniciado"
+    },
+    {
+      "id": "descartado",
+      "rotulo": "Testado e descartado"
+    },
+    {
+      "id": "pendente_producao",
+      "rotulo": "Pendente antes de Produção"
+    }
+  ],
+  "modulos": [
+    {
+      "id": "fundacao-tecnica",
+      "nome": "Fundação técnica e banco DEV",
+      "percentual": 80,
+      "estado": "em_andamento",
+      "estadoRotulo": "Em andamento avançado",
+      "grupo": "base",
+      "resumo": "Arquitetura, ambientes, banco DEV e estruturas relacionais principais validados.",
+      "pendenciaPrincipal": "Concluir camadas finais, ambiente de Produção e migração operacional."
+    },
+    {
+      "id": "consulta-estoque",
+      "nome": "Consulta de Estoque",
+      "percentual": 85,
+      "estado": "em_andamento",
+      "estadoRotulo": "Em andamento avançado",
+      "grupo": "operacional",
+      "resumo": "Consulta, filtros, seleção, fotos e compartilhamento validados no DEV.",
+      "pendenciaPrincipal": "Ampliar testes e concluir pendências documentadas do módulo."
+    },
+    {
+      "id": "atualizar-estoque",
+      "nome": "Atualizar Estoque",
+      "percentual": 60,
+      "estado": "em_andamento",
+      "estadoRotulo": "Em andamento — foco atual",
+      "grupo": "operacional",
+      "destaque": true,
+      "resumo": "Estrutura, leitura, gravação individual, fila, concorrência e auditoria técnica validadas.",
+      "pendenciaPrincipal": "Favoritos compartilhados e demais blocos da primeira versão."
+    },
+    {
+      "id": "home",
+      "nome": "Home e navegação geral",
+      "percentual": 15,
+      "estado": "definido",
+      "estadoRotulo": "Definido, não concluído",
+      "grupo": "interface",
+      "resumo": "Organização principal em grade 2 × 2 aprovada.",
+      "pendenciaPrincipal": "Implementar e validar a Home completa."
+    },
+    {
+      "id": "lista-espera",
+      "nome": "Lista de Espera",
+      "percentual": 10,
+      "estado": "definido",
+      "estadoRotulo": "Definido, não implementado",
+      "grupo": "operacional",
+      "resumo": "Regras funcionais principais aprovadas.",
+      "pendenciaPrincipal": "Implementação operacional completa."
+    },
+    {
+      "id": "reservas",
+      "nome": "Reservas",
+      "percentual": 10,
+      "estado": "definido",
+      "estadoRotulo": "Definido, não implementado",
+      "grupo": "operacional",
+      "resumo": "Regras e integrações iniciais documentadas.",
+      "pendenciaPrincipal": "Implementar o módulo e validar uma Reserva real no DEV."
+    },
+    {
+      "id": "planejamento-compras",
+      "nome": "Planejamento de Compras",
+      "percentual": 10,
+      "estado": "definido",
+      "estadoRotulo": "Definido, não implementado",
+      "grupo": "gestao",
+      "resumo": "Ciclo, estados e alertas financeiros funcionais definidos.",
+      "pendenciaPrincipal": "Implementação e validação do módulo."
+    },
+    {
+      "id": "vendas",
+      "nome": "Vendas",
+      "percentual": 0,
+      "estado": "nao_iniciado",
+      "estadoRotulo": "Não iniciado",
+      "grupo": "operacional",
+      "resumo": "Módulo previsto no escopo geral.",
+      "pendenciaPrincipal": "Definição e implementação."
+    },
+    {
+      "id": "trocas",
+      "nome": "Trocas",
+      "percentual": 0,
+      "estado": "nao_iniciado",
+      "estadoRotulo": "Não iniciado",
+      "grupo": "operacional",
+      "resumo": "Módulo previsto no escopo geral.",
+      "pendenciaPrincipal": "Definição e implementação."
+    },
+    {
+      "id": "defeitos",
+      "nome": "Defeitos",
+      "percentual": 0,
+      "estado": "nao_iniciado",
+      "estadoRotulo": "Não iniciado",
+      "grupo": "operacional",
+      "resumo": "Módulo previsto no escopo geral.",
+      "pendenciaPrincipal": "Definição e implementação."
+    },
+    {
+      "id": "ajustes",
+      "nome": "Ajustes",
+      "percentual": 0,
+      "estado": "nao_iniciado",
+      "estadoRotulo": "Não iniciado",
+      "grupo": "operacional",
+      "resumo": "Módulo previsto no escopo geral.",
+      "pendenciaPrincipal": "Definição e implementação."
+    },
+    {
+      "id": "usuarios-autenticacao",
+      "nome": "Usuários, autenticação e mini app",
+      "percentual": 5,
+      "estado": "definido",
+      "estadoRotulo": "Inicial",
+      "grupo": "seguranca",
+      "resumo": "Usuários operacionais existem no DEV e há decisão para acesso limitado da funcionária.",
+      "pendenciaPrincipal": "Definir permissões, autenticação final e mini app."
+    },
+    {
+      "id": "pwa-producao",
+      "nome": "PWA e ambiente de Produção",
+      "percentual": 5,
+      "estado": "definido",
+      "estadoRotulo": "Inicial",
+      "grupo": "infraestrutura",
+      "resumo": "Hospedagem e ambiente DEV existem.",
+      "pendenciaPrincipal": "Concluir PWA e preparar Produção após validação do núcleo."
+    }
+  ],
+  "camadasTransversais": [
+    {
+      "id": "historico-auditoria",
+      "nome": "Histórico e auditoria",
+      "percentual": 30,
+      "estado": "em_andamento"
+    },
+    {
+      "id": "alertas-operacionais",
+      "nome": "Alertas operacionais",
+      "percentual": 10,
+      "estado": "definido"
+    },
+    {
+      "id": "identidade-visual",
+      "nome": "Identidade visual final do aplicativo",
+      "percentual": 0,
+      "estado": "nao_iniciado"
+    },
+    {
+      "id": "seguranca-integridade",
+      "nome": "Segurança, concorrência e integridade do estoque",
+      "percentual": 65,
+      "estado": "em_andamento"
+    }
+  ],
+  "trilhaModuloAtivo": {
+    "modulo": "Atualizar Estoque",
+    "etapas": [
+      {
+        "ordem": 1,
+        "nome": "Estrutura e dados",
+        "estado": "validado",
+        "checkpoint": "CP-012"
+      },
+      {
+        "ordem": 2,
+        "nome": "Leitura e detalhes",
+        "estado": "validado",
+        "checkpoint": "CP-012"
+      },
+      {
+        "ordem": 3,
+        "nome": "Gravação individual",
+        "estado": "validado",
+        "checkpoint": "CP-013"
+      },
+      {
+        "ordem": 4,
+        "nome": "Fila, concorrência e idempotência",
+        "estado": "validado",
+        "checkpoint": "CP-013"
+      },
+      {
+        "ordem": 5,
+        "nome": "Desfazer",
+        "estado": "descartado",
+        "checkpoint": "CP-014",
+        "observacao": "Implementado e testado; descartado por decisão funcional. A correção vigente ocorre por nova edição direta."
+      },
+      {
+        "ordem": 6,
+        "nome": "Favoritos compartilhados",
+        "estado": "em_andamento",
+        "checkpoint": null
+      },
+      {
+        "ordem": 7,
+        "nome": "Reserva real, alertas e detalhes",
+        "estado": "definido",
+        "checkpoint": null
+      },
+      {
+        "ordem": 8,
+        "nome": "Tamanhos de produtos Variados",
+        "estado": "definido",
+        "checkpoint": null
+      },
+      {
+        "ordem": 9,
+        "nome": "Falha e ausência de internet",
+        "estado": "definido",
+        "checkpoint": null
+      },
+      {
+        "ordem": 10,
+        "nome": "Histórico visível e observações",
+        "estado": "definido",
+        "checkpoint": null
+      },
+      {
+        "ordem": 11,
+        "nome": "Remover código inativo de Desfazer",
+        "estado": "pendente_producao",
+        "checkpoint": null,
+        "observacao": "Obrigatório antes de qualquer implantação em Produção."
+      }
+    ]
+  },
+  "proximosBlocos": [
+    {
+      "ordem": 1,
+      "titulo": "Favoritos compartilhados",
+      "modulo": "Atualizar Estoque",
+      "estado": "em_andamento",
+      "detalhe": "Implementar primeiro a persistência no backend e depois integrar o frontend."
+    },
+    {
+      "ordem": 2,
+      "titulo": "Proteção com uma Reserva real",
+      "modulo": "Atualizar Estoque",
+      "estado": "definido",
+      "detalhe": "Validar a integração real da regra que impede total abaixo do reservado."
+    },
+    {
+      "ordem": 3,
+      "titulo": "Alertas e detalhes de Reserva e Lista de Espera",
+      "modulo": "Atualizar Estoque",
+      "estado": "definido",
+      "detalhe": "Exibir e detalhar pendências relacionadas ao Modelo, Cor e tamanho."
+    },
+    {
+      "ordem": 4,
+      "titulo": "Tamanhos de produtos Variados",
+      "modulo": "Atualizar Estoque",
+      "estado": "definido",
+      "detalhe": "Adicionar, desativar e reativar tamanhos conforme as regras aprovadas."
+    },
+    {
+      "ordem": 5,
+      "titulo": "Falha e ausência de internet",
+      "modulo": "Atualizar Estoque",
+      "estado": "definido",
+      "detalhe": "Bloquear edição sem conexão e restaurar o último saldo confirmado em caso de falha."
+    },
+    {
+      "ordem": 6,
+      "titulo": "Histórico visível e observações",
+      "modulo": "Atualizar Estoque",
+      "estado": "definido",
+      "detalhe": "Disponibilizar consulta do Histórico conforme as decisões aprovadas."
+    },
+    {
+      "ordem": 7,
+      "titulo": "Limpeza técnica do Desfazer",
+      "modulo": "Infraestrutura DEV",
+      "estado": "pendente_producao",
+      "detalhe": "Remover função, rota e apoios inativos antes de Produção."
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "CP-001",
+      "data": "2026-07-22",
+      "titulo": "Base técnica e primeiro fluxo",
+      "modulo": null,
+      "estado": "Validado parcialmente",
+      "categoria": "validado",
+      "resumo": "Arquitetura, ambientes DEV, migração inicial, busca por tamanho e primeiro compartilhamento de texto validados parcialmente."
+    },
+    {
+      "id": "CP-002",
+      "data": "2026-07-23",
+      "titulo": "API de foto única",
+      "modulo": null,
+      "estado": "Backend validado; fluxo completo ainda em andamento",
+      "categoria": "em_andamento",
+      "resumo": "Primeira foto real localizada, convertida e entregue pelo backend."
+    },
+    {
+      "id": "CP-003",
+      "data": "2026-07-24",
+      "titulo": "Compartilhamento de um produto com foto",
+      "modulo": "Consulta de Estoque — Fotos e Compartilhamento",
+      "estado": "Validado no celular",
+      "categoria": "validado",
+      "resumo": "Compartilhamento individual de foto e texto validado no celular, com bloqueio para produto sem foto."
+    },
+    {
+      "id": "CP-004",
+      "data": "2026-07-24",
+      "titulo": "Compartilhamento de vários produtos com várias fotos",
+      "modulo": "Consulta de Estoque — Fotos e Compartilhamento",
+      "estado": "Validado no celular com WhatsApp Business",
+      "categoria": "validado",
+      "resumo": "Dois produtos com duas fotos diferentes e texto completo foram validados."
+    },
+    {
+      "id": "CP-005",
+      "data": "2026-07-25",
+      "titulo": "Miniaturas descartadas e estado restaurado",
+      "modulo": "Consulta de Estoque — Lista de Resultados",
+      "estado": "Funcionalidade descartada por decisão de produto; código restaurado e validado",
+      "categoria": "descartado",
+      "resumo": "Miniaturas foram testadas, consideradas desnecessárias e removidas sem regressões."
+    },
+    {
+      "id": "CP-006",
+      "data": "2026-07-26",
+      "titulo": "Limpeza da mensagem de produto sem foto",
+      "modulo": "Consulta de Estoque — Seleção e Compartilhamento",
+      "estado": "Validado no celular",
+      "categoria": "validado",
+      "resumo": "A mensagem antiga passou a desaparecer imediatamente quando a seleção muda."
+    },
+    {
+      "id": "CP-007",
+      "data": "2026-07-26",
+      "titulo": "Estrutura relacional de Público e Uso",
+      "modulo": "Consulta de Estoque — Preparação de dados",
+      "estado": "Estrutura e amostra validadas no Google Sheets original",
+      "categoria": "validado",
+      "resumo": "Estrutura relacional e amostra manual de Público e Uso foram validadas."
+    },
+    {
+      "id": "CP-008",
+      "data": "2026-07-26",
+      "titulo": "Classificação completa de Público e Uso",
+      "modulo": "Consulta de Estoque — Preparação de dados",
+      "estado": "Classificação dos 92 produtos concluída e validada no Google Sheets original",
+      "categoria": "validado",
+      "resumo": "Todos os produtos do DEV receberam relações oficiais de Público e Uso."
+    },
+    {
+      "id": "CP-009",
+      "data": "2026-07-26",
+      "titulo": "Definição dos filtros de Público e Uso",
+      "modulo": "Consulta de Estoque — Filtros",
+      "estado": "Regras, comportamento visual e critérios de teste aprovados; implementação ainda não iniciada",
+      "categoria": "definido",
+      "resumo": "Regras e critérios de teste dos filtros foram aprovados antes da implementação."
+    },
+    {
+      "id": "CP-010",
+      "data": "2026-07-28",
+      "titulo": "Implementação dos filtros de Público e Uso",
+      "modulo": "Consulta de Estoque — Filtros",
+      "estado": "Implementado e validado no celular",
+      "categoria": "validado",
+      "resumo": "Filtros foram implementados e a lógica oficial entre vários Usos passou a ser OU."
+    },
+    {
+      "id": "CP-011",
+      "data": "2026-07-28",
+      "titulo": "Definição funcional do módulo Atualizar Estoque",
+      "modulo": "Atualizar Estoque",
+      "estado": "Especificação funcional da primeira versão concluída e aprovada; implementação ainda não iniciada",
+      "categoria": "definido",
+      "resumo": "Operação, segurança, navegação, alertas, Histórico e testes da primeira versão foram definidos."
+    },
+    {
+      "id": "CP-012",
+      "data": "2026-08-02",
+      "titulo": "Estrutura, leitura e detalhes do Atualizar Estoque",
+      "modulo": "Atualizar Estoque",
+      "estado": "Preparação estrutural, backend de leitura e interface somente de consulta implementados e validados no celular; gravação ainda não iniciada",
+      "categoria": "validado",
+      "resumo": "Estrutura do banco, leitura do backend e tela de detalhes somente de consulta foram validadas."
+    },
+    {
+      "id": "CP-013",
+      "data": "2026-08-02",
+      "titulo": "Gravação individual e fila do Atualizar Estoque",
+      "modulo": "Atualizar Estoque",
+      "estado": "Gravação individual implementada e validada no backend e no celular; integração com Reserva real permanece pendente",
+      "categoria": "validado",
+      "resumo": "Gravação individual, fila, concorrência, idempotência, rollback e auditoria foram validados."
+    },
+    {
+      "id": "CP-014",
+      "data": "2026-08-05",
+      "titulo": "Desfazer implementado, testado e descartado",
+      "modulo": "Atualizar Estoque",
+      "estado": "Desfazer implementado e validado no backend e no celular, depois descartado por decisão funcional; frontend estável restaurado",
+      "categoria": "descartado",
+      "resumo": "O Desfazer foi testado, descartado e substituído pela correção por nova edição direta."
+    }
+  ]
+}
