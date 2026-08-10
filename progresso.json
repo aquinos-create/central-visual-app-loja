@@ -5,11 +5,11 @@
     "tituloDashboard": "Central Visual — App da Loja",
     "ambiente": "DEV",
     "versaoLogica": "DEV-0.1.0",
-    "atualizadoEm": "2026-08-05",
+    "atualizadoEm": "2026-08-10",
     "fonteVerdade": "documentacao_oficial",
     "avisoFonte": "Este dashboard é uma representação visual. Em caso de divergência, prevalecem os documentos oficiais.",
     "progressoGeral": {
-      "percentual": 38,
+      "percentual": 40,
       "rotulo": "Progresso geral estimado",
       "tipo": "estimativa_acompanhamento",
       "observacao": "Estimativa visual de acompanhamento; não representa uma medição técnica absoluta e não é calculada por média simples dos módulos."
@@ -17,16 +17,16 @@
   },
   "situacaoAtual": {
     "ultimoCheckpoint": {
-      "id": "CP-014",
-      "data": "2026-08-05",
-      "titulo": "Desfazer implementado, testado e descartado",
-      "estado": "Concluído por decisão funcional"
+      "id": "CP-015",
+      "data": "2026-08-10",
+      "titulo": "Favoritos compartilhados por produto exato",
+      "estado": "Implementado e validado no backend, frontend e entre aparelhos"
     },
     "tarefaAtual": {
       "modulo": "Atualizar Estoque",
-      "tituloCurto": "Favoritos compartilhados",
-      "tituloCompleto": "Implementar e validar a gravação e a remoção de Favoritos compartilhados",
-      "blocoTecnicoImediato": "Persistência dos Favoritos no backend",
+      "tituloCurto": "Tamanhos de produtos Variados",
+      "tituloCompleto": "Implementar e validar a inclusão, a desativação e a reativação de tamanhos dos produtos Variados",
+      "blocoTecnicoImediato": "Inspeção do contrato real e implementação atômica no backend",
       "estado": "em_andamento"
     }
   },
@@ -80,13 +80,13 @@
     {
       "id": "atualizar-estoque",
       "nome": "Atualizar Estoque",
-      "percentual": 60,
+      "percentual": 68,
       "estado": "em_andamento",
       "estadoRotulo": "Em andamento — foco atual",
       "grupo": "operacional",
       "destaque": true,
-      "resumo": "Estrutura, leitura, gravação individual, fila, concorrência e auditoria técnica validadas.",
-      "pendenciaPrincipal": "Favoritos compartilhados e demais blocos da primeira versão."
+      "resumo": "Estrutura, leitura, gravação individual, fila, concorrência, auditoria e Favoritos por produto exato validados.",
+      "pendenciaPrincipal": "Implementar a manutenção de tamanhos dos produtos Variados e os demais blocos da primeira versão."
     },
     {
       "id": "home",
@@ -251,19 +251,19 @@
       },
       {
         "ordem": 6,
-        "nome": "Favoritos compartilhados",
+        "nome": "Favoritos por produto exato",
+        "estado": "validado",
+        "checkpoint": "CP-015"
+      },
+      {
+        "ordem": 7,
+        "nome": "Tamanhos de produtos Variados",
         "estado": "em_andamento",
         "checkpoint": null
       },
       {
-        "ordem": 7,
-        "nome": "Reserva real, alertas e detalhes",
-        "estado": "definido",
-        "checkpoint": null
-      },
-      {
         "ordem": 8,
-        "nome": "Tamanhos de produtos Variados",
+        "nome": "Reserva real, alertas e detalhes",
         "estado": "definido",
         "checkpoint": null
       },
@@ -291,10 +291,10 @@
   "proximosBlocos": [
     {
       "ordem": 1,
-      "titulo": "Favoritos compartilhados",
+      "titulo": "Tamanhos de produtos Variados",
       "modulo": "Atualizar Estoque",
       "estado": "em_andamento",
-      "detalhe": "Implementar primeiro a persistência no backend e depois integrar o frontend."
+      "detalhe": "Adicionar, desativar e reativar tamanhos, primeiro no backend e depois no frontend, conforme a DEC-064."
     },
     {
       "ordem": 2,
@@ -312,10 +312,10 @@
     },
     {
       "ordem": 4,
-      "titulo": "Tamanhos de produtos Variados",
+      "titulo": "Produtos inativos com pendência",
       "modulo": "Atualizar Estoque",
       "estado": "definido",
-      "detalhe": "Adicionar, desativar e reativar tamanhos conforme as regras aprovadas."
+      "detalhe": "Exibir separadamente produtos inativos que ainda possuam estoque, Reserva ou Lista de Espera."
     },
     {
       "ordem": 5,
@@ -465,6 +465,15 @@
       "estado": "Desfazer implementado e validado no backend e no celular, depois descartado por decisão funcional; frontend estável restaurado",
       "categoria": "descartado",
       "resumo": "O Desfazer foi testado, descartado e substituído pela correção por nova edição direta."
+    },
+    {
+      "id": "CP-015",
+      "data": "2026-08-10",
+      "titulo": "Favoritos compartilhados por produto exato",
+      "modulo": "Atualizar Estoque",
+      "estado": "Favoritos compartilhados implementados e validados no backend, no frontend e entre aparelhos; testes encerrados sem Favoritos residuais",
+      "categoria": "validado",
+      "resumo": "Favoritos passaram a usar o ID imutável do produto, exibem Modelo + Cor e preservam independência entre Cores do mesmo Modelo."
     }
   ]
 }
