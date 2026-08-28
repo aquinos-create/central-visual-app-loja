@@ -5,11 +5,11 @@
     "tituloDashboard": "Central Visual — App da Loja",
     "ambiente": "DEV",
     "versaoLogica": "DEV-0.1.0",
-    "atualizadoEm": "2026-08-10",
+    "atualizadoEm": "2026-08-28",
     "fonteVerdade": "documentacao_oficial",
     "avisoFonte": "Este dashboard é uma representação visual. Em caso de divergência, prevalecem os documentos oficiais.",
     "progressoGeral": {
-      "percentual": 40,
+      "percentual": 42,
       "rotulo": "Progresso geral estimado",
       "tipo": "estimativa_acompanhamento",
       "observacao": "Estimativa visual de acompanhamento; não representa uma medição técnica absoluta e não é calculada por média simples dos módulos."
@@ -17,16 +17,16 @@
   },
   "situacaoAtual": {
     "ultimoCheckpoint": {
-      "id": "CP-015",
-      "data": "2026-08-10",
-      "titulo": "Favoritos compartilhados por produto exato",
-      "estado": "Implementado e validado no backend, frontend e entre aparelhos"
+      "id": "CP-016",
+      "data": "2026-08-27",
+      "titulo": "Manutenção de tamanhos dos produtos Variados",
+      "estado": "Adição, reativação e desativação implementadas e validadas no backend e no celular"
     },
     "tarefaAtual": {
       "modulo": "Atualizar Estoque",
-      "tituloCurto": "Tamanhos de produtos Variados",
-      "tituloCompleto": "Implementar e validar a inclusão, a desativação e a reativação de tamanhos dos produtos Variados",
-      "blocoTecnicoImediato": "Inspeção do contrato real e implementação atômica no backend",
+      "tituloCurto": "Alertas de Reserva e Lista de Espera",
+      "tituloCompleto": "Implementar e validar os alertas nos níveis Modelo, Cor e Tamanho e os detalhes oficiais acionados pelo Tamanho",
+      "blocoTecnicoImediato": "Inspeção do contrato real, da fonte dos alertas e da proteção dos dados de clientes",
       "estado": "em_andamento"
     }
   },
@@ -80,13 +80,13 @@
     {
       "id": "atualizar-estoque",
       "nome": "Atualizar Estoque",
-      "percentual": 68,
+      "percentual": 75,
       "estado": "em_andamento",
       "estadoRotulo": "Em andamento — foco atual",
       "grupo": "operacional",
       "destaque": true,
-      "resumo": "Estrutura, leitura, gravação individual, fila, concorrência, auditoria e Favoritos por produto exato validados.",
-      "pendenciaPrincipal": "Implementar a manutenção de tamanhos dos produtos Variados e os demais blocos da primeira versão."
+      "resumo": "Estrutura, leitura, gravação individual, fila, concorrência, auditoria, Favoritos por produto exato e manutenção de tamanhos Variados validados.",
+      "pendenciaPrincipal": "Implementar alertas e detalhes de Reserva e Lista de Espera conforme a DEC-068, com proteção dos dados de clientes."
     },
     {
       "id": "home",
@@ -193,14 +193,14 @@
     {
       "id": "historico-auditoria",
       "nome": "Histórico e auditoria",
-      "percentual": 30,
+      "percentual": 35,
       "estado": "em_andamento"
     },
     {
       "id": "alertas-operacionais",
       "nome": "Alertas operacionais",
       "percentual": 10,
-      "estado": "definido"
+      "estado": "em_andamento"
     },
     {
       "id": "identidade-visual",
@@ -211,7 +211,7 @@
     {
       "id": "seguranca-integridade",
       "nome": "Segurança, concorrência e integridade do estoque",
-      "percentual": 65,
+      "percentual": 70,
       "estado": "em_andamento"
     }
   ],
@@ -258,29 +258,35 @@
       {
         "ordem": 7,
         "nome": "Tamanhos de produtos Variados",
+        "estado": "validado",
+        "checkpoint": "CP-016"
+      },
+      {
+        "ordem": 8,
+        "nome": "Alertas e detalhes de Reserva e Lista de Espera",
         "estado": "em_andamento",
         "checkpoint": null
       },
       {
-        "ordem": 8,
-        "nome": "Reserva real, alertas e detalhes",
-        "estado": "definido",
-        "checkpoint": null
-      },
-      {
         "ordem": 9,
-        "nome": "Falha e ausência de internet",
+        "nome": "Proteção com uma Reserva real",
         "estado": "definido",
         "checkpoint": null
       },
       {
         "ordem": 10,
-        "nome": "Histórico visível e observações",
+        "nome": "Falha e ausência de internet",
         "estado": "definido",
         "checkpoint": null
       },
       {
         "ordem": 11,
+        "nome": "Histórico visível e observações",
+        "estado": "definido",
+        "checkpoint": null
+      },
+      {
+        "ordem": 12,
         "nome": "Remover código inativo de Desfazer",
         "estado": "pendente_producao",
         "checkpoint": null,
@@ -291,10 +297,10 @@
   "proximosBlocos": [
     {
       "ordem": 1,
-      "titulo": "Tamanhos de produtos Variados",
+      "titulo": "Alertas e detalhes de Reserva e Lista de Espera",
       "modulo": "Atualizar Estoque",
       "estado": "em_andamento",
-      "detalhe": "Adicionar, desativar e reativar tamanhos, primeiro no backend e depois no frontend, conforme a DEC-064."
+      "detalhe": "Exibir o alerta vermelho no Modelo, na Cor e no Tamanho conforme a DEC-068; o alerta do Tamanho abre os detalhes, com trava de privacidade antes de expor dados de clientes."
     },
     {
       "ordem": 2,
@@ -305,34 +311,27 @@
     },
     {
       "ordem": 3,
-      "titulo": "Alertas e detalhes de Reserva e Lista de Espera",
-      "modulo": "Atualizar Estoque",
-      "estado": "definido",
-      "detalhe": "Exibir e detalhar pendências relacionadas ao Modelo, Cor e tamanho."
-    },
-    {
-      "ordem": 4,
       "titulo": "Produtos inativos com pendência",
       "modulo": "Atualizar Estoque",
       "estado": "definido",
       "detalhe": "Exibir separadamente produtos inativos que ainda possuam estoque, Reserva ou Lista de Espera."
     },
     {
-      "ordem": 5,
+      "ordem": 4,
       "titulo": "Falha e ausência de internet",
       "modulo": "Atualizar Estoque",
       "estado": "definido",
       "detalhe": "Bloquear edição sem conexão e restaurar o último saldo confirmado em caso de falha."
     },
     {
-      "ordem": 6,
+      "ordem": 5,
       "titulo": "Histórico visível e observações",
       "modulo": "Atualizar Estoque",
       "estado": "definido",
       "detalhe": "Disponibilizar consulta do Histórico conforme as decisões aprovadas."
     },
     {
-      "ordem": 7,
+      "ordem": 6,
       "titulo": "Limpeza técnica do Desfazer",
       "modulo": "Infraestrutura DEV",
       "estado": "pendente_producao",
@@ -474,6 +473,15 @@
       "estado": "Favoritos compartilhados implementados e validados no backend, no frontend e entre aparelhos; testes encerrados sem Favoritos residuais",
       "categoria": "validado",
       "resumo": "Favoritos passaram a usar o ID imutável do produto, exibem Modelo + Cor e preservam independência entre Cores do mesmo Modelo."
+    },
+    {
+      "id": "CP-016",
+      "data": "2026-08-27",
+      "titulo": "Manutenção de tamanhos dos produtos Variados",
+      "modulo": "Atualizar Estoque",
+      "estado": "Adição, reativação e desativação de tamanhos implementadas e validadas no backend e no celular; cenário de teste encerrado com o estoque-base restaurado",
+      "categoria": "validado",
+      "resumo": "Produtos Variados passaram a permitir criar, reativar e desativar tamanhos com idempotência, bloqueios e persistência; o Iate Café foi restaurado aos tamanhos ativos 38 a 43."
     }
   ]
 }
