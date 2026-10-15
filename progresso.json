@@ -5,29 +5,29 @@
     "tituloDashboard": "Central Visual — App da Loja",
     "ambiente": "DEV",
     "versaoLogica": "DEV-0.1.0",
-    "atualizadoEm": "2026-08-28",
+    "atualizadoEm": "2026-10-15",
     "fonteVerdade": "documentacao_oficial",
-    "avisoFonte": "Este dashboard é uma representação visual. Em caso de divergência, prevalecem os documentos oficiais.",
+    "avisoFonte": "Este dashboard é uma representação visual do DEV. Em caso de divergência, prevalecem os documentos oficiais.",
     "progressoGeral": {
       "percentual": 42,
       "rotulo": "Progresso geral estimado",
       "tipo": "estimativa_acompanhamento",
-      "observacao": "Estimativa visual de acompanhamento; não representa uma medição técnica absoluta e não é calculada por média simples dos módulos."
+      "observacao": "Percentual geral mantido como estimativa anterior. Não foi localizada uma metodologia objetiva reproduzível para recalculá-lo após o CP-019; portanto, nenhum novo percentual foi atribuído."
     }
   },
   "situacaoAtual": {
     "ultimoCheckpoint": {
-      "id": "CP-016",
-      "data": "2026-08-27",
-      "titulo": "Manutenção de tamanhos dos produtos Variados",
-      "estado": "Adição, reativação e desativação implementadas e validadas no backend e no celular"
+      "id": "CP-019",
+      "data": "2026-10-14",
+      "titulo": "Consolidação de Lista de Espera, Reservas e navegação DEV",
+      "estado": "Concluído; fluxos operacionais atuais consolidados e validados conforme os documentos oficiais"
     },
     "tarefaAtual": {
-      "modulo": "Atualizar Estoque",
-      "tituloCurto": "Alertas de Reserva e Lista de Espera",
-      "tituloCompleto": "Implementar e validar os alertas nos níveis Modelo, Cor e Tamanho e os detalhes oficiais acionados pelo Tamanho",
-      "blocoTecnicoImediato": "Inspeção do contrato real, da fonte dos alertas e da proteção dos dados de clientes",
-      "estado": "em_andamento"
+      "modulo": "Central",
+      "tituloCurto": "Definir próximo bloco funcional",
+      "tituloCompleto": "A Central deve definir e priorizar o próximo bloco funcional. Histórico visível em Atualizar Estoque continua como candidato, sem início automático.",
+      "blocoTecnicoImediato": "Backend local DEV sincronizado pelo clasp pull; antes de uma futura edição, executar pull novamente.",
+      "estado": "definido"
     }
   },
   "legendaEstados": [
@@ -62,61 +62,67 @@
       "nome": "Fundação técnica e banco DEV",
       "percentual": 80,
       "estado": "em_andamento",
-      "estadoRotulo": "Em andamento avançado",
+      "estadoRotulo": "DEV operacional; produção, migração e camadas finais pendentes",
       "grupo": "base",
-      "resumo": "Arquitetura, ambientes, banco DEV e estruturas relacionais principais validados.",
-      "pendenciaPrincipal": "Concluir camadas finais, ambiente de Produção e migração operacional."
+      "resumo": "Arquitetura DEV, planilha, backend Apps Script e fluxo clasp estão configurados. Após novo login/pull, appsscript.json, Código.js e ListaEspera.html locais foram confirmados iguais ao HEAD remoto.",
+      "pendenciaPrincipal": "A Central deve priorizar o próximo bloco; antes de Produção permanecem autenticação final, limpeza técnica do código inativo de Desfazer e migração operacional.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "consulta-estoque",
       "nome": "Consulta de Estoque",
       "percentual": 85,
       "estado": "em_andamento",
-      "estadoRotulo": "Em andamento avançado",
+      "estadoRotulo": "Módulo separado e operacional no DEV",
       "grupo": "operacional",
-      "resumo": "Consulta, filtros, seleção, fotos e compartilhamento validados no DEV.",
-      "pendenciaPrincipal": "Ampliar testes e concluir pendências documentadas do módulo."
+      "resumo": "Consulta está separada em consulta.html; fluxo de consulta e recursos implementados são preservados no DEV.",
+      "pendenciaPrincipal": "Concluir as pendências documentadas da Consulta quando priorizadas pela Central; nenhuma tarefa nova foi iniciada automaticamente.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "atualizar-estoque",
       "nome": "Atualizar Estoque",
       "percentual": 75,
       "estado": "em_andamento",
-      "estadoRotulo": "Em andamento — foco atual",
+      "estadoRotulo": "Fluxos aprovados implementados no DEV",
       "grupo": "operacional",
       "destaque": true,
-      "resumo": "Estrutura, leitura, gravação individual, fila, concorrência, auditoria, Favoritos por produto exato e manutenção de tamanhos Variados validados.",
-      "pendenciaPrincipal": "Implementar alertas e detalhes de Reserva e Lista de Espera conforme a DEC-068, com proteção dos dados de clientes."
+      "resumo": "92 produtos confirmados na verificação de 14/10; CP-017 concluiu alertas, painel, Reserva vencida e confirmação segura de escrita incerta; CP-018 integrou Reservas reais Aberta e Temporaria ao saldo comprometido.",
+      "pendenciaPrincipal": "Histórico visível dentro do módulo segue candidato não priorizado; remover o código e a rota inativos de Desfazer antes de qualquer publicação em Produção.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "home",
       "nome": "Home e navegação geral",
       "percentual": 15,
       "estado": "definido",
-      "estadoRotulo": "Definido, não concluído",
+      "estadoRotulo": "Home e navegação implementadas e validadas no celular",
       "grupo": "interface",
-      "resumo": "Organização principal em grade 2 × 2 aprovada.",
-      "pendenciaPrincipal": "Implementar e validar a Home completa."
+      "resumo": "Home real em index.html; Consulta separada em consulta.html; Menu global e regra hierárquica de Voltar foram validados no celular.",
+      "pendenciaPrincipal": "Home e navegação atuais concluídas; PWA completa, identidade visual final e preparação de Produção continuam fora deste bloco.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "lista-espera",
       "nome": "Lista de Espera",
       "percentual": 10,
-      "estado": "definido",
-      "estadoRotulo": "Definido, não implementado",
+      "estado": "em_andamento",
+      "estadoRotulo": "Fluxo operacional implementado no DEV",
       "grupo": "operacional",
-      "resumo": "Regras funcionais principais aprovadas.",
-      "pendenciaPrincipal": "Implementação operacional completa."
+      "resumo": "Cadastro e visualização geral protegidos; fila cronológica; contato WhatsApp confirmado cria Reserva Temporaria; visão operacional distingue aguardando, temporárias, abertas e vencidas.",
+      "pendenciaPrincipal": "O fluxo atual está consolidado; módulos gerais de Vendas e alertas gerais permanecem fora do escopo e dependem de priorização futura.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "reservas",
       "nome": "Reservas",
       "percentual": 10,
-      "estado": "definido",
-      "estadoRotulo": "Definido, não implementado",
+      "estado": "em_andamento",
+      "estadoRotulo": "Fluxo operacional integrado no DEV",
       "grupo": "operacional",
-      "resumo": "Regras e integrações iniciais documentadas.",
-      "pendenciaPrincipal": "Implementar o módulo e validar uma Reserva real no DEV."
+      "resumo": "Temporária protege estoque; confirmação converte a mesma Reserva, grava data e atribui número desde 236; vencimentos, prorrogações e encerramentos são manuais; venda originada de Reserva baixa estoque com idempotência, Movimentações e Histórico.",
+      "pendenciaPrincipal": "O módulo geral de Vendas não foi implementado; nenhum fechamento automático ou liberação automática ocorre por vencimento.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "planejamento-compras",
@@ -126,17 +132,19 @@
       "estadoRotulo": "Definido, não implementado",
       "grupo": "gestao",
       "resumo": "Ciclo, estados e alertas financeiros funcionais definidos.",
-      "pendenciaPrincipal": "Implementação e validação do módulo."
+      "pendenciaPrincipal": "Implementação e validação do módulo.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "vendas",
       "nome": "Vendas",
       "percentual": 0,
       "estado": "nao_iniciado",
-      "estadoRotulo": "Não iniciado",
+      "estadoRotulo": "Módulo geral não iniciado",
       "grupo": "operacional",
-      "resumo": "Módulo previsto no escopo geral.",
-      "pendenciaPrincipal": "Definição e implementação."
+      "resumo": "A venda originada de uma Reserva Aberta está implementada no fluxo de Reserva; isso não constitui o módulo geral de Vendas.",
+      "pendenciaPrincipal": "Definir e implementar o módulo geral de Vendas em bloco futuro aprovado pela Central.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "trocas",
@@ -146,7 +154,8 @@
       "estadoRotulo": "Não iniciado",
       "grupo": "operacional",
       "resumo": "Módulo previsto no escopo geral.",
-      "pendenciaPrincipal": "Definição e implementação."
+      "pendenciaPrincipal": "Definição e implementação.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "defeitos",
@@ -156,7 +165,8 @@
       "estadoRotulo": "Não iniciado",
       "grupo": "operacional",
       "resumo": "Módulo previsto no escopo geral.",
-      "pendenciaPrincipal": "Definição e implementação."
+      "pendenciaPrincipal": "Definição e implementação.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "ajustes",
@@ -166,27 +176,30 @@
       "estadoRotulo": "Não iniciado",
       "grupo": "operacional",
       "resumo": "Módulo previsto no escopo geral.",
-      "pendenciaPrincipal": "Definição e implementação."
+      "pendenciaPrincipal": "Definição e implementação.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "usuarios-autenticacao",
       "nome": "Usuários, autenticação e mini app",
       "percentual": 5,
-      "estado": "definido",
-      "estadoRotulo": "Inicial",
+      "estado": "em_andamento",
+      "estadoRotulo": "Proteção das rotas de Reserva validada; autenticação global pendente",
       "grupo": "seguranca",
-      "resumo": "Usuários operacionais existem no DEV e há decisão para acesso limitado da funcionária.",
-      "pendenciaPrincipal": "Definir permissões, autenticação final e mini app."
+      "resumo": "Dados pessoais dos fluxos protegidos são acessados por rotas protegidas; detalhes privados não são fornecidos pelas rotas públicas.",
+      "pendenciaPrincipal": "Definir autenticação global, perfis finais e mini app antes da operação completa.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "pwa-producao",
       "nome": "PWA e ambiente de Produção",
       "percentual": 5,
-      "estado": "definido",
-      "estadoRotulo": "Inicial",
+      "estado": "em_andamento",
+      "estadoRotulo": "DEV hospedado; PWA completa e Produção pendentes",
       "grupo": "infraestrutura",
-      "resumo": "Hospedagem e ambiente DEV existem.",
-      "pendenciaPrincipal": "Concluir PWA e preparar Produção após validação do núcleo."
+      "resumo": "Frontend DEV publicado no GitHub Pages e backend Apps Script DEV separado; Produção não foi alterada.",
+      "pendenciaPrincipal": "Concluir PWA e planejar migração/produção somente após validação e autorização.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     }
   ],
   "camadasTransversais": [
@@ -194,29 +207,39 @@
       "id": "historico-auditoria",
       "nome": "Histórico e auditoria",
       "percentual": 35,
-      "estado": "em_andamento"
+      "estado": "em_andamento",
+      "resumo": "Movimentacoes_Estoque e Historico_Acoes registram operações de estoque e os fluxos de Reserva; consulta visível do Histórico continua pendente.",
+      "pendenciaPrincipal": "Implementar a consulta somente leitura do Histórico quando priorizada.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "alertas-operacionais",
       "nome": "Alertas operacionais",
       "percentual": 10,
-      "estado": "em_andamento"
+      "estado": "em_andamento",
+      "resumo": "Alertas de Reserva e Lista de Espera do CP-017, com painel no Atualizar Estoque, estão concluídos; alerta geral futuro está fora deste bloco.",
+      "pendenciaPrincipal": "Nenhuma expansão de alertas gerais foi escolhida pela Central.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "identidade-visual",
       "nome": "Identidade visual final do aplicativo",
       "percentual": 0,
-      "estado": "nao_iniciado"
+      "estado": "nao_iniciado",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     },
     {
       "id": "seguranca-integridade",
       "nome": "Segurança, concorrência e integridade do estoque",
       "percentual": 70,
-      "estado": "em_andamento"
+      "estado": "em_andamento",
+      "resumo": "Proteção de dados, reservas no estoque, locks e idempotência são usados nos fluxos implementados; a Central informou validação real de idempotência.",
+      "pendenciaPrincipal": "Autenticação global e preparação de Produção permanecem pendentes.",
+      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
     }
   ],
   "trilhaModuloAtivo": {
-    "modulo": "Atualizar Estoque",
+    "modulo": "Fluxos operacionais DEV",
     "etapas": [
       {
         "ordem": 1,
@@ -264,78 +287,100 @@
       {
         "ordem": 8,
         "nome": "Alertas e detalhes de Reserva e Lista de Espera",
-        "estado": "em_andamento",
-        "checkpoint": null
+        "estado": "validado",
+        "checkpoint": "CP-017"
       },
       {
         "ordem": 9,
         "nome": "Proteção com uma Reserva real",
-        "estado": "definido",
-        "checkpoint": null
+        "estado": "validado",
+        "checkpoint": "CP-018"
       },
       {
         "ordem": 10,
-        "nome": "Falha e ausência de internet",
-        "estado": "definido",
-        "checkpoint": null
+        "nome": "Confirmação segura após resposta incerta de escrita",
+        "estado": "validado",
+        "checkpoint": "CP-017"
       },
       {
         "ordem": 11,
-        "nome": "Histórico visível e observações",
+        "nome": "Histórico visível de estoque",
         "estado": "definido",
-        "checkpoint": null
+        "checkpoint": null,
+        "observacao": "Candidato discutido; a Central ainda deve priorizar. Consulta somente leitura, sem edição ou observações."
       },
       {
         "ordem": 12,
-        "nome": "Remover código inativo de Desfazer",
+        "nome": "Remoção técnica do código inativo de Desfazer",
         "estado": "pendente_producao",
         "checkpoint": null,
         "observacao": "Obrigatório antes de qualquer implantação em Produção."
+      },
+      {
+        "ordem": 13,
+        "nome": "Lista de Espera e Reservas operacionais",
+        "estado": "validado",
+        "checkpoint": "CP-019",
+        "observacao": "Cadastro, contato, Reserva Temporaria, confirmação, número sequencial desde 236, vencimentos, prorrogação e encerramentos."
+      },
+      {
+        "ordem": 14,
+        "nome": "Venda realizada originada de Reserva",
+        "estado": "validado",
+        "checkpoint": "CP-019",
+        "observacao": "Baixa segura de estoque, Reserva/Lista encerradas, Movimentações, Histórico e idempotência."
+      },
+      {
+        "ordem": 15,
+        "nome": "Home, Consulta separada e navegação global",
+        "estado": "validado",
+        "checkpoint": "CP-019",
+        "observacao": "Menu global e Voltar hierárquico confirmados pela Central no celular."
+      },
+      {
+        "ordem": 16,
+        "nome": "Fluxo local do clasp e sincronização do backend DEV",
+        "estado": "validado",
+        "checkpoint": null,
+        "observacao": "Em 15/10/2026, autenticação restabelecida e pull comparado ao HEAD remoto por hash nos três arquivos."
       }
     ]
   },
   "proximosBlocos": [
     {
       "ordem": 1,
-      "titulo": "Alertas e detalhes de Reserva e Lista de Espera",
-      "modulo": "Atualizar Estoque",
-      "estado": "em_andamento",
-      "detalhe": "Exibir o alerta vermelho no Modelo, na Cor e no Tamanho conforme a DEC-068; o alerta do Tamanho abre os detalhes, com trava de privacidade antes de expor dados de clientes."
+      "titulo": "Definir e priorizar o próximo bloco funcional",
+      "modulo": "Central",
+      "estado": "definido",
+      "detalhe": "A Central deve escolher objetivo, escopo e critérios de aceite. Não iniciar outro módulo automaticamente."
     },
     {
       "ordem": 2,
-      "titulo": "Proteção com uma Reserva real",
+      "titulo": "Histórico visível no Atualizar Estoque",
       "modulo": "Atualizar Estoque",
       "estado": "definido",
-      "detalhe": "Validar a integração real da regra que impede total abaixo do reservado."
+      "detalhe": "Candidato já discutido: consulta somente leitura de Movimentacoes_Estoque, com filtros; aguarda priorização da Central."
     },
     {
       "ordem": 3,
-      "titulo": "Produtos inativos com pendência",
-      "modulo": "Atualizar Estoque",
-      "estado": "definido",
-      "detalhe": "Exibir separadamente produtos inativos que ainda possuam estoque, Reserva ou Lista de Espera."
+      "titulo": "Limpeza técnica do código inativo de Desfazer",
+      "modulo": "Infraestrutura DEV",
+      "estado": "pendente_producao",
+      "detalhe": "Remover função, rota e apoios inativos antes de qualquer implantação em Produção."
     },
     {
       "ordem": 4,
-      "titulo": "Falha e ausência de internet",
-      "modulo": "Atualizar Estoque",
+      "titulo": "Preparação da operação completa",
+      "modulo": "Infraestrutura",
       "estado": "definido",
-      "detalhe": "Bloquear edição sem conexão e restaurar o último saldo confirmado em caso de falha."
+      "detalhe": "PWA completa, autenticação global, conferência/migração final e implantação de Produção permanecem pendentes e exigem decisão própria."
     },
     {
       "ordem": 5,
-      "titulo": "Histórico visível e observações",
-      "modulo": "Atualizar Estoque",
-      "estado": "definido",
-      "detalhe": "Disponibilizar consulta do Histórico conforme as decisões aprovadas."
-    },
-    {
-      "ordem": 6,
-      "titulo": "Limpeza técnica do Desfazer",
-      "modulo": "Infraestrutura DEV",
-      "estado": "pendente_producao",
-      "detalhe": "Remover função, rota e apoios inativos antes de Produção."
+      "titulo": "Módulos gerais ainda não implementados",
+      "modulo": "Projeto",
+      "estado": "nao_iniciado",
+      "detalhe": "Vendas geral, Defeitos, Trocas, Ajustes e Planejamento de Compras dependem de definição/priorização futura."
     }
   ],
   "checkpoints": [
@@ -482,6 +527,51 @@
       "estado": "Adição, reativação e desativação de tamanhos implementadas e validadas no backend e no celular; cenário de teste encerrado com o estoque-base restaurado",
       "categoria": "validado",
       "resumo": "Produtos Variados passaram a permitir criar, reativar e desativar tamanhos com idempotência, bloqueios e persistência; o Iate Café foi restaurado aos tamanhos ativos 38 a 43."
+    },
+    {
+      "id": "CP-017",
+      "data": "2026-10-08",
+      "titulo": "Alertas de Reserva e Lista de Espera",
+      "modulo": "Atualizar Estoque",
+      "estado": "Concluído e validado no celular pela Central",
+      "categoria": "validado",
+      "resumo": "Painel público sem dados identificáveis, navegação Produto + Tamanho, detalhes protegidos, Reserva vencida, otimização de leituras e confirmação somente por consulta após escrita incerta. Produção não alterada."
+    },
+    {
+      "id": "CP-018",
+      "data": "2026-10-08",
+      "titulo": "Integração de Reserva real ao saldo reservado",
+      "modulo": "Atualizar Estoque",
+      "estado": "Concluído com validação técnica no DEV; sem validação no celular",
+      "categoria": "validado",
+      "resumo": "Reservas Aberta e Temporaria passaram a ser a fonte do estoque comprometido por Produto + Tamanho. Cenário DEV removido; nenhum Movimento ou Histórico fictício ficou; Produção não alterada."
+    },
+    {
+      "id": "CP-019",
+      "data": "2026-10-14",
+      "titulo": "Lista de Espera, Reservas, Venda e navegação DEV",
+      "modulo": "Fluxos operacionais DEV",
+      "estado": "Concluído; funcionalidades consolidadas e acabamento validado no celular",
+      "categoria": "validado",
+      "resumo": "Cadastro/fila/WhatsApp, Reserva Temporaria e confirmada com número desde 236, prazos, prorrogação e encerramentos manuais, venda originada de Reserva com Movimentações/Histórico/idempotência, Home, Consulta separada e Menu/Voltar hierárquico. Na transição de 15/10, clasp foi autenticado novamente e os três arquivos locais foram confirmados iguais ao HEAD por hash."
     }
-  ]
+  ],
+  "ambienteDevConfirmado": {
+    "frontend": {
+      "repositorio": "aquinos-create/app-loja-dev",
+      "branch": "main",
+      "commit": "911d8c941735b4cd5d517ac1ca81f7e65c8f0600",
+      "produtosConfirmados": 92,
+      "confirmadoEm": "2026-10-14"
+    },
+    "backendAppsScript": {
+      "implantacaoProtegidaVersao": 56,
+      "implantacaoPublicaVersao": 27,
+      "clasp": "3.4.1 via pnpm",
+      "autenticacao": "concluída na conta do projeto",
+      "pull": "concluído; appsscript.json, Código.js e ListaEspera.html correspondem exatamente ao HEAD remoto por tamanho e SHA-256",
+      "confirmadoEm": "2026-10-15"
+    },
+    "producaoAlterada": false
+  }
 }
