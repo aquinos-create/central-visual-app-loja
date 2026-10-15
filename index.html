@@ -41,8 +41,8 @@
       <div class="topbar__meta" aria-label="Metadados do projeto">
         <span class="meta-chip meta-chip--live"><i></i><strong id="meta-ambiente">DEV</strong></span>
         <span class="meta-chip" id="meta-versao">DEV-0.1.0</span>
-        <span class="meta-chip" id="meta-data">05/08/2026</span>
-        <button class="meta-chip meta-chip--checkpoint" type="button" id="btn-checkpoint-atual">CP-014</button>
+        <span class="meta-chip" id="meta-data">15/10/2026</span>
+        <button class="meta-chip meta-chip--checkpoint" type="button" id="btn-checkpoint-atual">CP-019</button>
       </div>
     </header>
 
@@ -69,13 +69,13 @@
 
             <div class="state-counts">
               <div class="state-count state-count--active">
-                <i></i><strong id="count-andamento">3</strong><span>Em andamento</span>
+                <i></i><strong id="count-andamento">0</strong><span>Parciais</span>
               </div>
               <div class="state-count state-count--defined">
-                <i></i><strong id="count-definidos">6</strong><span>Definidos / iniciais</span>
+                <i></i><strong id="count-definidos">6</strong><span>Concluídos</span>
               </div>
               <div class="state-count state-count--idle">
-                <i></i><strong id="count-nao-iniciados">4</strong><span>Não iniciados</span>
+                <i></i><strong id="count-nao-iniciados">7</strong><span>Pendentes</span>
               </div>
             </div>
           </div>
@@ -92,16 +92,16 @@
 
           <div class="front-list" id="front-list">
             <div class="front-row">
-              <div class="front-row__meta"><span>Consulta de Estoque</span><strong>85%</strong></div>
-              <div class="segmented-track"><span style="--value:85%"></span></div>
+              <div class="front-row__meta"><span>Consulta de Estoque</span><strong>100%</strong></div>
+              <div class="segmented-track"><span style="--value:100%"></span></div>
             </div>
             <div class="front-row">
-              <div class="front-row__meta"><span>Fundação técnica</span><strong>80%</strong></div>
-              <div class="segmented-track"><span style="--value:80%"></span></div>
+              <div class="front-row__meta"><span>Fundação técnica</span><strong>100%</strong></div>
+              <div class="segmented-track"><span style="--value:100%"></span></div>
             </div>
             <div class="front-row front-row--active">
-              <div class="front-row__meta"><span>Atualizar Estoque</span><strong>60%</strong></div>
-              <div class="segmented-track"><span style="--value:60%"></span></div>
+              <div class="front-row__meta"><span>Atualizar Estoque</span><strong>100%</strong></div>
+              <div class="segmented-track"><span style="--value:100%"></span></div>
             </div>
           </div>
 
@@ -115,8 +115,8 @@
         <h2 class="sr-only" id="core-title">Núcleo do projeto</h2>
 
         <div class="core-status-label core-status-label--defined" aria-hidden="true"><i></i><span>Definidos</span></div>
-        <div class="core-status-label core-status-label--active" aria-hidden="true"><i></i><span>Em andamento</span></div>
-        <div class="core-status-label core-status-label--idle" aria-hidden="true"><i></i><span>Não iniciados</span></div>
+        <div class="core-status-label core-status-label--active" aria-hidden="true"><i></i><span>Parciais</span></div>
+        <div class="core-status-label core-status-label--idle" aria-hidden="true"><i></i><span>Pendentes</span></div>
         <div class="core-status-label core-status-label--validated" aria-hidden="true"><i></i><span>Validado</span></div>
 
         <button class="project-core" type="button" data-open="overview" aria-label="Abrir visão geral detalhada do projeto">
@@ -135,9 +135,9 @@
           <span class="core-crosshair" aria-hidden="true"></span>
           <span class="core-readout">
             <small>Projeto em construção</small>
-            <strong><span id="core-percent">38</span><em>%</em></strong>
-            <span>Progresso geral estimado</span>
-            <b id="core-checkpoint">CP-014</b>
+            <strong><span id="core-percent">49</span><em>%</em></strong>
+            <span>Progresso geral · V1</span>
+            <b id="core-checkpoint">CP-019</b>
           </span>
           <span class="core-scanline" aria-hidden="true"></span>
         </button>
@@ -155,11 +155,11 @@
             <i class="panel-signal panel-signal--orange" aria-hidden="true"></i>
           </div>
 
-          <div class="task-module" id="task-module">Atualizar Estoque</div>
+          <div class="task-module" id="task-module">Central</div>
           <div class="task-main">
             <small>Foco atual</small>
-            <h3 id="task-title">Favoritos compartilhados</h3>
-            <p id="task-block">Persistência no backend</p>
+            <h3 id="task-title">Priorizar sequência da V1</h3>
+            <p id="task-block">Escolher o primeiro bloco funcional da V1</p>
           </div>
 
           <div class="task-activity" aria-hidden="true">
@@ -175,9 +175,9 @@
           </div>
 
           <ol class="next-list" id="next-list">
-            <li><b>01</b><span>Favoritos compartilhados</span><i>›</i></li>
-            <li><b>02</b><span>Proteção com uma Reserva real</span><i>›</i></li>
-            <li><b>03</b><span>Alertas e detalhes</span><i>›</i></li>
+            <li><b>01</b><span>Priorizar sequência da V1</span><i>›</i></li>
+            <li><b>02</b><span>Histórico operacional visível</span><i>›</i></li>
+            <li><b>03</b><span>Autenticação e permissões finais</span><i>›</i></li>
           </ol>
 
           <div class="data-pulse" aria-hidden="true"><span></span></div>
@@ -211,9 +211,9 @@
 
         <div class="summary-metrics">
           <div class="summary-metric summary-metric--total"><i></i><strong id="summary-total">13</strong><span>Total</span></div>
-          <div class="summary-metric summary-metric--active"><i></i><strong id="summary-active">3</strong><span>Em andamento</span></div>
+          <div class="summary-metric summary-metric--active"><i></i><strong id="summary-active">0</strong><span>Parciais</span></div>
           <div class="summary-metric summary-metric--defined"><i></i><strong id="summary-defined">6</strong><span>Definidos</span></div>
-          <div class="summary-metric summary-metric--idle"><i></i><strong id="summary-idle">4</strong><span>Não iniciados</span></div>
+          <div class="summary-metric summary-metric--idle"><i></i><strong id="summary-idle">7</strong><span>Pendentes</span></div>
         </div>
       </button>
 
@@ -226,15 +226,15 @@
 
         <div class="priority-list" id="priority-list">
           <div class="priority-row priority-row--high">
-            <span><b>Favoritos</b><small>Prioridade alta</small></span>
+            <span><b>Sequência da V1</b><small>Definição da Central</small></span>
             <div class="priority-segments" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           </div>
           <div class="priority-row priority-row--high">
-            <span><b>Reserva real</b><small>Prioridade alta</small></span>
+            <span><b>Histórico visível</b><small>Pendente de implementação</small></span>
             <div class="priority-segments" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           </div>
           <div class="priority-row priority-row--medium">
-            <span><b>Alertas e detalhes</b><small>Prioridade média</small></span>
+            <span><b>Preparação da V1</b><small>Autenticação e Produção</small></span>
             <div class="priority-segments" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           </div>
         </div>
@@ -248,7 +248,7 @@
         <span class="status-led"></span>
         <span class="status-led"></span>
       </div>
-      <p id="status-note">Percentuais são estimativas de acompanhamento e podem variar.</p>
+      <p id="status-note">Progresso calculado pelo catálogo canônico da primeira versão.</p>
       <div class="statusbar__right" aria-hidden="true">
         <span class="packet"><i></i><i></i><i></i><i></i><i></i></span>
         <span class="mini-bars"><i></i><i></i><i></i><i></i></span>
