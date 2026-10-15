@@ -3,9 +3,9 @@
 const CAMINHO_DADOS = "progresso.json";
 
 const estadoRotulo = {
-  validado: "Validado",
-  em_andamento: "Em andamento",
-  definido: "Definido / inicial",
+  validado: "Concluído",
+  em_andamento: "Parcial",
+  definido: "Escopo definido",
   nao_iniciado: "Não iniciado",
   descartado: "Testado e descartado",
   pendente_producao: "Pendente antes de Produção"
@@ -86,6 +86,7 @@ function validarDados(valor) {
   if (!Array.isArray(valor?.modulos)) faltantes.push("modulos");
   if (!Array.isArray(valor?.proximosBlocos)) faltantes.push("proximosBlocos");
   if (!Array.isArray(valor?.checkpoints)) faltantes.push("checkpoints");
+  if (!Array.isArray(valor?.metodologiaProgressoV1?.itens)) faltantes.push("metodologiaProgressoV1.itens");
   if (faltantes.length) throw new Error(`Estrutura incompleta no progresso.json: ${faltantes.join(", ")}.`);
 }
 
@@ -102,21 +103,21 @@ function preencherDashboard(valor) {
   texto(refs.corePercent, progresso);
   texto(refs.coreCheckpoint, atual.ultimoCheckpoint.id);
   texto(refs.totalModulos, valor.modulos.length);
-  texto(refs.countAndamento, contagens.andamento);
-  texto(refs.countDefinidos, contagens.definidos);
-  texto(refs.countNaoIniciados, contagens.naoIniciados);
+  texto(refs.countAndamento, contagens.parciais);
+  texto(refs.countDefinidos, contagens.concluidas);
+  texto(refs.countNaoIniciados, contagens.pendentes);
   texto(refs.summaryTotal, valor.modulos.length);
-  texto(refs.summaryActive, contagens.andamento);
-  texto(refs.summaryDefined, contagens.definidos);
-  texto(refs.summaryIdle, contagens.naoIniciados);
+  texto(refs.summaryActive, contagens.parciais);
+  texto(refs.summaryDefined, contagens.concluidas);
+  texto(refs.summaryIdle, contagens.pendentes);
   texto(refs.taskModule, atual.tarefaAtual.modulo);
   texto(refs.taskTitle, atual.tarefaAtual.tituloCurto || atual.tarefaAtual.tituloCompleto);
   texto(refs.taskBlock, atual.tarefaAtual.blocoTecnicoImediato);
-  texto(refs.statusNote, "Percentuais são estimativas de acompanhamento e podem variar.");
+  texto(refs.statusNote, `Metodologia v1: ${valor.metodologiaProgressoV1.resultado.pontos} pontos / ${valor.metodologiaProgressoV1.resultado.entregasValidas} entregas de peso igual; N/A fica fora do cálculo.`);
 
   refs.coreProgress.style.background = `conic-gradient(from -90deg, var(--cyan) 0 ${progresso}%, rgba(79,216,255,.08) ${progresso}% 100%)`;
   refs.stateDonut.style.background = montarGradienteEstados(valor.modulos, contagens);
-  refs.stateDonut.setAttribute("aria-label", `${contagens.andamento} módulos em andamento, ${contagens.definidos} definidos ou iniciais e ${contagens.naoIniciados} não iniciados.`);
+  refs.stateDonut.setAttribute("aria-label", `${contagens.concluidas} áreas concluídas, ${contagens.parciais} parciais e ${contagens.pendentes} pendentes.`);
 
   renderizarFrentes(valor.modulos);
   renderizarProximos(valor.proximosBlocos);
@@ -126,19 +127,20 @@ function preencherDashboard(valor) {
 
 function contarEstados(modulos) {
   return modulos.reduce((acc, modulo) => {
-    if (modulo.estado === "em_andamento") acc.andamento += 1;
-    else if (modulo.estado === "nao_iniciado") acc.naoIniciados += 1;
-    else acc.definidos += 1;
+    const valor = Number(modulo.percentual);
+    if (valor >= 100) acc.concluidas += 1;
+    else if (valor > 0) acc.parciais += 1;
+    else acc.pendentes += 1;
     return acc;
-  }, { andamento: 0, definidos: 0, naoIniciados: 0 });
+  }, { concluidas: 0, parciais: 0, pendentes: 0 });
 }
 
 function montarGradienteEstados(modulos, contagens) {
   const total = Math.max(1, modulos.length);
-  const pAndamento = contagens.andamento / total * 100;
-  const pDefinidos = contagens.definidos / total * 100;
-  const limiteDefinidos = pAndamento + pDefinidos;
-  return `conic-gradient(var(--orange) 0 ${pAndamento.toFixed(2)}%, var(--blue) ${pAndamento.toFixed(2)}% ${limiteDefinidos.toFixed(2)}%, #4b6376 ${limiteDefinidos.toFixed(2)}% 100%)`;
+  const pParciais = contagens.parciais / total * 100;
+  const pConcluidas = contagens.concluidas / total * 100;
+  const limiteConcluidas = pParciais + pConcluidas;
+  return `conic-gradient(var(--orange) 0 ${pParciais.toFixed(2)}%, var(--blue) ${pParciais.toFixed(2)}% ${limiteConcluidas.toFixed(2)}%, #4b6376 ${limiteConcluidas.toFixed(2)}% 100%)`;
 }
 
 function renderizarFrentes(modulos) {
@@ -278,13 +280,14 @@ function construirModal(tipo) {
 
 function modalVisaoGeral() {
   const container = document.createElement("div");
-  const contagens = contarEstados(dados.modulos);
+  const metodo = dados.metodologiaProgressoV1;
+  const contagens = metodo.resultado;
   const kpis = document.createElement("div");
   kpis.className = "modal-kpis";
   [
-    [dados.projeto.progressoGeral.percentual + "%", "Progresso estimado"],
-    [dados.modulos.length, "Módulos totais"],
-    [contagens.andamento, "Em andamento"],
+    [percentual(dados.projeto.progressoGeral.percentual) + "%", "Progresso geral v1"],
+    [contagens.entregasValidas, "Entregas válidas"],
+    [contagens.concluidas, "Concluídas"],
     [dados.situacaoAtual.ultimoCheckpoint.id, "Último checkpoint"]
   ].forEach(([valor, rotulo]) => kpis.appendChild(criarKpi(valor, rotulo)));
 
@@ -300,7 +303,7 @@ function modalVisaoGeral() {
   );
 
   container.append(kpis, nota, lista);
-  return { titulo: "Visão geral do projeto", corpo: container };
+  return { titulo: "Visão geral da V1", corpo: container };
 }
 
 function modalModulos() {
@@ -351,7 +354,7 @@ function modalTarefa() {
   kpis.className = "modal-kpis";
   kpis.append(
     criarKpi(tarefa.modulo, "Módulo"),
-    criarKpi("Em andamento", "Estado"),
+    criarKpi(estadoRotulo[tarefa.estado] || "Definido", "Estado"),
     criarKpi(dados.situacaoAtual.ultimoCheckpoint.id, "Base atual"),
     criarKpi("DEV", "Ambiente")
   );
