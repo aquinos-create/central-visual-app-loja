@@ -6,13 +6,16 @@
     "ambiente": "DEV",
     "versaoLogica": "DEV-0.1.0",
     "atualizadoEm": "2026-10-15",
-    "fonteVerdade": "documentacao_oficial",
-    "avisoFonte": "Este dashboard é uma representação visual do DEV. Em caso de divergência, prevalecem os documentos oficiais.",
+    "fonteVerdade": "documentacao_oficial_e_catalogo_metodologia_v1",
+    "avisoFonte": "Este dashboard representa o estado DEV pelo catálogo canônico de entregas V1. Em caso de divergência, prevalecem os documentos oficiais e a metodologia registrada neste JSON.",
     "progressoGeral": {
-      "percentual": 42,
-      "rotulo": "Progresso geral estimado",
-      "tipo": "estimativa_acompanhamento",
-      "observacao": "Percentual geral mantido como estimativa anterior. Não foi localizada uma metodologia objetiva reproduzível para recalculá-lo após o CP-019; portanto, nenhum novo percentual foi atribuído."
+      "percentual": 49.122807017543856,
+      "rotulo": "Progresso geral oficial — Metodologia v1",
+      "tipo": "catalogo_canonico_peso_igual",
+      "observacao": "Metodologia v1: 28 pontos / 57 entregas válidas = 49.122807017544%. Cada entrega tem peso igual; áreas são métricas secundárias. A estimativa histórica de 42% foi substituída e não é progresso atual.",
+      "pontos": 28,
+      "totalEntregasValidas": 57,
+      "percentualExibicao": 49
     }
   },
   "situacaoAtual": {
@@ -24,9 +27,9 @@
     },
     "tarefaAtual": {
       "modulo": "Central",
-      "tituloCurto": "Definir próximo bloco funcional",
-      "tituloCompleto": "A Central deve definir e priorizar o próximo bloco funcional. Histórico visível em Atualizar Estoque continua como candidato, sem início automático.",
-      "blocoTecnicoImediato": "Backend local DEV sincronizado pelo clasp pull; antes de uma futura edição, executar pull novamente.",
+      "tituloCurto": "Priorizar sequência da V1",
+      "tituloCompleto": "A Central aprovou a fronteira da primeira versão utilizável em Produção e critérios mínimos para os módulos ainda sem especificação completa. Falta definir qual bloco será implementado primeiro.",
+      "blocoTecnicoImediato": "Catálogo v1 calculado; implementar o próximo bloco somente após prioridade da Central.",
       "estado": "definido"
     }
   },
@@ -59,103 +62,166 @@
   "modulos": [
     {
       "id": "fundacao-tecnica",
-      "nome": "Fundação técnica e banco DEV",
-      "percentual": 80,
-      "estado": "em_andamento",
-      "estadoRotulo": "DEV operacional; produção, migração e camadas finais pendentes",
+      "nome": "Fundação técnica e DEV",
+      "percentual": 100,
+      "estado": "validado",
+      "estadoRotulo": "Concluído no escopo DEV da V1",
       "grupo": "base",
-      "resumo": "Arquitetura DEV, planilha, backend Apps Script e fluxo clasp estão configurados. Após novo login/pull, appsscript.json, Código.js e ListaEspera.html locais foram confirmados iguais ao HEAD remoto.",
-      "pendenciaPrincipal": "A Central deve priorizar o próximo bloco; antes de Produção permanecem autenticação final, limpeza técnica do código inativo de Desfazer e migração operacional.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "A arquitetura DEV, base de dados, privacidade de rotas e fluxo local clasp estão consolidados.",
+      "pendenciaPrincipal": "Preparação para Produção e autenticação final são áreas separadas.",
+      "calculoSecundario": {
+        "itemIds": [
+          "base-01-arquitetura-dev",
+          "base-02-dados-catalogo-dev",
+          "base-03-fluxo-clasp",
+          "seg-01-rotas-publicas-protegidas"
+        ],
+        "totalItens": 4,
+        "pontos": 4
+      }
     },
     {
       "id": "consulta-estoque",
       "nome": "Consulta de Estoque",
-      "percentual": 85,
-      "estado": "em_andamento",
-      "estadoRotulo": "Módulo separado e operacional no DEV",
+      "percentual": 100,
+      "estado": "validado",
+      "estadoRotulo": "Concluído no escopo DEV da V1",
       "grupo": "operacional",
-      "resumo": "Consulta está separada em consulta.html; fluxo de consulta e recursos implementados são preservados no DEV.",
-      "pendenciaPrincipal": "Concluir as pendências documentadas da Consulta quando priorizadas pela Central; nenhuma tarefa nova foi iniciada automaticamente.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "Filtros, resultados, seleção e compartilhamento com fotos foram implementados e validados.",
+      "pendenciaPrincipal": "Sem pendência de Consulta registrada na V1; melhorias marcadas Futuro permanecem no roadmap.",
+      "calculoSecundario": {
+        "itemIds": [
+          "consulta-01-filtros",
+          "consulta-02-resultados",
+          "consulta-03-selecao-compartilhamento",
+          "consulta-04-fotos"
+        ],
+        "totalItens": 4,
+        "pontos": 4
+      }
     },
     {
       "id": "atualizar-estoque",
       "nome": "Atualizar Estoque",
-      "percentual": 75,
-      "estado": "em_andamento",
-      "estadoRotulo": "Fluxos aprovados implementados no DEV",
+      "percentual": 100,
+      "estado": "validado",
+      "estadoRotulo": "Concluído no escopo DEV da V1",
       "grupo": "operacional",
-      "destaque": true,
-      "resumo": "92 produtos confirmados na verificação de 14/10; CP-017 concluiu alertas, painel, Reserva vencida e confirmação segura de escrita incerta; CP-018 integrou Reservas reais Aberta e Temporaria ao saldo comprometido.",
-      "pendenciaPrincipal": "Histórico visível dentro do módulo segue candidato não priorizado; remover o código e a rota inativos de Desfazer antes de qualquer publicação em Produção.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "Listagem, edição segura, Favoritos, Variados, proteção por Reservas e alertas estão concluídos no DEV.",
+      "pendenciaPrincipal": "A consulta visível do Histórico está em sua área própria.",
+      "calculoSecundario": {
+        "itemIds": [
+          "estoque-01-listagem-detalhes",
+          "estoque-02-busca-navegacao",
+          "estoque-03-edicao-mobile",
+          "estoque-04-gravacao-segura",
+          "estoque-05-reservas-protegem-saldo",
+          "estoque-06-favoritos",
+          "estoque-07-tamanhos-variados",
+          "estoque-08-alertas-reserva-espera"
+        ],
+        "totalItens": 8,
+        "pontos": 8
+      }
     },
     {
       "id": "home",
       "nome": "Home e navegação geral",
-      "percentual": 15,
-      "estado": "definido",
-      "estadoRotulo": "Home e navegação implementadas e validadas no celular",
+      "percentual": 100,
+      "estado": "validado",
+      "estadoRotulo": "Concluído no escopo DEV da V1",
       "grupo": "interface",
-      "resumo": "Home real em index.html; Consulta separada em consulta.html; Menu global e regra hierárquica de Voltar foram validados no celular.",
-      "pendenciaPrincipal": "Home e navegação atuais concluídas; PWA completa, identidade visual final e preparação de Produção continuam fora deste bloco.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "Home real, Consulta separada, Menu global e retorno hierárquico foram validados no celular.",
+      "pendenciaPrincipal": "Sem pendência de navegação registrada.",
+      "calculoSecundario": {
+        "itemIds": [
+          "home-01-home-e-consulta",
+          "home-02-menu-global",
+          "home-03-voltar-hierarquia"
+        ],
+        "totalItens": 3,
+        "pontos": 3
+      }
     },
     {
       "id": "lista-espera",
       "nome": "Lista de Espera",
-      "percentual": 10,
-      "estado": "em_andamento",
-      "estadoRotulo": "Fluxo operacional implementado no DEV",
+      "percentual": 100,
+      "estado": "validado",
+      "estadoRotulo": "Concluído no escopo DEV da V1",
       "grupo": "operacional",
-      "resumo": "Cadastro e visualização geral protegidos; fila cronológica; contato WhatsApp confirmado cria Reserva Temporaria; visão operacional distingue aguardando, temporárias, abertas e vencidas.",
-      "pendenciaPrincipal": "O fluxo atual está consolidado; módulos gerais de Vendas e alertas gerais permanecem fora do escopo e dependem de priorização futura.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "Cadastro, visão operacional, fila cronológica e contato WhatsApp com confirmação estão consolidados.",
+      "pendenciaPrincipal": "Sem pendência funcional de Lista de Espera registrada.",
+      "calculoSecundario": {
+        "itemIds": [
+          "espera-01-cliente-whatsapp",
+          "espera-02-item-fila",
+          "espera-03-visao-operacional",
+          "espera-04-contato-temporaria"
+        ],
+        "totalItens": 4,
+        "pontos": 4
+      }
     },
     {
       "id": "reservas",
-      "nome": "Reservas",
-      "percentual": 10,
-      "estado": "em_andamento",
-      "estadoRotulo": "Fluxo operacional integrado no DEV",
+      "nome": "Reservas e venda originada de Reserva",
+      "percentual": 100,
+      "estado": "validado",
+      "estadoRotulo": "Concluído no escopo DEV da V1",
       "grupo": "operacional",
-      "resumo": "Temporária protege estoque; confirmação converte a mesma Reserva, grava data e atribui número desde 236; vencimentos, prorrogações e encerramentos são manuais; venda originada de Reserva baixa estoque com idempotência, Movimentações e Histórico.",
-      "pendenciaPrincipal": "O módulo geral de Vendas não foi implementado; nenhum fechamento automático ou liberação automática ocorre por vencimento.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "Reserva Temporária e confirmada, numeração desde 236, vencimentos, ações manuais e venda reservada idempotente.",
+      "pendenciaPrincipal": "Não inclui o módulo geral de Vendas.",
+      "calculoSecundario": {
+        "itemIds": [
+          "reserva-01-acompanhamento-temporaria",
+          "reserva-02-conversao-numero-mensagem",
+          "reserva-03-vencimento-prorrogacao-encerramento",
+          "venda-reserva-01-operacao"
+        ],
+        "totalItens": 4,
+        "pontos": 4
+      }
     },
     {
       "id": "planejamento-compras",
       "nome": "Planejamento de Compras",
-      "percentual": 10,
-      "estado": "definido",
-      "estadoRotulo": "Definido, não implementado",
-      "grupo": "gestao",
-      "resumo": "Ciclo, estados e alertas financeiros funcionais definidos.",
-      "pendenciaPrincipal": "Implementação e validação do módulo.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "percentual": 0,
+      "estado": "nao_iniciado",
+      "estadoRotulo": "Não iniciado",
+      "grupo": "base",
+      "resumo": "Critérios funcionais mínimos aprovados pela Central para a V1.",
+      "pendenciaPrincipal": "Ainda não iniciado.",
+      "calculoSecundario": {
+        "itemIds": [
+          "compras-01-fluxo-principal",
+          "compras-02-persistencia-backend",
+          "compras-03-integracao-seguranca",
+          "compras-04-validacao-dev"
+        ],
+        "totalItens": 4,
+        "pontos": 0
+      }
     },
     {
       "id": "vendas",
-      "nome": "Vendas",
-      "percentual": 0,
-      "estado": "nao_iniciado",
-      "estadoRotulo": "Módulo geral não iniciado",
-      "grupo": "operacional",
-      "resumo": "A venda originada de uma Reserva Aberta está implementada no fluxo de Reserva; isso não constitui o módulo geral de Vendas.",
-      "pendenciaPrincipal": "Definir e implementar o módulo geral de Vendas em bloco futuro aprovado pela Central.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
-    },
-    {
-      "id": "trocas",
-      "nome": "Trocas",
+      "nome": "Vendas geral",
       "percentual": 0,
       "estado": "nao_iniciado",
       "estadoRotulo": "Não iniciado",
       "grupo": "operacional",
-      "resumo": "Módulo previsto no escopo geral.",
-      "pendenciaPrincipal": "Definição e implementação.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "Módulo geral explicitamente incluído na V1 pela Central.",
+      "pendenciaPrincipal": "Fluxo, backend, integrações e validação ainda não iniciados.",
+      "calculoSecundario": {
+        "itemIds": [
+          "vendas-geral-01-fluxo-principal",
+          "vendas-geral-02-persistencia-backend",
+          "vendas-geral-03-integracao-seguranca",
+          "vendas-geral-04-validacao-dev"
+        ],
+        "totalItens": 4,
+        "pontos": 0
+      }
     },
     {
       "id": "defeitos",
@@ -164,78 +230,150 @@
       "estado": "nao_iniciado",
       "estadoRotulo": "Não iniciado",
       "grupo": "operacional",
-      "resumo": "Módulo previsto no escopo geral.",
-      "pendenciaPrincipal": "Definição e implementação.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "Módulo explicitamente incluído na V1 pela Central.",
+      "pendenciaPrincipal": "Fluxo, backend, integrações e validação ainda não iniciados.",
+      "calculoSecundario": {
+        "itemIds": [
+          "defeitos-01-fluxo-principal",
+          "defeitos-02-persistencia-backend",
+          "defeitos-03-integracao-seguranca",
+          "defeitos-04-validacao-dev"
+        ],
+        "totalItens": 4,
+        "pontos": 0
+      }
     },
     {
-      "id": "ajustes",
-      "nome": "Ajustes",
+      "id": "trocas",
+      "nome": "Trocas",
       "percentual": 0,
       "estado": "nao_iniciado",
       "estadoRotulo": "Não iniciado",
       "grupo": "operacional",
-      "resumo": "Módulo previsto no escopo geral.",
-      "pendenciaPrincipal": "Definição e implementação.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "Módulo explicitamente incluído na V1 pela Central.",
+      "pendenciaPrincipal": "Fluxo, backend, integrações e validação ainda não iniciados.",
+      "calculoSecundario": {
+        "itemIds": [
+          "trocas-01-fluxo-principal",
+          "trocas-02-persistencia-backend",
+          "trocas-03-integracao-seguranca",
+          "trocas-04-validacao-dev"
+        ],
+        "totalItens": 4,
+        "pontos": 0
+      }
+    },
+    {
+      "id": "ajustes",
+      "nome": "Ajustes de estoque",
+      "percentual": 0,
+      "estado": "nao_iniciado",
+      "estadoRotulo": "Não iniciado",
+      "grupo": "operacional",
+      "resumo": "Módulo explicitamente incluído na V1 pela Central, separado da edição comum do Atualizar Estoque.",
+      "pendenciaPrincipal": "Fluxo, backend, integrações e validação ainda não iniciados.",
+      "calculoSecundario": {
+        "itemIds": [
+          "ajustes-01-fluxo-principal",
+          "ajustes-02-persistencia-backend",
+          "ajustes-03-integracao-seguranca",
+          "ajustes-04-validacao-dev"
+        ],
+        "totalItens": 4,
+        "pontos": 0
+      }
     },
     {
       "id": "usuarios-autenticacao",
-      "nome": "Usuários, autenticação e mini app",
-      "percentual": 5,
-      "estado": "em_andamento",
-      "estadoRotulo": "Proteção das rotas de Reserva validada; autenticação global pendente",
+      "nome": "Autenticação e permissões finais",
+      "percentual": 0,
+      "estado": "nao_iniciado",
+      "estadoRotulo": "Não iniciado",
       "grupo": "seguranca",
-      "resumo": "Dados pessoais dos fluxos protegidos são acessados por rotas protegidas; detalhes privados não são fornecidos pelas rotas públicas.",
-      "pendenciaPrincipal": "Definir autenticação global, perfis finais e mini app antes da operação completa.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "A proteção específica de rotas privadas está em Fundação técnica; este módulo mede o controle final global.",
+      "pendenciaPrincipal": "Autenticação, perfis, permissões finais e validação continuam pendentes.",
+      "calculoSecundario": {
+        "itemIds": [
+          "auth-01-autenticacao-global",
+          "auth-02-perfis-e-miniapp",
+          "auth-03-controle-backend",
+          "auth-04-validacao-perfis"
+        ],
+        "totalItens": 4,
+        "pontos": 0
+      }
     },
     {
       "id": "pwa-producao",
-      "nome": "PWA e ambiente de Produção",
-      "percentual": 5,
-      "estado": "em_andamento",
-      "estadoRotulo": "DEV hospedado; PWA completa e Produção pendentes",
+      "nome": "Preparação para Produção",
+      "percentual": 0,
+      "estado": "nao_iniciado",
+      "estadoRotulo": "Não iniciado",
       "grupo": "infraestrutura",
-      "resumo": "Frontend DEV publicado no GitHub Pages e backend Apps Script DEV separado; Produção não foi alterada.",
-      "pendenciaPrincipal": "Concluir PWA e planejar migração/produção somente após validação e autorização.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "A V1 de Produção ainda não está configurada nem implantada.",
+      "pendenciaPrincipal": "Limpeza técnica, ambiente isolado, migração e aceite final estão pendentes.",
+      "calculoSecundario": {
+        "itemIds": [
+          "prod-01-remover-desfazer-inativo",
+          "prod-02-ambiente-producao",
+          "prod-03-migracao-reconciliacao",
+          "prod-04-aceite-corte"
+        ],
+        "totalItens": 4,
+        "pontos": 0
+      }
     }
   ],
   "camadasTransversais": [
     {
       "id": "historico-auditoria",
-      "nome": "Histórico e auditoria",
-      "percentual": 35,
+      "nome": "Histórico operacional e auditoria",
+      "percentual": 50,
       "estado": "em_andamento",
-      "resumo": "Movimentacoes_Estoque e Historico_Acoes registram operações de estoque e os fluxos de Reserva; consulta visível do Histórico continua pendente.",
-      "pendenciaPrincipal": "Implementar a consulta somente leitura do Histórico quando priorizada.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "O registro imutável de movimentos e ações já existe nos fluxos concluídos; a consulta visível filtrada ainda está pendente.",
+      "pendenciaPrincipal": "Implementar a tela somente leitura de Movimentacoes_Estoque.",
+      "itemIds": [
+        "historico-01-registros-operacionais",
+        "historico-02-consulta-visivel"
+      ],
+      "calculoSecundario": "1 de 2 entregas do catálogo concluída; não conta de novo no total."
     },
     {
       "id": "alertas-operacionais",
-      "nome": "Alertas operacionais",
-      "percentual": 10,
-      "estado": "em_andamento",
-      "resumo": "Alertas de Reserva e Lista de Espera do CP-017, com painel no Atualizar Estoque, estão concluídos; alerta geral futuro está fora deste bloco.",
-      "pendenciaPrincipal": "Nenhuma expansão de alertas gerais foi escolhida pela Central.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
-    },
-    {
-      "id": "identidade-visual",
-      "nome": "Identidade visual final do aplicativo",
-      "percentual": 0,
-      "estado": "nao_iniciado",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "nome": "Alertas de Reserva e Lista de Espera",
+      "percentual": 100,
+      "estado": "validado",
+      "resumo": "Painel, visão das pendências, prazos e navegação segura foram concluídos.",
+      "pendenciaPrincipal": "Nenhuma pendência de alerta v1 registrada.",
+      "itemIds": [
+        "estoque-08-alertas-reserva-espera",
+        "espera-03-visao-operacional",
+        "reserva-01-acompanhamento-temporaria"
+      ],
+      "calculoSecundario": "Métrica secundária por referências do catálogo; sem peso adicional."
     },
     {
       "id": "seguranca-integridade",
-      "nome": "Segurança, concorrência e integridade do estoque",
-      "percentual": 70,
+      "nome": "Segurança e integridade",
+      "percentual": 66.66666666666666,
       "estado": "em_andamento",
-      "resumo": "Proteção de dados, reservas no estoque, locks e idempotência são usados nos fluxos implementados; a Central informou validação real de idempotência.",
-      "pendenciaPrincipal": "Autenticação global e preparação de Produção permanecem pendentes.",
-      "observacaoPercentual": "Estimativa anterior preservada; sem metodologia objetiva reproduzível para recalcular nesta atualização."
+      "resumo": "Proteção privada, transações/idempotência e segurança dos fluxos atuais estão validadas; autenticação e permissões finais continuam pendentes.",
+      "pendenciaPrincipal": "Concluir autenticação global, perfis e validação antes da Produção.",
+      "itemIds": [
+        "seg-01-rotas-publicas-protegidas",
+        "estoque-04-gravacao-segura",
+        "estoque-05-reservas-protegem-saldo",
+        "espera-04-contato-temporaria",
+        "reserva-02-conversao-numero-mensagem",
+        "reserva-03-vencimento-prorrogacao-encerramento",
+        "venda-reserva-01-operacao",
+        "historico-01-registros-operacionais",
+        "auth-01-autenticacao-global",
+        "auth-02-perfis-e-miniapp",
+        "auth-03-controle-backend",
+        "auth-04-validacao-perfis"
+      ],
+      "calculoSecundario": "Métrica secundária por referências do catálogo; sem peso adicional."
     }
   ],
   "trilhaModuloAtivo": {
@@ -349,38 +487,38 @@
   "proximosBlocos": [
     {
       "ordem": 1,
-      "titulo": "Definir e priorizar o próximo bloco funcional",
+      "titulo": "Priorizar a sequência de implementação da V1",
       "modulo": "Central",
       "estado": "definido",
-      "detalhe": "A Central deve escolher objetivo, escopo e critérios de aceite. Não iniciar outro módulo automaticamente."
+      "detalhe": "O escopo e os critérios mínimos foram aprovados; a Central ainda deve escolher a primeira frente e sua ordem."
     },
     {
       "ordem": 2,
-      "titulo": "Histórico visível no Atualizar Estoque",
+      "titulo": "Histórico operacional visível",
       "modulo": "Atualizar Estoque",
       "estado": "definido",
-      "detalhe": "Candidato já discutido: consulta somente leitura de Movimentacoes_Estoque, com filtros; aguarda priorização da Central."
+      "detalhe": "Parte necessária da V1, somente leitura de Movimentacoes_Estoque; carregamento em blocos e filtros aprovados. A implementação ainda aguarda prioridade."
     },
     {
       "ordem": 3,
-      "titulo": "Limpeza técnica do código inativo de Desfazer",
-      "modulo": "Infraestrutura DEV",
-      "estado": "pendente_producao",
-      "detalhe": "Remover função, rota e apoios inativos antes de qualquer implantação em Produção."
+      "titulo": "Autenticação e permissões finais",
+      "modulo": "Segurança",
+      "estado": "nao_iniciado",
+      "detalhe": "Incluídas na V1; autenticação global, perfis, controle de permissões e validação DEV continuam pendentes."
     },
     {
       "ordem": 4,
-      "titulo": "Preparação da operação completa",
+      "titulo": "Preparação de Produção",
       "modulo": "Infraestrutura",
-      "estado": "definido",
-      "detalhe": "PWA completa, autenticação global, conferência/migração final e implantação de Produção permanecem pendentes e exigem decisão própria."
+      "estado": "pendente_producao",
+      "detalhe": "Inclui limpeza do código inativo de Desfazer, ambiente isolado, migração/conciliação e aceite/corte."
     },
     {
       "ordem": 5,
-      "titulo": "Módulos gerais ainda não implementados",
+      "titulo": "Módulos operacionais restantes da V1",
       "modulo": "Projeto",
       "estado": "nao_iniciado",
-      "detalhe": "Vendas geral, Defeitos, Trocas, Ajustes e Planejamento de Compras dependem de definição/priorização futura."
+      "detalhe": "Vendas geral, Defeitos, Trocas, Ajustes de estoque e Planejamento de Compras têm critérios mínimos iguais aprovados; todos aguardam implementação e validação."
     }
   ],
   "checkpoints": [
@@ -562,7 +700,7 @@
       "branch": "main",
       "commit": "911d8c941735b4cd5d517ac1ca81f7e65c8f0600",
       "produtosConfirmados": 92,
-      "confirmadoEm": "2026-10-14"
+      "confirmadoEm": "2026-10-15"
     },
     "backendAppsScript": {
       "implantacaoProtegidaVersao": 56,
@@ -573,5 +711,1001 @@
       "confirmadoEm": "2026-10-15"
     },
     "producaoAlterada": false
+  },
+  "metodologiaProgressoV1": {
+    "nome": "Metodologia de Progresso v1",
+    "versao": "1.0",
+    "criadaEm": "2026-10-15",
+    "dataBase": "2026-10-15",
+    "escopo": "Entregas necessárias para a primeira versão utilizável em Produção da loja, conforme definição da Central em 15/10/2026.",
+    "granularidade": "Catálogo canônico fechado nesta versão, com granularidade comparável entre áreas. Todo item listado entra uma vez no denominador; cada item válido tem o mesmo peso.",
+    "regraPontuacao": {
+      "concluida": 1,
+      "parcial": 0.5,
+      "pendente": 0,
+      "foraEscopo": "N/A"
+    },
+    "regraConclusao": "1.0 exige implementação e validação suficiente no DEV; 0.5 indica implementação parcial ou validação insuficiente; 0.0 indica não iniciado. N/A não entra no denominador.",
+    "formula": "soma dos pontos ÷ quantidade de entregas válidas × 100",
+    "resultado": {
+      "pontos": 28,
+      "entregasValidas": 57,
+      "percentualPreciso": 49.122807017543856,
+      "percentualExibicao": 49,
+      "concluidas": 28,
+      "parciais": 0,
+      "pendentes": 29
+    },
+    "metricaOficialUnica": "projeto.progressoGeral.percentual",
+    "metricasPorArea": "Percentuais de módulos/camadas são indicadores secundários calculados dos mesmos IDs canônicos; não adicionam peso nem itens ao denominador.",
+    "fontesBase": [
+      "01_ESTADO_ATUAL.md",
+      "02_PROXIMA_TAREFA.md",
+      "03_DECISOES_APROVADAS.md",
+      "08_CHECKPOINTS.md",
+      "CONTEXTO_ATUAL_PARA_NOVA_CONVERSA.md",
+      "progresso.json anterior",
+      "estado DEV confirmado nos documentos em 14–15/10/2026"
+    ],
+    "historicoEstimativas": [
+      {
+        "data": "2026-10-15",
+        "percentual": 42,
+        "tipo": "estimativa_histórica",
+        "tratamento": "substituída; não usada no cálculo v1",
+        "motivo": "não havia metodologia reproduzível documentada"
+      }
+    ],
+    "alteracoesEscopo": [
+      {
+        "data": "2026-10-15",
+        "tipo": "expansao",
+        "motivo": "A Central definiu que a V1 inclui Vendas geral, Defeitos, Trocas, Ajustes de estoque, Planejamento de Compras, Histórico operacional, autenticação/permissões finais e preparação/migração para Produção; os cinco módulos sem critérios próprios receberam quatro critérios mínimos iguais conforme orientação da Central."
+      }
+    ],
+    "observacaoGranularidade": "Não alterar silenciosamente esta lista ou dividir/combinar itens. Nova funcionalidade deve entrar com novo ID e motivo/data. Mudanças de escopo devem registrar data, motivo e itens incluídos/removidos.",
+    "itens": [
+      {
+        "id": "base-01-arquitetura-dev",
+        "area": "fundacao-tecnica",
+        "entrega": "Arquitetura DEV integrada: Google Sheets, Apps Script e GitHub Pages em ambientes separados.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-001",
+          "DEC-003",
+          "01_ESTADO_ATUAL.md §1",
+          "08_CHECKPOINTS.md CP-011/CP-012"
+        ],
+        "evidencia": "Arquitetura DEV configurada e operacional; Produção permanece separada."
+      },
+      {
+        "id": "base-02-dados-catalogo-dev",
+        "area": "fundacao-tecnica",
+        "entrega": "Estrutura do banco DEV e catálogo de produtos classificados para Consulta e estoque.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "08_CHECKPOINTS.md CP-007/CP-008/CP-012",
+          "01_ESTADO_ATUAL.md §1"
+        ],
+        "evidencia": "Classificação e estrutura foram validadas; 92 produtos estavam confirmados em 14/10/2026."
+      },
+      {
+        "id": "base-03-fluxo-clasp",
+        "area": "fundacao-tecnica",
+        "entrega": "Ferramenta clasp autenticada e backend local sincronizado com o HEAD por pull e hashes.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "01_ESTADO_ATUAL.md §1",
+          "02_PROXIMA_TAREFA.md §Cuidados",
+          "CONTEXTO_ATUAL_PARA_NOVA_CONVERSA.md §Divergências"
+        ],
+        "evidencia": "Em 15/10/2026, clasp 3.4.1 autenticado; appsscript.json, Código.js e ListaEspera.html locais iguais ao HEAD remoto."
+      },
+      {
+        "id": "seg-01-rotas-publicas-protegidas",
+        "area": "seguranca",
+        "entrega": "Separar dados públicos e privados, mantendo dados de cliente somente em rotas protegidas.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-002",
+          "DEC-082",
+          "08_CHECKPOINTS.md CP-017/CP-019",
+          "01_ESTADO_ATUAL.md §3"
+        ],
+        "evidencia": "Rotas públicas sem dados identificáveis e detalhes privados protegidos foram validados."
+      },
+      {
+        "id": "auth-01-autenticacao-global",
+        "area": "autenticacao",
+        "entrega": "Implementar autenticação global e gestão de sessão para a operação da V1.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-040",
+          "01_ESTADO_ATUAL.md §5",
+          "02_PROXIMA_TAREFA.md §Limites"
+        ],
+        "evidencia": "A documentação mantém autenticação global como pendência."
+      },
+      {
+        "id": "auth-02-perfis-e-miniapp",
+        "area": "autenticacao",
+        "entrega": "Implementar perfis finais e acesso limitado da funcionária conforme as regras aprovadas.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-040",
+          "03_DECISOES_APROVADAS.md §Usuários"
+        ],
+        "evidencia": "Há decisão para mini app limitado, mas as telas e perfis finais estão pendentes."
+      },
+      {
+        "id": "auth-03-controle-backend",
+        "area": "autenticacao",
+        "entrega": "Aplicar permissões finais no backend a todos os recursos privados e administrativos da V1.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-040",
+          "DEC-082",
+          "01_ESTADO_ATUAL.md §5"
+        ],
+        "evidencia": "A proteção atual cobre detalhes específicos; o controle global/final permanece pendente."
+      },
+      {
+        "id": "auth-04-validacao-perfis",
+        "area": "autenticacao",
+        "entrega": "Validar no DEV cada perfil e seus limites de acesso antes da operação.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-007",
+          "DEC-009",
+          "DEC-040"
+        ],
+        "evidencia": "Não há validação de autenticação e perfis finais registrada."
+      },
+      {
+        "id": "prod-01-remover-desfazer-inativo",
+        "area": "preparacao-producao",
+        "entrega": "Remover função, rota e apoios inativos de Desfazer antes de qualquer publicação em Produção.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-080",
+          "01_ESTADO_ATUAL.md §5",
+          "02_PROXIMA_TAREFA.md §Próximos blocos"
+        ],
+        "evidencia": "A dívida técnica está explicitamente pendente antes de Produção."
+      },
+      {
+        "id": "prod-02-ambiente-producao",
+        "area": "preparacao-producao",
+        "entrega": "Preparar ambientes, configurações e implantações isoladas de Produção.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-003",
+          "DEC-005",
+          "01_ESTADO_ATUAL.md §1",
+          "02_PROXIMA_TAREFA.md §Preparação"
+        ],
+        "evidencia": "A arquitetura atual é DEV; Produção ainda não foi criada/alterada."
+      },
+      {
+        "id": "prod-03-migracao-reconciliacao",
+        "area": "preparacao-producao",
+        "entrega": "Planejar, migrar e reconciliar os dados autorizados para a fonte oficial de Produção.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-004",
+          "DEC-014",
+          "02_PROXIMA_TAREFA.md §Preparação",
+          "CONTEXTO_ATUAL_PARA_NOVA_CONVERSA.md"
+        ],
+        "evidencia": "A migração/conferência final de Produção permanece pendente."
+      },
+      {
+        "id": "prod-04-aceite-corte",
+        "area": "preparacao-producao",
+        "entrega": "Executar aceite ponta a ponta e corte controlado para a primeira operação em Produção.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-003",
+          "DEC-007",
+          "02_PROXIMA_TAREFA.md §Preparação"
+        ],
+        "evidencia": "Não há implantação nem aceite em Produção; não se presume teste."
+      },
+      {
+        "id": "consulta-01-filtros",
+        "area": "consulta",
+        "entrega": "Consultar por tamanho obrigatório, Público e Uso opcionais, com lógica E entre grupos e OU entre Usos.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-017/DEC-018/DEC-019",
+          "DEC-043/DEC-044",
+          "08_CHECKPOINTS.md CP-009/CP-010"
+        ],
+        "evidencia": "Filtros implementados e validados no celular."
+      },
+      {
+        "id": "consulta-02-resultados",
+        "area": "consulta",
+        "entrega": "Exibir somente produtos ativos e disponíveis, ordenar por Modelo + Cor e respeitar o conjunto de filtros.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-020/DEC-045/DEC-046/DEC-048/DEC-050/DEC-051",
+          "08_CHECKPOINTS.md CP-010/CP-012"
+        ],
+        "evidencia": "Comportamento e ausência de resultados foram definidos e validados; os fluxos existentes foram preservados."
+      },
+      {
+        "id": "consulta-03-selecao-compartilhamento",
+        "area": "consulta",
+        "entrega": "Permitir seleção múltipla e compartilhamento manual sem escolher destinatário nem enviar silenciosamente.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-022/DEC-023/DEC-051",
+          "08_CHECKPOINTS.md CP-003/CP-004/CP-006"
+        ],
+        "evidencia": "Compartilhamento individual e múltiplo foi confirmado no celular."
+      },
+      {
+        "id": "consulta-04-fotos",
+        "area": "consulta",
+        "entrega": "Associar foto principal ao produto exato, permitir substituição sem alterar cadastro e compartilhar fotos conforme o fluxo aprovado.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-024/DEC-025/DEC-026",
+          "08_CHECKPOINTS.md CP-002/CP-003/CP-004"
+        ],
+        "evidencia": "Fluxo de foto e compartilhamento com múltiplos produtos foi validado no celular."
+      },
+      {
+        "id": "estoque-01-listagem-detalhes",
+        "area": "atualizar-estoque",
+        "entrega": "Listar produtos e abrir detalhes com tamanhos configurados, saldos e distinção entre Grade e Variados.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-058/DEC-062/DEC-063/DEC-076/DEC-077",
+          "08_CHECKPOINTS.md CP-012"
+        ],
+        "evidencia": "Listagem e detalhes de 92 produtos foram validados; Grade e Variados foram conferidos."
+      },
+      {
+        "id": "estoque-02-busca-navegacao",
+        "area": "atualizar-estoque",
+        "entrega": "Pesquisar Modelo/Cor e navegar por Modelo, Cor e tamanho preservando contexto de retorno.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-059/DEC-061",
+          "08_CHECKPOINTS.md CP-012/CP-019"
+        ],
+        "evidencia": "Busca, abertura/retorno de produto e navegação foram validados."
+      },
+      {
+        "id": "estoque-03-edicao-mobile",
+        "area": "atualizar-estoque",
+        "entrega": "Editar Total por tamanho no celular com validação de inteiros, salvamento individual e retorno visual correto.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-052/DEC-053/DEC-055/DEC-066/DEC-067",
+          "08_CHECKPOINTS.md CP-013/CP-016"
+        ],
+        "evidencia": "Edição individual, teclado, sequência, correção e persistência foram testados."
+      },
+      {
+        "id": "estoque-04-gravacao-segura",
+        "area": "atualizar-estoque",
+        "entrega": "Gravar alterações com bloqueio, conferência de saldo, idempotência e rollback; confirmar respostas incertas somente por leitura.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-057/DEC-086",
+          "08_CHECKPOINTS.md CP-013/CP-017/CP-019"
+        ],
+        "evidencia": "Concorrência, repetição, rollback e confirmação segura após escrita incerta foram validados; escritas não são reenviadas automaticamente."
+      },
+      {
+        "id": "estoque-05-reservas-protegem-saldo",
+        "area": "atualizar-estoque",
+        "entrega": "Calcular estoque comprometido pelas Reservas Aberta e Temporaria e bloquear redução abaixo do comprometido.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-087/DEC-088",
+          "08_CHECKPOINTS.md CP-018/CP-019",
+          "01_ESTADO_ATUAL.md §2"
+        ],
+        "evidencia": "Teste DEV confirmou 7/2/5, bloqueio abaixo do reservado, retorno 7/0/7 após limpeza; validação técnica, sem teste no celular."
+      },
+      {
+        "id": "estoque-06-favoritos",
+        "area": "atualizar-estoque",
+        "entrega": "Manter Favoritos compartilhados por ID_Produto, independentes por Cor e ordenados por Modelo + Cor.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-081",
+          "08_CHECKPOINTS.md CP-015"
+        ],
+        "evidencia": "Persistência, independência e sincronização entre aparelhos foram validadas."
+      },
+      {
+        "id": "estoque-07-tamanhos-variados",
+        "area": "atualizar-estoque",
+        "entrega": "Adicionar, reativar e desativar tamanhos de produtos Variados com bloqueios e sem apagar registros.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-063/DEC-064",
+          "08_CHECKPOINTS.md CP-016"
+        ],
+        "evidencia": "Criação, reativação, bloqueios, repetição, falha de internet e restauração do cenário foram validadas no celular."
+      },
+      {
+        "id": "estoque-08-alertas-reserva-espera",
+        "area": "atualizar-estoque",
+        "entrega": "Exibir painel e indicadores exatos de alertas, permitir navegação Produto + Tamanho e abrir detalhes privados sob demanda.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-068/DEC-069/DEC-070/DEC-082/DEC-083/DEC-084/DEC-085",
+          "08_CHECKPOINTS.md CP-017/CP-019"
+        ],
+        "evidencia": "Resumo sem dados pessoais, Reserva vencida, performance, navegação e proteção dos detalhes foram validados no celular."
+      },
+      {
+        "id": "espera-01-cliente-whatsapp",
+        "area": "lista-espera",
+        "entrega": "Localizar/reutilizar cliente por WhatsApp ou cadastrar outra pessoa com o mesmo número.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "08_CHECKPOINTS.md CP-019",
+          "01_ESTADO_ATUAL.md §3",
+          "Definição Central de 15/10/2026"
+        ],
+        "evidencia": "Busca, cadastro novo e duplicidade intencional de número foram testados no DEV."
+      },
+      {
+        "id": "espera-02-item-fila",
+        "area": "lista-espera",
+        "entrega": "Criar item Aguardando para Produto + Tamanho exatos e consultar a fila do cadastro mais antigo ao mais recente.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-029/DEC-030/DEC-031",
+          "08_CHECKPOINTS.md CP-019"
+        ],
+        "evidencia": "Cadastro, correspondência exata, ordem e persistência foram validados."
+      },
+      {
+        "id": "espera-03-visao-operacional",
+        "area": "lista-espera",
+        "entrega": "Visualizar pendências ativas sem selecionar Produto + Tamanho e abrir detalhes individuais dos status aplicáveis.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "08_CHECKPOINTS.md CP-019",
+          "01_ESTADO_ATUAL.md §3",
+          "Definição Central sobre Lista de Espera"
+        ],
+        "evidencia": "Visão geral, cartões, estados e detalhes da Lista/Reserva foram consolidados e validados."
+      },
+      {
+        "id": "espera-04-contato-temporaria",
+        "area": "lista-espera",
+        "entrega": "Preparar contato WhatsApp editável, exigir confirmação de envio e criar uma única Reserva Temporaria somente após Sim.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-033/DEC-088",
+          "08_CHECKPOINTS.md CP-019",
+          "01_ESTADO_ATUAL.md §3"
+        ],
+        "evidencia": "Ordem e pares livres são respeitados; abrir WhatsApp não muda estado; idempotência e resposta Não foram validadas."
+      },
+      {
+        "id": "reserva-01-acompanhamento-temporaria",
+        "area": "reservas",
+        "entrega": "Acompanhar Reserva Temporaria em 24/48h, mostrar vencimento forte após 48h e nunca liberar estoque automaticamente.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-088/DEC-090",
+          "08_CHECKPOINTS.md CP-019",
+          "01_ESTADO_ATUAL.md §3"
+        ],
+        "evidencia": "Estados e prazos foram implementados; vencimento mantém o compromisso até ação manual."
+      },
+      {
+        "id": "reserva-02-conversao-numero-mensagem",
+        "area": "reservas",
+        "entrega": "Converter a mesma Temporaria em Aberta com data combinada; gerar número sequencial desde 236 somente na conversão e preparar mensagem/etiqueta.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-089",
+          "08_CHECKPOINTS.md CP-019",
+          "01_ESTADO_ATUAL.md §3"
+        ],
+        "evidencia": "Conversão preserva IDs e quantidade, usa lock/idempotência e foi confirmada no celular."
+      },
+      {
+        "id": "reserva-03-vencimento-prorrogacao-encerramento",
+        "area": "reservas",
+        "entrega": "Aplicar vencimento no dia seguinte à data combinada, permitir prorrogação/encerramento manual com motivos aprovados e atualizar a Lista/estoque comprometido.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-090",
+          "08_CHECKPOINTS.md CP-019",
+          "01_ESTADO_ATUAL.md §3"
+        ],
+        "evidencia": "Ações manuais, motivos, liberação somente após encerramento e registro de Histórico estão consolidados."
+      },
+      {
+        "id": "venda-reserva-01-operacao",
+        "area": "venda-reserva",
+        "entrega": "Registrar venda originada de Reserva Aberta em operação idempotente, baixar quantidade correta e encerrar Reserva/Lista preservando o número.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-091",
+          "08_CHECKPOINTS.md CP-019",
+          "01_ESTADO_ATUAL.md §3"
+        ],
+        "evidencia": "Fluxo seguro da venda da Reserva e idempotência foram confirmados; Produção não foi alterada."
+      },
+      {
+        "id": "historico-01-registros-operacionais",
+        "area": "historico",
+        "entrega": "Registrar uma única trilha em Movimentacoes_Estoque e Historico_Acoes para alterações de estoque e operações de Reserva/Venda.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-057/DEC-064/DEC-073/DEC-091",
+          "08_CHECKPOINTS.md CP-013/CP-016/CP-019",
+          "01_ESTADO_ATUAL.md §3"
+        ],
+        "evidencia": "Movimentos e Histórico são escritos nos fluxos implementados, com idempotência e sem duplicidade."
+      },
+      {
+        "id": "historico-02-consulta-visivel",
+        "area": "historico",
+        "entrega": "Consultar Histórico de estoque em modo somente leitura, recente primeiro, com carregamento em blocos e filtros aprovados.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-072",
+          "02_PROXIMA_TAREFA.md §Próximo passo",
+          "01_ESTADO_ATUAL.md §5",
+          "Escopo Central aprovado nesta conversa"
+        ],
+        "evidencia": "A fonte e os campos estão definidos, mas a consulta visível ainda não foi implementada."
+      },
+      {
+        "id": "home-01-home-e-consulta",
+        "area": "home-navegacao",
+        "entrega": "Manter Home como entrada real e Consulta em página separada, com acesso aos módulos atuais.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-092",
+          "08_CHECKPOINTS.md CP-019",
+          "01_ESTADO_ATUAL.md §4"
+        ],
+        "evidencia": "Home, Consulta separada e acessos dos módulos foram validados no celular."
+      },
+      {
+        "id": "home-02-menu-global",
+        "area": "home-navegacao",
+        "entrega": "Disponibilizar Menu global com destinos Início, Consulta, Atualizar Estoque e Lista de Espera e destacar o módulo atual.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-092",
+          "08_CHECKPOINTS.md CP-019",
+          "01_ESTADO_ATUAL.md §4"
+        ],
+        "evidencia": "Menu e os quatro destinos foram confirmados pela Central no celular."
+      },
+      {
+        "id": "home-03-voltar-hierarquia",
+        "area": "home-navegacao",
+        "entrega": "Aplicar Voltar hierárquico: telas principais à Home, subtelas um nível acima e alerta de Estoque de volta ao Estoque.",
+        "pontos": 1,
+        "status": "concluida",
+        "referencias": [
+          "DEC-092",
+          "08_CHECKPOINTS.md CP-019",
+          "01_ESTADO_ATUAL.md §4"
+        ],
+        "evidencia": "Retornos internos e acabamento final foram validados no celular."
+      },
+      {
+        "id": "vendas-geral-01-fluxo-principal",
+        "area": "vendas-geral",
+        "entrega": "Vendas geral: fluxo principal funcional pela interface.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; Central definiu o critério mínimo, sem implementação documentada."
+      },
+      {
+        "id": "vendas-geral-02-persistencia-backend",
+        "area": "vendas-geral",
+        "entrega": "Vendas geral: persistência/backend grava e consulta os dados corretamente.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; critério mínimo da Central, sem implementação documentada."
+      },
+      {
+        "id": "vendas-geral-03-integracao-seguranca",
+        "area": "vendas-geral",
+        "entrega": "Vendas geral: integração, segurança, permissões e idempotência necessárias ao módulo.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; requisito mínimo da Central, sem implementação documentada."
+      },
+      {
+        "id": "vendas-geral-04-validacao-dev",
+        "area": "vendas-geral",
+        "entrega": "Vendas geral: fluxo principal validado no DEV; celular quando a operação exigir uso móvel.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; nenhuma validação de fluxo DEV pode ser presumida."
+      },
+      {
+        "id": "defeitos-01-fluxo-principal",
+        "area": "defeitos",
+        "entrega": "Defeitos: fluxo principal funcional pela interface.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; Central definiu o critério mínimo, sem implementação documentada."
+      },
+      {
+        "id": "defeitos-02-persistencia-backend",
+        "area": "defeitos",
+        "entrega": "Defeitos: persistência/backend grava e consulta os dados corretamente.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; critério mínimo da Central, sem implementação documentada."
+      },
+      {
+        "id": "defeitos-03-integracao-seguranca",
+        "area": "defeitos",
+        "entrega": "Defeitos: integração, segurança, permissões e idempotência necessárias ao módulo.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; requisito mínimo da Central, sem implementação documentada."
+      },
+      {
+        "id": "defeitos-04-validacao-dev",
+        "area": "defeitos",
+        "entrega": "Defeitos: fluxo principal validado no DEV; celular quando a operação exigir uso móvel.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; nenhuma validação de fluxo DEV pode ser presumida."
+      },
+      {
+        "id": "trocas-01-fluxo-principal",
+        "area": "trocas",
+        "entrega": "Trocas: fluxo principal funcional pela interface.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; Central definiu o critério mínimo, sem implementação documentada."
+      },
+      {
+        "id": "trocas-02-persistencia-backend",
+        "area": "trocas",
+        "entrega": "Trocas: persistência/backend grava e consulta os dados corretamente.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; critério mínimo da Central, sem implementação documentada."
+      },
+      {
+        "id": "trocas-03-integracao-seguranca",
+        "area": "trocas",
+        "entrega": "Trocas: integração, segurança, permissões e idempotência necessárias ao módulo.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; requisito mínimo da Central, sem implementação documentada."
+      },
+      {
+        "id": "trocas-04-validacao-dev",
+        "area": "trocas",
+        "entrega": "Trocas: fluxo principal validado no DEV; celular quando a operação exigir uso móvel.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; nenhuma validação de fluxo DEV pode ser presumida."
+      },
+      {
+        "id": "ajustes-01-fluxo-principal",
+        "area": "ajustes",
+        "entrega": "Ajustes de estoque: fluxo principal funcional pela interface.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; Central definiu o critério mínimo, sem implementação documentada."
+      },
+      {
+        "id": "ajustes-02-persistencia-backend",
+        "area": "ajustes",
+        "entrega": "Ajustes de estoque: persistência/backend grava e consulta os dados corretamente.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; critério mínimo da Central, sem implementação documentada."
+      },
+      {
+        "id": "ajustes-03-integracao-seguranca",
+        "area": "ajustes",
+        "entrega": "Ajustes de estoque: integração, segurança, permissões e idempotência necessárias ao módulo.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; requisito mínimo da Central, sem implementação documentada."
+      },
+      {
+        "id": "ajustes-04-validacao-dev",
+        "area": "ajustes",
+        "entrega": "Ajustes de estoque: fluxo principal validado no DEV; celular quando a operação exigir uso móvel.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "Definição Central de 15/10/2026",
+          "progresso.json atual — módulo previsto, sem implementação"
+        ],
+        "evidencia": "Não iniciado; nenhuma validação de fluxo DEV pode ser presumida."
+      },
+      {
+        "id": "compras-01-fluxo-principal",
+        "area": "planejamento-compras",
+        "entrega": "Planejamento de Compras: fluxo principal funcional pela interface.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-035/DEC-036/DEC-037/DEC-038/DEC-039",
+          "Definição Central de 15/10/2026"
+        ],
+        "evidencia": "Não iniciado; Central definiu o critério mínimo, sem implementação documentada."
+      },
+      {
+        "id": "compras-02-persistencia-backend",
+        "area": "planejamento-compras",
+        "entrega": "Planejamento de Compras: persistência/backend grava e consulta os dados corretamente.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-035/DEC-036/DEC-037/DEC-038/DEC-039",
+          "Definição Central de 15/10/2026"
+        ],
+        "evidencia": "Não iniciado; critério mínimo da Central, sem implementação documentada."
+      },
+      {
+        "id": "compras-03-integracao-seguranca",
+        "area": "planejamento-compras",
+        "entrega": "Planejamento de Compras: integração, segurança, permissões e idempotência necessárias ao módulo.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-035/DEC-036/DEC-037/DEC-038/DEC-039",
+          "Definição Central de 15/10/2026"
+        ],
+        "evidencia": "Não iniciado; requisito mínimo da Central, sem implementação documentada."
+      },
+      {
+        "id": "compras-04-validacao-dev",
+        "area": "planejamento-compras",
+        "entrega": "Planejamento de Compras: fluxo principal validado no DEV; celular quando a operação exigir uso móvel.",
+        "pontos": 0,
+        "status": "pendente",
+        "referencias": [
+          "DEC-035/DEC-036/DEC-037/DEC-038/DEC-039",
+          "Definição Central de 15/10/2026"
+        ],
+        "evidencia": "Não iniciado; nenhuma validação de fluxo DEV pode ser presumida."
+      }
+    ],
+    "foraDoDenominador": [
+      {
+        "id": "roadmap-pwa-completa",
+        "nome": "PWA completa/instalável",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-001",
+          "01_ESTADO_ATUAL.md §5",
+          "02_PROXIMA_TAREFA.md §Preparação"
+        ],
+        "motivo": "PWA aparece na arquitetura e como pendência, mas os documentos não esclarecem se a PWA completa é requisito indispensável da primeira versão de Produção. A Central orientou excluir escopo ambíguo do cálculo e registrar a dúvida."
+      },
+      {
+        "id": "roadmap-identidade-visual-final",
+        "nome": "Redesign/identidade visual final do aplicativo",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-028",
+          "progresso.json anterior"
+        ],
+        "motivo": "Há decisão de visual próprio para a Home, já implementada; não há critério aprovado que torne um redesign visual completo requisito da V1."
+      },
+      {
+        "id": "roadmap-grade-cadastro-produto",
+        "nome": "Manutenção de grades padrão/personalizadas em Cadastro do Produto",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-065"
+        ],
+        "motivo": "A alteração da grade foi explicitamente destinada a um módulo futuro; não é necessária para os fluxos v1 definidos."
+      },
+      {
+        "id": "roadmap-transferencia-tamanhos",
+        "nome": "Transferência automática entre tamanhos",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-078"
+        ],
+        "motivo": "Explicitamente fora da primeira versão."
+      },
+      {
+        "id": "roadmap-origem-movimento-integracoes",
+        "nome": "Classificação detalhada da origem de movimentações e integração automática com Compras/Trocas/Defeitos no Atualizar Estoque",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-079"
+        ],
+        "motivo": "Explicitamente futura na edição comum; os módulos próprios de Compras, Trocas e Defeitos entram na V1, mas essa integração automática não entra."
+      },
+      {
+        "id": "roadmap-observacoes-historico",
+        "nome": "Adicionar observações e editar/excluir registros no Histórico",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-072",
+          "DEC-073",
+          "Escopo Central aprovado nesta conversa"
+        ],
+        "motivo": "A consulta v1 aprovada nesta conversa é somente leitura, sem observações, edição ou exclusão."
+      },
+      {
+        "id": "roadmap-alertas-gerais",
+        "nome": "Painel geral de pendências fora dos módulos",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "01_ESTADO_ATUAL.md §3",
+          "08_CHECKPOINTS.md CP-019"
+        ],
+        "motivo": "Documentado como futuro e não incluído pela Central na fronteira da V1."
+      },
+      {
+        "id": "roadmap-sincronizacao-offline",
+        "nome": "Guardar alterações offline e sincronizar depois",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-075"
+        ],
+        "motivo": "A primeira versão é online; alterações offline não são armazenadas para sincronização posterior."
+      }
+    ],
+    "metricasSecundarias": [
+      {
+        "id": "historico-auditoria",
+        "nome": "Histórico e auditoria",
+        "itemIds": [
+          "historico-01-registros-operacionais",
+          "historico-02-consulta-visivel"
+        ],
+        "totalItens": 2,
+        "pontos": 1,
+        "percentualPreciso": 50,
+        "tipo": "métrica secundária por referências do catálogo; não adiciona itens ao denominador"
+      },
+      {
+        "id": "alertas-operacionais",
+        "nome": "Alertas operacionais",
+        "itemIds": [
+          "estoque-08-alertas-reserva-espera",
+          "espera-03-visao-operacional",
+          "reserva-01-acompanhamento-temporaria"
+        ],
+        "totalItens": 3,
+        "pontos": 3,
+        "percentualPreciso": 100,
+        "tipo": "métrica secundária por referências do catálogo; não adiciona itens ao denominador"
+      },
+      {
+        "id": "seguranca-integridade",
+        "nome": "Segurança e integridade",
+        "itemIds": [
+          "seg-01-rotas-publicas-protegidas",
+          "estoque-04-gravacao-segura",
+          "estoque-05-reservas-protegem-saldo",
+          "espera-04-contato-temporaria",
+          "reserva-02-conversao-numero-mensagem",
+          "reserva-03-vencimento-prorrogacao-encerramento",
+          "venda-reserva-01-operacao",
+          "historico-01-registros-operacionais",
+          "auth-01-autenticacao-global",
+          "auth-02-perfis-e-miniapp",
+          "auth-03-controle-backend",
+          "auth-04-validacao-perfis"
+        ],
+        "totalItens": 12,
+        "pontos": 8,
+        "percentualPreciso": 66.66666666666666,
+        "tipo": "métrica secundária por referências do catálogo; não adiciona itens ao denominador"
+      }
+    ]
+  },
+  "roadmapForaV1": {
+    "observacao": "Itens N/A não fazem parte do cálculo v1; recursos ambíguos são mantidos aqui até decisão explícita.",
+    "itens": [
+      {
+        "id": "roadmap-pwa-completa",
+        "nome": "PWA completa/instalável",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-001",
+          "01_ESTADO_ATUAL.md §5",
+          "02_PROXIMA_TAREFA.md §Preparação"
+        ],
+        "motivo": "PWA aparece na arquitetura e como pendência, mas os documentos não esclarecem se a PWA completa é requisito indispensável da primeira versão de Produção. A Central orientou excluir escopo ambíguo do cálculo e registrar a dúvida."
+      },
+      {
+        "id": "roadmap-identidade-visual-final",
+        "nome": "Redesign/identidade visual final do aplicativo",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-028",
+          "progresso.json anterior"
+        ],
+        "motivo": "Há decisão de visual próprio para a Home, já implementada; não há critério aprovado que torne um redesign visual completo requisito da V1."
+      },
+      {
+        "id": "roadmap-grade-cadastro-produto",
+        "nome": "Manutenção de grades padrão/personalizadas em Cadastro do Produto",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-065"
+        ],
+        "motivo": "A alteração da grade foi explicitamente destinada a um módulo futuro; não é necessária para os fluxos v1 definidos."
+      },
+      {
+        "id": "roadmap-transferencia-tamanhos",
+        "nome": "Transferência automática entre tamanhos",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-078"
+        ],
+        "motivo": "Explicitamente fora da primeira versão."
+      },
+      {
+        "id": "roadmap-origem-movimento-integracoes",
+        "nome": "Classificação detalhada da origem de movimentações e integração automática com Compras/Trocas/Defeitos no Atualizar Estoque",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-079"
+        ],
+        "motivo": "Explicitamente futura na edição comum; os módulos próprios de Compras, Trocas e Defeitos entram na V1, mas essa integração automática não entra."
+      },
+      {
+        "id": "roadmap-observacoes-historico",
+        "nome": "Adicionar observações e editar/excluir registros no Histórico",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-072",
+          "DEC-073",
+          "Escopo Central aprovado nesta conversa"
+        ],
+        "motivo": "A consulta v1 aprovada nesta conversa é somente leitura, sem observações, edição ou exclusão."
+      },
+      {
+        "id": "roadmap-alertas-gerais",
+        "nome": "Painel geral de pendências fora dos módulos",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "01_ESTADO_ATUAL.md §3",
+          "08_CHECKPOINTS.md CP-019"
+        ],
+        "motivo": "Documentado como futuro e não incluído pela Central na fronteira da V1."
+      },
+      {
+        "id": "roadmap-sincronizacao-offline",
+        "nome": "Guardar alterações offline e sincronizar depois",
+        "status": "N/A",
+        "pontos": null,
+        "referencias": [
+          "DEC-075"
+        ],
+        "motivo": "A primeira versão é online; alterações offline não são armazenadas para sincronização posterior."
+      }
+    ]
   }
 }
