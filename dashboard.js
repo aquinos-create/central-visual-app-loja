@@ -79,57 +79,68 @@ async function carregarDados() {
 }
 
 function validarDados(valor) {
-  const faltantes = [];
-  if (!valor?.projeto?.progressoGeral) faltantes.push("projeto.progressoGeral");
-  if (!valor?.situacaoAtual?.ultimoCheckpoint) faltantes.push("situacaoAtual.ultimoCheckpoint");
-  if (!valor?.situacaoAtual?.tarefaAtual) faltantes.push("situacaoAtual.tarefaAtual");
-  if (!Array.isArray(valor?.modulos)) faltantes.push("modulos");
-  if (!Array.isArray(valor?.proximosBlocos)) faltantes.push("proximosBlocos");
-  if (!Array.isArray(valor?.checkpoints)) faltantes.push("checkpoints");
-  if (!Array.isArray(valor?.metodologiaProgressoV1?.itens)) faltantes.push("metodologiaProgressoV1.itens");
-  if (faltantes.length) throw new Error(`Estrutura incompleta no progresso.json: ${faltantes.join(", ")}.`);
+  const metodo = valor?.metodologiaNeon04;
+  if (!metodo || !Array.isArray(metodo.capacidades) || metodo.capacidades.length !== 24 ||
+      !Array.isArray(metodo.prontidao?.gates) || metodo.prontidao.gates.length !== 8 ||
+      !Array.isArray(valor?.checkpoints) || !Array.isArray(valor?.proximosBlocos)) {
+    throw new Error("Estrutura incompleta no progresso.json da Migração Neon 04.");
+  }
+  const soma = metodo.capacidades.reduce((total, item) => total + item.peso, 0);
+  const concluidos = metodo.capacidades.filter((item) => item.estado === "Completa")
+    .reduce((total, item) => total + item.peso, 0);
+  const p0 = metodo.capacidades.filter((item) => item.prioridade === "P0");
+  const totalP0 = p0.reduce((total, item) => total + item.peso, 0);
+  const completosP0 = p0.filter((item) => item.estado === "Completa")
+    .reduce((total, item) => total + item.peso, 0);
+  const gates = metodo.prontidao.gates.filter((gate) => gate.evidenciado).length;
+  if (soma !== 161 || concluidos !== 95 || totalP0 !== 152 || completosP0 !== 95 ||
+      gates !== 2 || metodo.funcional.percentual !== 59 || metodo.p0.percentual !== 62.5 ||
+      metodo.prontidao.percentual !== 25) {
+    throw new Error("Indicadores incompatíveis com a matriz aprovada da Migração Neon 04.");
+  }
 }
 
 function preencherDashboard(valor) {
   const projeto = valor.projeto;
   const atual = valor.situacaoAtual;
-  const progresso = percentual(projeto.progressoGeral.percentual);
-  const contagens = contarEstados(valor.modulos);
+  const metodo = valor.metodologiaNeon04;
+  const capacidades = metodo.capacidades;
+  const contagens = contarEstados(capacidades);
+  const progresso = metodo.funcional.percentual;
 
   texto(refs.ambiente, projeto.ambiente);
-  texto(refs.versao, projeto.versaoLogica);
+  texto(refs.versao, "NEON-04");
   texto(refs.data, formatarData(projeto.atualizadoEm));
   texto(refs.btnCheckpoint, atual.ultimoCheckpoint.id);
-  texto(refs.corePercent, progresso);
+  texto(refs.corePercent, formatarPercentual(progresso));
   texto(refs.coreCheckpoint, atual.ultimoCheckpoint.id);
-  texto(refs.totalModulos, valor.modulos.length);
+  texto(refs.totalModulos, capacidades.length);
   texto(refs.countAndamento, contagens.parciais);
   texto(refs.countDefinidos, contagens.concluidas);
   texto(refs.countNaoIniciados, contagens.pendentes);
-  texto(refs.summaryTotal, valor.modulos.length);
+  texto(refs.summaryTotal, capacidades.length);
   texto(refs.summaryActive, contagens.parciais);
   texto(refs.summaryDefined, contagens.concluidas);
   texto(refs.summaryIdle, contagens.pendentes);
-  texto(refs.taskModule, atual.tarefaAtual.modulo);
-  texto(refs.taskTitle, atual.tarefaAtual.tituloCurto || atual.tarefaAtual.tituloCompleto);
-  texto(refs.taskBlock, atual.tarefaAtual.blocoTecnicoImediato);
-  texto(refs.statusNote, `Metodologia v1: ${valor.metodologiaProgressoV1.resultado.pontos} pontos / ${valor.metodologiaProgressoV1.resultado.entregasValidas} entregas de peso igual; N/A fica fora do cálculo.`);
+  texto(refs.taskModule, "Prontidão independente do progresso funcional");
+  texto(refs.taskTitle, `${metodo.prontidao.percentual}% · ${metodo.prontidao.evidenciados} de ${metodo.prontidao.total} gates`);
+  texto(refs.taskBlock, `Uso real: ${metodo.prontidao.estado}`);
+  texto(refs.statusNote, `Funcional: 95/161 = 59,0% · P0: 95/152 = 62,5% · prontidão: 2/8 = 25%. Uso real: NÃO PRONTO.`);
 
   refs.coreProgress.style.background = `conic-gradient(from -90deg, var(--cyan) 0 ${progresso}%, rgba(79,216,255,.08) ${progresso}% 100%)`;
-  refs.stateDonut.style.background = montarGradienteEstados(valor.modulos, contagens);
-  refs.stateDonut.setAttribute("aria-label", `${contagens.concluidas} áreas concluídas, ${contagens.parciais} parciais e ${contagens.pendentes} pendentes.`);
+  refs.stateDonut.style.background = montarGradienteEstados(capacidades, contagens);
+  refs.stateDonut.setAttribute("aria-label", `${contagens.concluidas} capacidades completas, ${contagens.parciais} parciais e ${contagens.pendentes} não implementadas.`);
 
-  renderizarFrentes(valor.modulos);
+  renderizarFrentes(metodo);
   renderizarProximos(valor.proximosBlocos);
   renderizarPrioridades(valor.proximosBlocos);
   renderizarTimeline(valor.checkpoints, atual.ultimoCheckpoint.id);
 }
 
-function contarEstados(modulos) {
-  return modulos.reduce((acc, modulo) => {
-    const valor = Number(modulo.percentual);
-    if (valor >= 100) acc.concluidas += 1;
-    else if (valor > 0) acc.parciais += 1;
+function contarEstados(capacidades) {
+  return capacidades.reduce((acc, item) => {
+    if (item.estado === "Completa") acc.concluidas += 1;
+    else if (item.estado === "Parcial") acc.parciais += 1;
     else acc.pendentes += 1;
     return acc;
   }, { concluidas: 0, parciais: 0, pendentes: 0 });
@@ -143,31 +154,28 @@ function montarGradienteEstados(modulos, contagens) {
   return `conic-gradient(var(--orange) 0 ${pParciais.toFixed(2)}%, var(--blue) ${pParciais.toFixed(2)}% ${limiteConcluidas.toFixed(2)}%, #4b6376 ${limiteConcluidas.toFixed(2)}% 100%)`;
 }
 
-function renderizarFrentes(modulos) {
-  const frentes = [...modulos]
-    .sort((a, b) => percentual(b.percentual) - percentual(a.percentual))
-    .slice(0, 3);
-
+function renderizarFrentes(metodo) {
+  const indicadores = [
+    ["Funcional · 95/161", metodo.funcional.percentual],
+    ["Essenciais P0 · 95/152", metodo.p0.percentual],
+    ["Prontidão · 2/8 gates", metodo.prontidao.percentual]
+  ];
   refs.frontList.replaceChildren();
-
-  frentes.forEach((modulo) => {
+  indicadores.forEach(([rotulo, numero]) => {
     const linha = document.createElement("div");
-    linha.className = `front-row${modulo.destaque ? " front-row--active" : ""}`;
-
+    linha.className = "front-row";
     const meta = document.createElement("div");
     meta.className = "front-row__meta";
     const nome = document.createElement("span");
-    nome.textContent = modulo.nome;
+    nome.textContent = rotulo;
     const valor = document.createElement("strong");
-    valor.textContent = `${percentual(modulo.percentual)}%`;
+    valor.textContent = numero === 25 ? "25%" : `${formatarPercentual(numero)}%`;
     meta.append(nome, valor);
-
     const trilho = document.createElement("div");
     trilho.className = "segmented-track";
     const barra = document.createElement("span");
-    barra.style.setProperty("--value", `${percentual(modulo.percentual)}%`);
+    barra.style.setProperty("--value", `${numero}%`);
     trilho.appendChild(barra);
-
     linha.append(meta, trilho);
     refs.frontList.appendChild(linha);
   });
@@ -280,71 +288,53 @@ function construirModal(tipo) {
 
 function modalVisaoGeral() {
   const container = document.createElement("div");
-  const metodo = dados.metodologiaProgressoV1;
-  const contagens = metodo.resultado;
+  const metodo = dados.metodologiaNeon04;
   const kpis = document.createElement("div");
   kpis.className = "modal-kpis";
   [
-    [percentual(dados.projeto.progressoGeral.percentual) + "%", "Progresso geral v1"],
-    [contagens.entregasValidas, "Entregas válidas"],
-    [contagens.concluidas, "Concluídas"],
-    [dados.situacaoAtual.ultimoCheckpoint.id, "Último checkpoint"]
+    ["59,0%", "Funcional · 95/161"],
+    ["62,5%", "P0 · 95/152"],
+    ["25%", "Prontidão · 2/8"],
+    ["NÃO PRONTO", "Uso real"]
   ].forEach(([valor, rotulo]) => kpis.appendChild(criarKpi(valor, rotulo)));
-
   const nota = document.createElement("div");
   nota.className = "modal-note";
-  nota.textContent = dados.projeto.progressoGeral.observacao;
-
+  nota.textContent = `${metodo.regra} ${metodo.limite} Os 8 gates são obrigatórios; não há compensação por média.`;
   const lista = document.createElement("div");
   lista.className = "modal-list";
-  lista.append(
-    criarItemModal("Foco atual", dados.situacaoAtual.tarefaAtual.tituloCurto, dados.situacaoAtual.tarefaAtual.blocoTecnicoImediato, dados.situacaoAtual.tarefaAtual.modulo),
-    criarItemModal("Último checkpoint", dados.situacaoAtual.ultimoCheckpoint.id, dados.situacaoAtual.ultimoCheckpoint.titulo, formatarData(dados.situacaoAtual.ultimoCheckpoint.data))
-  );
-
+  metodo.prontidao.gates.forEach((gate, indice) => {
+    lista.appendChild(criarItemModal(String(indice + 1).padStart(2, "0"), gate.nome,
+      gate.evidenciado ? "Evidência experimental" : "Ainda não evidenciado", gate.evidenciado ? "2/8" : "Pendente"));
+  });
   container.append(kpis, nota, lista);
-  return { titulo: "Visão geral da V1", corpo: container };
+  return { titulo: "Cobertura funcional e prontidão", corpo: container };
 }
 
 function modalModulos() {
-  const grade = document.createElement("div");
-  grade.className = "modal-grid";
-
-  dados.modulos.forEach((modulo) => {
-    const card = document.createElement("article");
-    card.className = `modal-card${modulo.destaque ? " modal-card--active" : ""}`;
-    const titulo = document.createElement("h3");
-    titulo.textContent = modulo.nome;
-    const estado = document.createElement("p");
-    estado.textContent = modulo.estadoRotulo;
-    const barra = document.createElement("div");
-    barra.className = "modal-bar";
-    const preenchimento = document.createElement("span");
-    preenchimento.style.width = `${percentual(modulo.percentual)}%`;
-    barra.appendChild(preenchimento);
-    const valor = document.createElement("strong");
-    valor.textContent = `${percentual(modulo.percentual)}%`;
-    const resumo = document.createElement("p");
-    resumo.textContent = modulo.resumo;
-    const marco = document.createElement("p");
-    marco.textContent = `Próximo marco: ${modulo.pendenciaPrincipal}`;
-    card.append(titulo, estado, barra, valor, resumo, marco);
-    grade.appendChild(card);
+  const lista = document.createElement("div");
+  lista.className = "modal-list";
+  dados.metodologiaNeon04.capacidades.forEach((item, indice) => {
+    lista.appendChild(criarItemModal(String(indice + 1).padStart(2, "0"), item.nome,
+      `${item.estado} · ${item.evidenciaOuLacuna}`, `${item.prioridade} · peso ${item.peso}`));
   });
-
-  return { titulo: "Módulos e estados", corpo: grade };
+  return { titulo: "24 capacidades da matriz Neon 04", corpo: lista };
 }
 
 function modalFrentes() {
   const lista = document.createElement("div");
   lista.className = "modal-list";
-  [...dados.modulos]
-    .sort((a, b) => percentual(b.percentual) - percentual(a.percentual))
-    .slice(0, 5)
-    .forEach((modulo, indice) => {
-      lista.appendChild(criarItemModal(String(indice + 1).padStart(2, "0"), modulo.nome, modulo.resumo, `${percentual(modulo.percentual)}%`));
-    });
-  return { titulo: "Frentes mais avançadas", corpo: lista };
+  const metodo = dados.metodologiaNeon04;
+  lista.append(
+    criarItemModal("01", "Progresso funcional", "95 pontos completos de 161. Capacidades parciais recebem zero.", "59,0%"),
+    criarItemModal("02", "Funcionalidades essenciais P0", "95 pontos completos de 152 no recorte essencial.", "62,5%"),
+    criarItemModal("03", "Prontidão para uso real", "2 de 8 gates evidenciados experimentalmente; todos são obrigatórios.", "25%")
+  );
+  const nota = document.createElement("div");
+  nota.className = "modal-note";
+  nota.textContent = `${metodo.limite} Uso real: NÃO PRONTO.`;
+  const container = document.createElement("div");
+  container.append(lista, nota);
+  return { titulo: "Indicadores da Migração Neon 04", corpo: container };
 }
 
 function modalTarefa() {
@@ -356,7 +346,7 @@ function modalTarefa() {
     criarKpi(tarefa.modulo, "Módulo"),
     criarKpi(estadoRotulo[tarefa.estado] || "Definido", "Estado"),
     criarKpi(dados.situacaoAtual.ultimoCheckpoint.id, "Base atual"),
-    criarKpi("DEV", "Ambiente")
+    criarKpi("Experimental", "Ambiente")
   );
   const nota = document.createElement("div");
   nota.className = "modal-note";
@@ -365,7 +355,7 @@ function modalTarefa() {
   lista.className = "modal-list";
   lista.appendChild(criarItemModal("Agora", tarefa.tituloCurto, tarefa.blocoTecnicoImediato, "Tarefa ativa"));
   container.append(kpis, nota, lista);
-  return { titulo: "Tarefa em execução", corpo: container };
+  return { titulo: "Prontidão para uso real", corpo: container };
 }
 
 function modalProximos() {
@@ -374,7 +364,7 @@ function modalProximos() {
   [...dados.proximosBlocos].sort((a, b) => a.ordem - b.ordem).forEach((bloco) => {
     lista.appendChild(criarItemModal(String(bloco.ordem).padStart(2, "0"), bloco.titulo, bloco.detalhe, bloco.modulo));
   });
-  return { titulo: "Próximos blocos", corpo: lista };
+  return { titulo: "Pendências para decisão", corpo: lista };
 }
 
 function modalTimeline() {
@@ -395,7 +385,7 @@ function modalCheckpointAtual() {
     criarKpi(checkpoint.id, "Checkpoint"),
     criarKpi(formatarData(checkpoint.data), "Data"),
     criarKpi(checkpoint.modulo || "Projeto", "Módulo"),
-    criarKpi("DEV", "Ambiente")
+    criarKpi("Experimental", "Ambiente")
   );
   const nota = document.createElement("div");
   nota.className = "modal-note";
@@ -439,6 +429,10 @@ function exibirFalha(erro) {
 
 function texto(elemento, valor) {
   if (elemento && valor !== undefined && valor !== null) elemento.textContent = String(valor);
+}
+
+function formatarPercentual(valor) {
+  return Number(valor).toFixed(1).replace(".", ",");
 }
 
 function percentual(valor) {

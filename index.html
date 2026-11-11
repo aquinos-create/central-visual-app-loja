@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Central visual do projeto App da Loja.">
+  <meta name="description" content="Cobertura funcional e prontidão para uso real do App da Loja, conforme Migração Neon 04.">
   <title>Central Visual — App da Loja</title>
   <link rel="stylesheet" href="estilo.css">
   <script src="dashboard.js" defer></script>
@@ -39,28 +39,28 @@
       </div>
 
       <div class="topbar__meta" aria-label="Metadados do projeto">
-        <span class="meta-chip meta-chip--live"><i></i><strong id="meta-ambiente">DEV</strong></span>
-        <span class="meta-chip" id="meta-versao">DEV-0.1.0</span>
-        <span class="meta-chip" id="meta-data">15/10/2026</span>
-        <button class="meta-chip meta-chip--checkpoint" type="button" id="btn-checkpoint-atual">CP-019</button>
+        <span class="meta-chip meta-chip--live"><i></i><strong id="meta-ambiente">Experimental</strong></span>
+        <span class="meta-chip" id="meta-versao">NEON-04</span>
+        <span class="meta-chip" id="meta-data">11/11/2026</span>
+        <button class="meta-chip meta-chip--checkpoint" type="button" id="btn-checkpoint-atual">NEON-04</button>
       </div>
     </header>
 
     <main class="cockpit" aria-label="Visão geral do projeto">
       <aside class="cockpit__left">
-        <button class="hud-panel panel-modules hud-frame interactive-panel" type="button" data-open="modules" aria-label="Abrir detalhes dos módulos e estados">
+        <button class="hud-panel panel-modules hud-frame interactive-panel" type="button" data-open="modules" aria-label="Abrir detalhes das capacidades e estados">
           <div class="panel-heading">
             <span class="panel-icon panel-icon--cube" aria-hidden="true"></span>
-            <span>Módulos e estados</span>
+            <span>Capacidades e estados</span>
             <i class="panel-signal" aria-hidden="true"></i>
           </div>
 
           <div class="modules-layout">
             <div class="donut-wrap">
-              <div class="state-donut" id="state-donut" role="img" aria-label="Distribuição dos estados dos módulos">
+              <div class="state-donut" id="state-donut" role="img" aria-label="Distribuição das 24 capacidades">
                 <div class="state-donut__inner">
-                  <strong id="total-modulos">13</strong>
-                  <span>Módulos</span>
+                  <strong id="total-modulos">24</strong>
+                  <span>Capacidades</span>
                   <small>totais</small>
                 </div>
               </div>
@@ -69,13 +69,13 @@
 
             <div class="state-counts">
               <div class="state-count state-count--active">
-                <i></i><strong id="count-andamento">0</strong><span>Parciais</span>
+                <i></i><strong id="count-andamento">5</strong><span>Parciais</span>
               </div>
               <div class="state-count state-count--defined">
-                <i></i><strong id="count-definidos">6</strong><span>Concluídos</span>
+                <i></i><strong id="count-definidos">12</strong><span>Completas</span>
               </div>
               <div class="state-count state-count--idle">
-                <i></i><strong id="count-nao-iniciados">7</strong><span>Pendentes</span>
+                <i></i><strong id="count-nao-iniciados">7</strong><span>Não implementadas</span>
               </div>
             </div>
           </div>
@@ -83,25 +83,25 @@
           <div class="panel-corner panel-corner--br" aria-hidden="true"></div>
         </button>
 
-        <button class="hud-panel panel-fronts hud-frame interactive-panel" type="button" data-open="fronts" aria-label="Abrir detalhes das frentes avançadas">
+        <button class="hud-panel panel-fronts hud-frame interactive-panel" type="button" data-open="fronts" aria-label="Abrir detalhes dos três indicadores aprovados">
           <div class="panel-heading">
             <span class="panel-icon panel-icon--radar" aria-hidden="true"></span>
-            <span>Frentes avançadas</span>
+            <span>Indicadores aprovados</span>
             <i class="panel-signal" aria-hidden="true"></i>
           </div>
 
           <div class="front-list" id="front-list">
             <div class="front-row">
-              <div class="front-row__meta"><span>Consulta de Estoque</span><strong>100%</strong></div>
-              <div class="segmented-track"><span style="--value:100%"></span></div>
+              <div class="front-row__meta"><span>Funcional · 95/161</span><strong>59,0%</strong></div>
+              <div class="segmented-track"><span style="--value:59%"></span></div>
             </div>
             <div class="front-row">
-              <div class="front-row__meta"><span>Fundação técnica</span><strong>100%</strong></div>
-              <div class="segmented-track"><span style="--value:100%"></span></div>
+              <div class="front-row__meta"><span>Essenciais P0 · 95/152</span><strong>62,5%</strong></div>
+              <div class="segmented-track"><span style="--value:62.5%"></span></div>
             </div>
             <div class="front-row front-row--active">
-              <div class="front-row__meta"><span>Atualizar Estoque</span><strong>100%</strong></div>
-              <div class="segmented-track"><span style="--value:100%"></span></div>
+              <div class="front-row__meta"><span>Prontidão · 2/8 gates</span><strong>25%</strong></div>
+              <div class="segmented-track"><span style="--value:25%"></span></div>
             </div>
           </div>
 
@@ -114,10 +114,10 @@
       <section class="core-zone" aria-labelledby="core-title">
         <h2 class="sr-only" id="core-title">Núcleo do projeto</h2>
 
-        <div class="core-status-label core-status-label--defined" aria-hidden="true"><i></i><span>Definidos</span></div>
+        <div class="core-status-label core-status-label--defined" aria-hidden="true"><i></i><span>Completas</span></div>
         <div class="core-status-label core-status-label--active" aria-hidden="true"><i></i><span>Parciais</span></div>
-        <div class="core-status-label core-status-label--idle" aria-hidden="true"><i></i><span>Pendentes</span></div>
-        <div class="core-status-label core-status-label--validated" aria-hidden="true"><i></i><span>Validado</span></div>
+        <div class="core-status-label core-status-label--idle" aria-hidden="true"><i></i><span>Não implementadas</span></div>
+        <div class="core-status-label core-status-label--validated" aria-hidden="true"><i></i><span>Experimental</span></div>
 
         <button class="project-core" type="button" data-open="overview" aria-label="Abrir visão geral detalhada do projeto">
           <span class="core-halo core-halo--one" aria-hidden="true"></span>
@@ -135,31 +135,31 @@
           <span class="core-crosshair" aria-hidden="true"></span>
           <span class="core-readout">
             <small>Projeto em construção</small>
-            <strong><span id="core-percent">49</span><em>%</em></strong>
-            <span>Progresso geral · V1</span>
-            <b id="core-checkpoint">CP-019</b>
+            <strong><span id="core-percent">59,0</span><em>%</em></strong>
+            <span>Cobertura funcional ponderada</span>
+            <b id="core-checkpoint">NEON-04</b>
           </span>
           <span class="core-scanline" aria-hidden="true"></span>
         </button>
 
         <div class="core-data-strip" aria-hidden="true">
-          <span>SYS/APP-LOJA</span><i></i><span>DATA LINK</span><i></i><span>STATUS NOMINAL</span>
+          <span>SYS/APP-LOJA</span><i></i><span>DATA LINK</span><i></i><span>USO REAL NÃO PRONTO</span>
         </div>
       </section>
 
       <aside class="cockpit__right">
-        <button class="hud-panel panel-task hud-frame interactive-panel" type="button" data-open="task" aria-label="Abrir detalhes da tarefa em execução">
+        <button class="hud-panel panel-task hud-frame interactive-panel" type="button" data-open="task" aria-label="Abrir detalhes da prontidão para uso real">
           <div class="panel-heading">
             <span class="panel-icon panel-icon--target" aria-hidden="true"></span>
-            <span>Tarefa em execução</span>
+            <span>Prontidão para uso real</span>
             <i class="panel-signal panel-signal--orange" aria-hidden="true"></i>
           </div>
 
           <div class="task-module" id="task-module">Central</div>
           <div class="task-main">
             <small>Foco atual</small>
-            <h3 id="task-title">Priorizar sequência da V1</h3>
-            <p id="task-block">Escolher o primeiro bloco funcional da V1</p>
+            <h3 id="task-title">25% · 2 de 8 gates</h3>
+            <p id="task-block">Uso real: não pronto</p>
           </div>
 
           <div class="task-activity" aria-hidden="true">
@@ -167,17 +167,17 @@
           </div>
         </button>
 
-        <button class="hud-panel panel-next hud-frame interactive-panel" type="button" data-open="next" aria-label="Abrir todos os próximos passos">
+        <button class="hud-panel panel-next hud-frame interactive-panel" type="button" data-open="next" aria-label="Abrir pendências para decisão da Central">
           <div class="panel-heading">
             <span class="panel-icon panel-icon--gear" aria-hidden="true"></span>
-            <span>Próximos passos</span>
+            <span>Pendências para decisão</span>
             <i class="panel-signal" aria-hidden="true"></i>
           </div>
 
           <ol class="next-list" id="next-list">
-            <li><b>01</b><span>Priorizar sequência da V1</span><i>›</i></li>
-            <li><b>02</b><span>Histórico operacional visível</span><i>›</i></li>
-            <li><b>03</b><span>Autenticação e permissões finais</span><i>›</i></li>
+            <li><b>01</b><span>Interface P0 no celular</span><i>›</i></li>
+            <li><b>02</b><span>Perfis e dados reais</span><i>›</i></li>
+            <li><b>03</b><span>Recuperação e liberação</span><i>›</i></li>
           </ol>
 
           <div class="data-pulse" aria-hidden="true"><span></span></div>
@@ -202,39 +202,39 @@
         </div>
       </button>
 
-      <button class="hud-panel bottom-panel panel-summary hud-frame interactive-panel" type="button" data-open="modules" aria-label="Abrir resumo completo dos módulos">
+      <button class="hud-panel bottom-panel panel-summary hud-frame interactive-panel" type="button" data-open="modules" aria-label="Abrir resumo das 24 capacidades">
         <div class="panel-heading panel-heading--compact">
           <span class="panel-icon panel-icon--layers" aria-hidden="true"></span>
-          <span>Resumo de módulos</span>
+          <span>Resumo de capacidades</span>
           <i class="panel-signal" aria-hidden="true"></i>
         </div>
 
         <div class="summary-metrics">
-          <div class="summary-metric summary-metric--total"><i></i><strong id="summary-total">13</strong><span>Total</span></div>
-          <div class="summary-metric summary-metric--active"><i></i><strong id="summary-active">0</strong><span>Parciais</span></div>
-          <div class="summary-metric summary-metric--defined"><i></i><strong id="summary-defined">6</strong><span>Definidos</span></div>
-          <div class="summary-metric summary-metric--idle"><i></i><strong id="summary-idle">7</strong><span>Pendentes</span></div>
+          <div class="summary-metric summary-metric--total"><i></i><strong id="summary-total">24</strong><span>Total</span></div>
+          <div class="summary-metric summary-metric--active"><i></i><strong id="summary-active">5</strong><span>Parciais</span></div>
+          <div class="summary-metric summary-metric--defined"><i></i><strong id="summary-defined">12</strong><span>Completas</span></div>
+          <div class="summary-metric summary-metric--idle"><i></i><strong id="summary-idle">7</strong><span>Não implementadas</span></div>
         </div>
       </button>
 
-      <button class="hud-panel bottom-panel panel-priority hud-frame interactive-panel" type="button" data-open="next" aria-label="Abrir prioridades dos próximos blocos">
+      <button class="hud-panel bottom-panel panel-priority hud-frame interactive-panel" type="button" data-open="next" aria-label="Abrir gates de prontidão pendentes">
         <div class="panel-heading panel-heading--compact">
           <span class="panel-icon panel-icon--priority" aria-hidden="true"></span>
-          <span>Próximos blocos</span>
+          <span>Gates pendentes</span>
           <i class="panel-signal panel-signal--orange" aria-hidden="true"></i>
         </div>
 
         <div class="priority-list" id="priority-list">
           <div class="priority-row priority-row--high">
-            <span><b>Sequência da V1</b><small>Definição da Central</small></span>
+            <span><b>Interface P0</b><small>Validação no celular</small></span>
             <div class="priority-segments" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           </div>
           <div class="priority-row priority-row--high">
-            <span><b>Histórico visível</b><small>Pendente de implementação</small></span>
+            <span><b>Perfis e dados</b><small>Preparação para uso real</small></span>
             <div class="priority-segments" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           </div>
           <div class="priority-row priority-row--medium">
-            <span><b>Preparação da V1</b><small>Autenticação e Produção</small></span>
+            <span><b>Recuperação</b><small>Backup e liberação</small></span>
             <div class="priority-segments" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           </div>
         </div>
@@ -248,7 +248,7 @@
         <span class="status-led"></span>
         <span class="status-led"></span>
       </div>
-      <p id="status-note">Progresso calculado pelo catálogo canônico da primeira versão.</p>
+      <p id="status-note">59,0% funcional · P0 62,5% · prontidão 25% (2/8) · uso real não pronto.</p>
       <div class="statusbar__right" aria-hidden="true">
         <span class="packet"><i></i><i></i><i></i><i></i><i></i></span>
         <span class="mini-bars"><i></i><i></i><i></i><i></i></span>
